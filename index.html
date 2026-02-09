@@ -3,215 +3,227 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Planner 2026 — Executive Vintage</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Marck+Script&display=swap" rel="stylesheet">
+<title>Pro Teacher Planner 2026 — Vintage Luxury</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reenie+Beanie&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
   :root{
-    --ruby:#821122; --navy:#1a2a44; --emerald:#0a5a46;
-    --paper:#f2e6d0; /* ورق معتق أكثر */
-    --ink:#2d261f; --line:#d4c3a3; --accent:#8e7356;
-    --shadow: rgba(0,0,0,0.2);
-    --font:'Cairo',sans-serif;
-    --sign:'Marck Script', cursive;
+    --ruby:#801818; --navy:#1a2a44; --emerald:#1b4d3e;
+    --paper:#f4ecd8; 
+    --leather:#3d2b1f;
+    --ink:#2f2a25; --line:#d6c8af; --accent:#b5a084;
+    --gold:#c5a059;
+  }
+  
+  html,body{margin:0; min-height:100vh; background:#2c1e14; color:var(--ink); font-family:'Cairo',sans-serif;}
+  
+  /* خلفية فاخرة بنسيج جلدي */
+  body {
+    background: radial-gradient(circle, #4d3a2b 0%, #2c1e14 100%);
+    padding: 20px;
   }
 
-  body{
-    margin:0; min-height:100vh; background:#3d362d; 
-    background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
-    font-family: var(--font); color: var(--ink);
+  .planner-container {
+    max-width: 1400px; margin: 0 auto; display: flex; position: relative;
+    background: var(--leather); padding: 15px; border-radius: 15px;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
   }
 
-  .planner{
-    max-width: 1600px; margin: 40px auto; display: flex;
-    padding: 0 20px; gap: 0; position: relative;
+  .page {
+    flex: 1; min-height: 1000px; background: var(--paper);
+    position: relative; padding: 30px; box-sizing: border-box;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
   }
+  
+  .page.right { border-radius: 5px 20px 20px 5px; margin-left: 2px; }
+  .page.left { border-radius: 20px 5px 5px 20px; margin-right: 2px; }
 
-  /* تصميم الصفحة الفاخر */
-  .page{
-    flex: 1; background: var(--paper); min-height: 1000px;
-    padding: 30px; position: relative;
-    box-shadow: 5px 15px 35px rgba(0,0,0,0.5);
-    background-image: radial-gradient(circle at 2px 2px, rgba(0,0,0,0.02) 1px, transparent 0);
-    background-size: 24px 24px;
-  }
-  .page.right{ border-radius: 5px 30px 30px 5px; border-left: 1px solid rgba(0,0,0,0.1); }
-  .page.left{ border-radius: 30px 5px 5px 30px; border-right: 1px solid rgba(0,0,0,0.1); }
-
-  /* السلك الحلزوني الاحترافي */
+  /* السلك الحلزوني الفاخر */
   .spiral-binder {
-    width: 40px; background: transparent;
-    display: flex; flex-direction: column; align-items: center;
-    gap: 12px; z-index: 10; margin: 20px -20px;
+    width: 40px; background: transparent; position: relative; z-index: 10;
+    display: flex; flex-direction: column; justify-content: space-around; align-items: center;
+    padding: 20px 0; margin: 0 -20px;
   }
   .wire {
-    width: 50px; height: 12px;
-    background: linear-gradient(90deg, #999 0%, #eee 45%, #888 100%);
-    border-radius: 6px; box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    width: 50px; height: 12px; background: linear-gradient(180deg, #d1d1d1 0%, #757575 50%, #4a4a4a 100%);
+    border-radius: 10px; margin: 8px 0; transform: rotate(-15deg);
+    box-shadow: 2px 4px 5px rgba(0,0,0,0.3); position: relative;
   }
+  .wire::after { content: ''; position: absolute; left: 5px; top: 2px; width: 40px; height: 3px; background: rgba(255,255,255,0.3); border-radius: 5px; }
 
-  /* جدول الحصص الأفقي */
-  .schedule-mini {
-    display: flex; gap: 5px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;
-  }
-  .schedule-item {
-    flex: 1; min-width: 80px; background: rgba(255,255,255,0.4);
-    border: 1px solid var(--line); border-radius: 6px; text-align: center; padding: 5px;
-  }
-  .schedule-item span { display: block; font-size: 0.75em; color: var(--accent); font-weight: bold; }
-  .schedule-item div { height: 25px; border-top: 1px dashed var(--line); margin-top: 5px; }
-
-  /* التقويم */
-  .months { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-  .mini { background: #fffdf9; border: 1px solid var(--line); border-radius: 8px; font-size: 0.85em; }
-  .mini .mh { background: var(--accent); color: #fff; padding: 5px; text-align: center; font-weight: bold; }
-  .mini table { width: 100%; border-collapse: collapse; }
-  .mini td { text-align: center; padding: 4px 2px; border: 0.5px solid #eee; width: 14.2%; }
-  .mini td.weekend { background: #f9f2e7; color: #a67c52; }
-  .mini td.event-religious { background: var(--navy); color: #fff; border-radius: 4px; }
-  .mini td.salary { border: 1.5px solid var(--ruby); font-weight: bold; color: var(--ruby); }
-
-  /* الملاحظات الطويلة */
-  .full-notes {
-    height: 750px; background-image: linear-gradient(var(--line) 1px, transparent 1px);
-    background-size: 100% 30px; line-height: 30px; padding-top: 5px;
-  }
-
+  /* الاسم الانسيابي (Signature Style) */
   .signature {
-    font-family: var(--sign); font-size: 1.8em; color: var(--navy);
-    text-align: left; margin-top: 20px; opacity: 0.8;
+    font-family: 'Reenie Beanie', cursive; font-size: 2.2em; color: var(--navy);
+    line-height: 1; margin-top: 5px; display: block;
   }
 
-  .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-  .tab { 
-    padding: 8px 15px; background: var(--accent); color: white; border-radius: 20px; 
-    text-decoration: none; font-size: 0.9em; transition: 0.3s;
+  /* الجداول المصغرة (Professional Side) */
+  .mini-grid-container {
+    display: flex; gap: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.3);
+    padding: 10px; border-radius: 8px; border: 1px solid var(--line);
   }
-  .tab:hover { transform: translateY(-3px); box-shadow: 0 4px 10px var(--shadow); }
+  .mini-table { font-size: 0.75em; border-collapse: collapse; flex: 1; }
+  .mini-table th, .mini-table td { border: 1px solid var(--line); padding: 4px; text-align: center; }
+  .mini-table th { background: var(--accent); color: white; }
 
-  .header-info { border-bottom: 2px double var(--line); padding-bottom: 10px; margin-bottom: 20px; }
+  /* التقاويم */
+  .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .calendar-box { background: #fffdf5; border: 1px solid var(--line); border-radius: 5px; padding: 5px; }
+  .calendar-box h4 { margin: 0 0 5px 0; font-size: 0.9em; text-align: center; color: var(--ruby); }
+  .calendar-box table { width: 100%; font-size: 0.7em; border-collapse: collapse; }
+  .calendar-box td { padding: 2px; text-align: center; border-bottom: 1px solid #f0e6d4; }
   
-  /* إخفاء الأقسام */
-  .content-sec { display: none; }
-  .content-sec.active { display: block; }
+  /* تمييز الأيام */
+  .day-salary { background: #ffd700 !important; font-weight: bold; border-radius: 3px; }
+  .day-event { background: var(--ruby) !important; color: white !important; border-radius: 50%; }
+
+  /* مسطرة الملاحظات (طول الصفحة) */
+  .full-notes {
+    background-image: linear-gradient(var(--line) 1px, transparent 1px);
+    background-size: 100% 30px; line-height: 30px; min-height: 600px;
+    padding: 0 10px; color: #444; font-size: 1.1em;
+  }
+
+  .section-title {
+    border-bottom: 2px solid var(--gold); color: var(--leather);
+    padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; display: flex; align-items: center; gap: 10px;
+  }
+
+  /* تبويبات */
+  .tabs-row { display: flex; gap: 5px; margin-bottom: 15px; }
+  .tab-btn {
+    padding: 8px 15px; background: var(--accent); color: white; border: none;
+    border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: 0.3s;
+  }
+  .tab-btn:hover { background: var(--leather); }
+
 </style>
 </head>
 <body>
 
-<div class="planner">
+<div class="planner-container">
   <div class="page right">
-    <div class="header-info">
-      <h2 style="margin:0; color:var(--ruby)">المخطط الشخصي 2026</h2>
-      <small>سجل أفكارك وطموحاتك اليومية</small>
+    <div style="text-align: left; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 20px;">
+      <span class="signature" id="userName">Mohamed Yassin Helmy</span>
+      <small style="color: var(--accent);">مخطط الحياة اليومية 2026</small>
     </div>
 
-    <div class="tabs">
-      <a href="#" class="tab" onclick="showSec('personal-cal')">التقويم</a>
-      <a href="#" class="tab" onclick="showSec('personal-notes')">ملاحظات حرة</a>
-    </div>
+    <div class="section-title"><i class="fa fa-calendar-alt"></i> تقويم النصف الأول (يناير - يونيو)</div>
+    <div class="months-grid" id="calContainerRight">
+      </div>
 
-    <div id="personal-cal" class="content-sec active">
-      <div class="months" id="cal-right"></div>
+    <div class="section-title"><i class="fa fa-edit"></i> ملاحظات حرة وأفكار</div>
+    <div class="full-notes" contenteditable="true">
+      ابدأ كتابة ملاحظاتك هنا...
     </div>
-
-    <div id="personal-notes" class="content-sec">
-      <div class="full-notes"></div>
-    </div>
-
-    <div class="signature">Mohamed Yassin Helmy</div>
   </div>
 
   <div class="spiral-binder">
-    <div class="wire"></div><div class="wire"></div><div class="wire"></div><div class="wire"></div>
-    <div class="wire"></div><div class="wire"></div><div class="wire"></div><div class="wire"></div>
-    <div class="wire"></div><div class="wire"></div><div class="wire"></div><div class="wire"></div>
-    <div class="wire"></div><div class="wire"></div><div class="wire"></div><div class="wire"></div>
-    <div class="wire"></div><div class="wire"></div><div class="wire"></div><div class="wire"></div>
+    <script>
+      for(let i=0; i<25; i++) document.write('<div class="wire"></div>');
+    </script>
   </div>
 
   <div class="page left">
-    <div class="header-info">
-      <h2 style="margin:0; color:var(--emerald)">مركز المعلم الاحترافي</h2>
-      <small>أ/ محمد ياسين حلمي — فنون بصرية</small>
+    <div class="section-title"><i class="fa fa-briefcase"></i> لوحة التحكم للمعلم الاحترافي</div>
+    
+    <div class="tabs-row">
+      <button class="tab-btn">التحضير الذكي</button>
+      <button class="tab-btn">سجل الإنجاز</button>
+      <button class="tab-btn">الميزانية</button>
     </div>
 
-    <div class="schedule-mini">
-      <div class="schedule-item"><span>الأولى</span><div></div></div>
-      <div class="schedule-item"><span>الثانية</span><div></div></div>
-      <div class="schedule-item"><span>الثالثة</span><div></div></div>
-      <div class="schedule-item"><span>الرابعة</span><div></div></div>
-      <div class="schedule-item"><span>الخامسة</span><div></div></div>
-      <div class="schedule-item"><span>السادسة</span><div></div></div>
-      <div class="schedule-item"><span>السابعة</span><div></div></div>
-      <div class="schedule-item"><span>الثامنة</span><div></div></div>
+    <div class="mini-grid-container">
+      <table class="mini-table">
+        <thead>
+          <tr><th colspan="6">جدول الحصص الأسبوعي</th></tr>
+          <tr><td>أحد</td><td>اثنين</td><td>ثلاثاء</td><td>أربعاء</td><td>خميس</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+
+      <table class="mini-table">
+        <thead>
+          <tr><th colspan="3">توزيع الصفوف</th></tr>
+          <tr><td>الصف</td><td>الشعبة</td><td>العدد</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="tabs">
-      <a href="#" class="tab" style="background:var(--navy)" onclick="showSec('pro-prep')">التحضير</a>
-      <a href="#" class="tab" style="background:var(--navy)" onclick="showSec('pro-cal')">المواعيد</a>
+    <div class="section-title"><i class="fa fa-tasks"></i> التحضير اليومي والمهام المهنية</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: white;">
+        <h5 style="margin:0 0 10px 0; color: var(--navy);">أهداف الحصص</h5>
+        <div class="full-notes" style="min-height: 300px; font-size: 0.9em;"></div>
+      </div>
+      <div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: white;">
+        <h5 style="margin:0 0 10px 0; color: var(--navy);">قائمة المهام العاجلة</h5>
+        <div class="full-notes" style="min-height: 300px; font-size: 0.9em;"></div>
+      </div>
     </div>
 
-    <div id="pro-prep" class="content-sec active">
-       <div class="full-notes"></div>
-    </div>
-
-    <div id="pro-cal" class="content-sec">
-      <div class="months" id="cal-left"></div>
-    </div>
-
-    <div class="signature" style="text-align:right">M. Yassin Helmy</div>
+    <div class="section-title" style="margin-top:20px;"><i class="fa fa-info-circle"></i> دليل المناسبات الهامة</div>
+    <div id="eventsList" style="font-size: 0.85em; color: var(--leather); column-count: 2;">
+      </div>
   </div>
 </div>
 
 <script>
-const monthsNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو'];
-// تعديل المواعيد: رمضان 18 فبراير (المفترض فلكياً 2026)
-const events = {
-  '2026-02-18': {type:'religious', label:'بداية رمضان'},
-  '2026-03-20': {type:'religious', label:'عيد الفطر'},
-  '2026-01-23': {type:'salary'},
-  '2026-02-23': {type:'salary'},
-  '2026-03-23': {type:'salary'}
+const events2026 = {
+  '2026-01-27': 'الإسراء والمعراج',
+  '2026-02-18': 'بداية شهر رمضان المبارك',
+  '2026-02-22': 'يوم التأسيس السعودي',
+  '2026-03-20': 'عيد الفطر المبارك (تقريبي)',
+  '2026-05-27': 'وقفة عرفة',
+  '2026-05-28': 'عيد الأضحى المبارك'
 };
 
-function buildCalendar(monthIdx, targetId) {
-  const y = 2026;
-  const firstDay = new Date(y, monthIdx, 1).getDay();
-  const lastDate = new Date(y, monthIdx + 1, 0).getDate();
+function getSalaryDay(month) {
+  // مثال: يوم 27 من كل شهر
+  return 27;
+}
+
+function generateCalendar() {
+  const container = document.getElementById('calContainerRight');
+  const evList = document.getElementById('eventsList');
+  const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
   
-  let html = `<div class="mini"><div class="mh">${monthsNames[monthIdx]}</div><table>`;
-  html += '<tr><td>ح</td><td>ن</td><td>ث</td><td>ر</td><td>خ</td><td>ج</td><td>س</td></tr><tr>';
-  
-  for(let i=0; i<firstDay; i++) html += '<td></td>';
-  
-  for(let d=1; d<=lastDate; d++) {
-    const dateStr = `${y}-${String(monthIdx+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    let cls = '';
-    if(events[dateStr]) {
-       if(events[dateStr].type === 'religious') cls = 'event-religious';
-       if(events[dateStr].type === 'salary') cls = 'salary';
-    }
-    const dayOfWeek = new Date(y, monthIdx, d).getDay();
-    if(dayOfWeek === 5 || dayOfWeek === 6) cls += ' weekend';
+  for (let m = 0; m < 6; m++) {
+    let html = `<div class="calendar-box"><h4>${monthNames[m]}</h4><table>`;
+    html += `<tr><td>ح</td><td>ن</td><td>ث</td><td>ر</td><td>خ</td><td>ج</td><td>س</td></tr><tr>`;
     
-    html += `<td class="${cls}">${d}</td>`;
-    if((firstDay + d) % 7 === 0) html += '</tr><tr>';
+    let firstDay = new Date(2026, m, 1).getDay();
+    let daysInMonth = new Date(2026, m + 1, 0).getDate();
+    
+    for (let i = 0; i < firstDay; i++) html += `<td></td>`;
+    
+    for (let d = 1; d <= daysInMonth; d++) {
+      let dateStr = `2026-${String(m+1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      let className = "";
+      if (d === getSalaryDay(m)) className = "day-salary";
+      if (events2026[dateStr]) className = "day-event";
+      
+      html += `<td class="${className}">${d}</td>`;
+      if ((d + firstDay) % 7 === 0) html += `</tr><tr>`;
+    }
+    html += `</tr></table></div>`;
+    container.innerHTML += html;
   }
-  html += '</tr></table></div>';
-  document.getElementById(targetId).innerHTML += html;
+
+  // ملء قائمة المناسبات
+  for (let date in events2026) {
+    evList.innerHTML += `<div>• ${events2026[date]} (${date})</div>`;
+  }
 }
 
-function showSec(id) {
-  const page = document.getElementById(id).closest('.page');
-  page.querySelectorAll('.content-sec').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// بناء التقويم كاملاً من يناير ليوليو
-window.onload = () => {
-  [0,1,2].forEach(m => buildCalendar(m, 'cal-right'));
-  [3,4,5,6].forEach(m => buildCalendar(m, 'cal-left'));
-}
+window.onload = generateCalendar;
 </script>
 </body>
 </html>
