@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سجل الفنون التشكيلية 2026 - الإصدار التفاعلي</title>
+    <title>سجل الفنون التشكيلية 2026 - الإصدار الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,7 @@
             --line-tan: #e5dcc5;
             --salary-green: #2d5a27;
             --weekend-bg: #f0f2f5;
+            --spiral-color: #d1d5db;
         }
 
         @media print {
@@ -24,7 +25,6 @@
 
         body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 20px; scroll-behavior: smooth; }
         
-        /* شريط الأدوات العائم */
         .dashboard { 
             position: sticky; top: 10px; z-index: 1000;
             max-width: 800px; margin: 0 auto 30px; 
@@ -37,83 +37,108 @@
         .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 10px 30px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; transition: 0.3s; }
         .btn-premium:hover { background: var(--antique-gold); color: var(--royal-navy); }
         
-        .spread-container { display: flex; justify-content: center; gap: 0; margin-bottom: 40px; }
+        /* تصميم السلك الحلزوني */
+        .spiral-binder {
+            position: absolute; left: 50%; top: 5%; bottom: 5%;
+            width: 30px; transform: translateX(-50%);
+            display: flex; flex-direction: column; justify-content: space-around;
+            z-index: 10; pointer-events: none;
+        }
+        .spiral-hole {
+            width: 12px; height: 12px; background: #334155;
+            border-radius: 50%; box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5);
+            position: relative; margin-left: 9px;
+        }
+        .spiral-wire {
+            position: absolute; width: 25px; height: 8px;
+            background: linear-gradient(to bottom, #999, #fff, #777);
+            border-radius: 10px; top: 2px; left: -6px;
+            transform: rotate(-10deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .spread-container { 
+            display: flex; justify-content: center; 
+            position: relative; margin-bottom: 50px; 
+            width: 297mm; margin-left: auto; margin-right: auto;
+        }
+
         .page-container {
             width: 148.5mm; height: 210mm; background: var(--vintage-paper); 
-            padding: 8mm; box-sizing: border-box; display: flex; flex-direction: column; 
-            position: relative; border: 1px solid #d1c7a7;
+            padding: 10mm 12mm; box-sizing: border-box; display: flex; flex-direction: column; 
+            position: relative; border: 1px solid #d1c7a7; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+
+        /* تعديل الهوامش للربط السلكي */
+        .page-right { padding-left: 15mm; border-radius: 5px 0 0 5px; }
+        .page-left { padding-right: 15mm; border-radius: 0 5px 5px 0; }
 
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--antique-gold); margin-bottom: 5px; }
         .initials-logo { font-family: 'Mrs Saint Delafield', cursive; font-size: 35px; color: var(--antique-gold); border: 2px solid var(--antique-gold); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--royal-navy); }
         
-        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; min-width: 70px; cursor: pointer; }
-        .date-month { background: var(--deep-ruby); color: white; font-size: 11px; padding: 2px; }
-        .date-day { font-size: 28px; font-weight: 900; color: var(--royal-navy); line-height: 1; }
+        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; min-width: 60px; overflow: hidden; }
+        .date-month { background: var(--deep-ruby); color: white; font-size: 11px; padding: 2px; font-weight: bold; }
+        .date-day { font-size: 24px; font-weight: 900; color: var(--royal-navy); line-height: 1.2; }
 
         .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
 
-        .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 10px; border: 1px solid var(--antique-gold); padding: 6px 2px; }
-        .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
+        .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 8px; border: 1px solid var(--antique-gold); padding: 4px 1px; }
+        .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 30px; background: white; }
 
         .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; }
         
-        .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; }
+        .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; overflow: hidden; }
         .lines { background-image: repeating-linear-gradient(transparent, transparent 27px, var(--line-tan) 28px); line-height: 28px; height: 100%; }
 
-        /* التفاعل في التقويم الصغير */
-        .mini-cal-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
-        .mini-month { border: 1px solid var(--antique-gold); background: white; font-size: 8px; text-align: center; }
-        .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; cursor: pointer; }
-        .mini-month td { cursor: pointer; transition: 0.2s; }
-        .mini-month td:hover:not(:empty) { background: var(--antique-gold) !important; color: white !important; }
+        /* تنظيم التقاويم في الصفحة اليسرى لعدم التداخل */
+        .mini-cal-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            margin-top: 5px;
+            background: rgba(255,255,255,0.5);
+            padding: 5px;
+            border-radius: 5px;
+        }
         
-        .day-event { background: var(--deep-ruby) !important; color: white !important; border-radius: 2px; font-weight: bold; }
-        .day-salary { background: var(--salary-green) !important; color: white !important; border-radius: 2px; }
+        .mini-month { border: 1px solid var(--antique-gold); background: white; font-size: 8px; text-align: center; width: 100%; }
+        .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; font-weight: bold; }
+        .mini-month td { height: 12px; cursor: pointer; border: 0.1pt solid #eee; }
+        
+        .day-event { background: var(--deep-ruby) !important; color: white !important; font-weight: bold; }
+        .day-salary { background: var(--salary-green) !important; color: white !important; }
         .day-weekend { background: var(--weekend-bg); color: #bbb; }
 
-        .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
+        .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 38px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-3deg); display: inline-block; }
         
-        .finance-table { width: 100%; border-collapse: collapse; flex: 1; }
-        .finance-table th { background: var(--royal-navy); color: white; font-size: 11px; border: 1px solid var(--antique-gold); padding: 8px; }
-        .finance-table td { border: 1px solid var(--antique-gold); background: white; height: 30px; }
-
-        footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 11px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--royal-navy); }
-        .event-text { color: var(--deep-ruby); font-weight: bold; }
+        footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 10px; display: flex; justify-content: space-between; align-items: center; color: var(--royal-navy); }
     </style>
 </head>
 <body>
 
     <div class="dashboard no-print">
-        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية التفاعلي 2026</h2>
+        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية 2026 - الإصدار المطور</h2>
         <div style="display:flex; justify-content:center; gap:10px;">
-            <button class="btn-premium" onclick="generate()">توليد السجل وتفعيل الانتقال</button>
-            <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
+            <button class="btn-premium" onclick="generate()">توليد السجل الكامل (يناير - يوليو)</button>
+            <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">تصدير PDF</button>
         </div>
-        <p style="font-size:12px; margin-top:10px;">* اضغط على أي تاريخ في التقاويم الصغيرة للانتقال السريع لصفحة اليوم.</p>
     </div>
 
     <div id="print-area"></div>
 
     <script>
         const events = {
-            "1-11": "مناسبة: ذكرى تولي جلالة السلطان هيثم بن طارق المعظم",
-            "1-15": "مناسبة: ذكرى الإسراء والمعراج",
-            "2-1": "حدث: بداية الفصل الدراسي الثاني",
-            "2-24": "مناسبة: يوم المعلم العماني",
-            "3-1": "حدث: بداية شهر رمضان المبارك (تقديرياً)",
-            "3-30": "مناسبة: عيد الفطر السعيد (تقديرياً)",
-            "7-1": "حدث: بدء إجازة الكادر الإداري والتدريسي"
+            "1-11": "ذكرى تولي جلالة السلطان",
+            "1-15": "ذكرى الإسراء والمعراج",
+            "2-1": "بداية الفصل الثاني",
+            "2-24": "يوم المعلم العماني",
+            "3-1": "بداية رمضان (تقديرياً)",
+            "3-30": "عيد الفطر (تقديرياً)",
+            "7-1": "بدء إجازة الكادر"
         };
 
         const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
-        const scheduleTimes = ["07:35 - 08:15", "08:20 - 09:00", "09:05 - 09:45", "09:50 - 10:30", "الفسحة", "10:55 - 11:35", "11:40 - 12:20", "12:25 - 13:05", "13:10 - 13:50"];
-
-        function scrollToId(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        const scheduleTimes = ["07:35", "08:20", "09:05", "09:50", "الفسحة", "10:55", "11:40", "12:25", "13:10"];
 
         function getSalaryDay(m) {
             let d = new Date(2026, m, 23);
@@ -121,8 +146,9 @@
         }
 
         function buildMiniCal(m) {
+            if (m > 6) return "";
             let html = `<div class="mini-month">
-                <div class="mini-month-title" onclick="scrollToId('month-fin-${m}')">${monthNames[m]}</div>
+                <div class="mini-month-title">${monthNames[m]}</div>
                 <table style="width:100%; border-collapse:collapse;"><tr>`;
             ['ح','ن','ث','ر','خ','ج','س'].forEach(d => html += `<td style="font-weight:bold; font-size:7px;">${d}</td>`);
             html += `</tr>`;
@@ -141,14 +167,21 @@
                         if (j >= 5) cls = "day-weekend";
                         if (day === getSalaryDay(m)) cls = "day-salary";
                         if (events[dateKey]) cls = "day-event";
-                        
-                        html += `<td class="${cls}" onclick="scrollToId('day-${m+1}-${day}')">${day}</td>`;
+                        html += `<td class="${cls}">${day}</td>`;
                         day++;
                     }
                 }
                 html += `</tr>`; if(day > days) break;
             }
             return html + `</table></div>`;
+        }
+
+        function createSpiral() {
+            let holes = "";
+            for(let i=0; i<18; i++) {
+                holes += `<div class="spiral-hole"><div class="spiral-wire"></div></div>`;
+            }
+            return `<div class="spiral-binder no-print">${holes}</div>`;
         }
 
         function generate() {
@@ -168,13 +201,14 @@
 
                         output += `
                         <div class="spread-container" id="day-${m+1}-${day}">
-                            <div class="page-container">
+                            ${createSpiral()}
+                            <div class="page-container page-right">
                                 <header>
                                     <div style="display:flex; align-items:center; gap:8px">
                                         <div class="initials-logo">MYH</div>
                                         <div style="font-family:'Cairo'; font-size:14px; font-weight:900;">محمد ياسين حلمي</div>
                                     </div>
-                                    <div class="date-badge" onclick="scrollToId('month-fin-${m}')">
+                                    <div class="date-badge">
                                         <div class="date-month">${monthNames[m]}</div>
                                         <div class="date-day">${day}</div>
                                     </div>
@@ -186,50 +220,38 @@
                                 </table>
                                 <div class="section-header">التحضير الذهني والوسائل</div>
                                 <div class="notes-area"><div class="lines"></div></div>
-                                <div class="mini-cal-container">${[0,1,2].map(mm => buildMiniCal(mm)).join('')}</div>
+                                <div class="mini-cal-grid">
+                                    ${buildMiniCal(0)} ${buildMiniCal(1)}
+                                </div>
                                 <footer>
-                                    <span class="event-text">${events[dateKey] || "يوم عمل اعتيادي"}</span>
+                                    <span style="color:var(--deep-ruby); font-weight:bold;">${events[dateKey] || "عمل اعتيادي"}</span>
                                     <div class="signature-fluid">Mo.Yasin</div>
                                 </footer>
                             </div>
-                            <div class="page-container">
-                                <div class="section-header" style="background:var(--deep-ruby)">المهام اليومية</div>
-                                <div style="display: grid; grid-template-columns: 40px 1fr; gap: 10px; flex: 1;">
+
+                            <div class="page-container page-left">
+                                <div class="section-header" style="background:var(--deep-ruby)">المهام اليومية وتواصل أولياء الأمور</div>
+                                <div style="display: grid; grid-template-columns: 30px 1fr; gap: 10px; flex: 1;">
                                     <div style="display:flex; flex-direction:column; border-left:1px dashed var(--antique-gold)">
-                                        ${Array(14).fill('<div style="height:30px; border-bottom:1px solid #eee; display:flex; align-items:center;"><div style="width:15px; height:15px; border:1px solid var(--royal-navy)"></div></div>').join('')}
+                                        ${Array(12).fill('<div style="height:32px; border-bottom:1px solid #eee; display:flex; align-items:center;"><div style="width:14px; height:14px; border:1px solid var(--royal-navy)"></div></div>').join('')}
                                     </div>
                                     <div class="notes-area"><div class="lines"></div></div>
                                 </div>
-                                <div class="section-header">توجيهات فنية</div>
-                                <div style="height:80px; background:white; border:1px solid #ddd; margin-bottom:10px"></div>
-                                <div class="mini-cal-container">${[3,4,5,6].slice(0,3).map(mm => buildMiniCal(mm)).join('')}</div>
-                                <footer><span>سجل 2026 المطور</span><div style="text-align:left">نهاية الدوام 13:50</div></footer>
+                                <div class="section-header">توجيهات فنية / ملاحظات</div>
+                                <div style="height:60px; background:white; border:1px solid #ddd; margin-bottom:10px"></div>
+                                
+                                <div class="mini-cal-grid">
+                                    ${buildMiniCal(2)} ${buildMiniCal(3)} ${buildMiniCal(4)} ${buildMiniCal(5)}
+                                </div>
+                                
+                                <footer>
+                                    <span>سجل 2026 - الفنون التشكيلية</span>
+                                    <div style="text-align:left">نهاية الدوام 13:50</div>
+                                </footer>
                             </div>
                         </div>`;
                     }
                 }
-
-                // صفحة الماليات الشهرية
-                output += `
-                <div class="spread-container" id="month-fin-${m}">
-                    <div class="page-container">
-                        <div class="section-header" style="background:var(--salary-green)">الملخص المالي لشهر ${monthNames[m]}</div>
-                        <table class="finance-table">
-                            <thead><tr><th>التاريخ</th><th>البيان</th><th>صرف</th><th>دخل</th></tr></thead>
-                            <tbody>${Array(18).fill('<tr><td></td><td></td><td></td><td></td></tr>').join('')}</tbody>
-                        </table>
-                        <footer><div class="signature-fluid">Mo.Yasin</div></footer>
-                    </div>
-                    <div class="page-container">
-                        <div class="section-header">ملاحظات الميزانية والمشتريات</div>
-                        <div class="notes-area"><div class="lines"></div></div>
-                        <div style="padding:20px; display:flex; justify-content:center; flex-direction:column; align-items:center;">
-                            <p style="font-family:'Cairo'; font-weight:bold; color:var(--royal-navy)">تقويم الشهر</p>
-                            ${buildMiniCal(m)}
-                        </div>
-                        <footer><span>الفنون التشكيلية</span><span>2026</span></footer>
-                    </div>
-                </div>`;
             }
             area.innerHTML = output;
         }
