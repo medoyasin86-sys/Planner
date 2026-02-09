@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Planner 2026 — Professional Edition</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
   :root{
@@ -12,239 +12,221 @@
     --paper:#F3EAD7; --ink:#2f2a25; --line:#e1d6c2; --accent:#9a8364;
     --shadow: rgba(0,0,0,.12);
     --font:'Cairo',sans-serif;
-    --signature:'Aref Ruqaa', serif;
+    --sig-font: 'Dancing Script', cursive;
+    --tab-h:36px; --tab-r:10px; --tab-fs:.9em;
   }
-  html,body{margin:0;height:100%;background:#efe9da;color:var(--ink);font-family:var(--font);overflow-x:hidden}
-  
-  /* تنسيق الاسم الانسيابي (Signature Style) */
-  .signature-name {
-    font-family: var(--signature);
-    font-size: 1.4em;
-    color: var(--navy);
-    display: inline-block;
-    margin-top: 4px;
-    border-bottom: 1px solid var(--accent);
+  html,body{margin:0;height:100%;background:#efe9da;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-2;
+    background: radial-gradient(1200px 800px at 20% 0%, rgba(0,0,0,.06), transparent 60%), repeating-linear-gradient(90deg, rgba(0,0,0,.03), rgba(0,0,0,.03) 1px, transparent 1px, transparent 4px);
   }
 
-  .planner{ max-width:1800px; margin:0 auto; padding:20px; display:flex; align-items:stretch; gap:14px; }
-  .page{ flex:1; min-height:950px; background:var(--paper); border-radius:20px; position:relative; box-shadow:0 10px 28px var(--shadow); padding:15px; }
-  
-  /* الحلقات */
-  .binder{ width:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:150px; }
-  .ring{ width:50px; height:50px; border-radius:50%; background:linear-gradient(145deg, #e6e6e6, #ffffff); box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff; position:relative; }
-  .ring::after{ content:""; position:absolute; inset:10px; border-radius:50%; background:#dcdcdc; }
+  .planner{ max-width:1800px; margin:0 auto; padding:20px; display:flex; align-items:stretch; gap:14px; perspective:1800px; }
+  .page{ flex:1; min-height:1000px; background:var(--paper); border-radius:20px; position:relative; overflow:hidden; box-shadow:0 10px 28px var(--shadow), inset 0 0 0 1px rgba(0,0,0,.06); }
+  .page.right{ transform:rotateY(-1.5deg); }
+  .page.left{ transform:rotateY(1.5deg); }
 
-  .header{ display:flex; align-items:center; justify-content:space-between; padding-bottom:10px; border-bottom:1px solid var(--line); }
-  .logo{ font-weight:700; color:var(--accent); letter-spacing:2px }
+  /* التوقيع */
+  .signature-name { font-family: var(--sig-font); font-size: 1.4em; color: var(--navy); display: inline-block; margin-top: 4px; border-bottom: 1px solid var(--accent); }
 
-  .tabs{ display:flex; gap:8px; margin:15px 0; }
-  .tab{ padding:8px 15px; border-radius:10px; background:#e9dec4; cursor:pointer; font-size:.9em; border:1px solid var(--line); transition: .3s; }
-  .tab.active{ background:var(--navy); color:#fff; }
+  .binder{ width:68px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; position:relative; padding:60px 0; }
+  .ring{ width:55px; height:55px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #fff, #8b8c90); box-shadow: 0 8px 15px rgba(0,0,0,0.2); margin: 20px 0; }
+
+  .header{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid rgba(0,0,0,.08); }
+  .tabs{ display:flex; gap:8px; padding:10px 12px; }
+  .tab{ height:var(--tab-h); line-height:var(--tab-h); padding:0 12px; border-radius:var(--tab-r); background:#efe4ce; color:#453a2f; text-decoration:none; font-size:var(--tab-fs); cursor:pointer; display:flex; align-items:center; gap:6px; border:1px solid #decfb6; }
+  .tab.active { background: var(--accent); color: #fff; }
+
+  .content{ padding:12px 16px; display:flex; flex-direction:column; gap:12px }
+  .section{ background:rgba(255,255,255,.45); border:1px solid rgba(0,0,0,.08); border-radius:14px; display: none; }
+  .section.visible { display: block; }
+  .sec-h{ padding:10px 12px; font-weight:700; background:#f1e7d2; border-bottom:1px solid rgba(0,0,0,.08); display:flex; justify-content:space-between; align-items:center; }
+
+  /* التقاويم - منع التداخل */
+  .months{ display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; padding:10px; }
+  .mini{ background:#fff; border:1px solid #e6d8bf; border-radius:10px; overflow:hidden; }
+  .mini table{ width:100%; border-collapse:collapse; table-layout: fixed; }
+  .mini th, .mini td{ text-align:center; padding:5px 2px; font-size:0.85em; border: 1px solid #f0e6d4; overflow: hidden; }
+  .mini td.active-day:hover { background: var(--accent) !important; color: white !important; cursor: pointer; }
 
   /* جدول الحصص الأفقي */
-  .class-table {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 5px;
-    margin: 15px 0;
-    background: #fffdf5;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid var(--line);
-  }
-  .class-box {
-    border: 1px solid var(--line);
-    height: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 6px;
-  }
-  .class-box span { font-size: 0.75em; color: #888; margin-bottom: 5px; }
-  .class-input { width: 90%; border: none; border-bottom: 1px dashed #ccc; text-align: center; font-family: var(--font); }
+  .class-table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
+  .class-table td { border: 1px solid var(--line); height: 45px; background: #fff; text-align: center; }
 
   /* مساحة الملاحظات المريحة */
-  .notes-full {
-    min-height: 700px;
-    background-image: linear-gradient(var(--line) 1px, transparent 1px);
-    background-size: 100% 32px;
-    line-height: 32px;
-    padding: 0 10px;
-    outline: none;
-  }
+  .notes-area { min-height: 800px; background-image: linear-gradient(var(--line) 1px, transparent 1px); background-size: 100% 32px; padding: 10px; line-height: 32px; }
 
-  /* التقويمات */
-  .calendar-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:15px; }
-  .mini-cal { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; font-size:0.85em; }
-  .mini-cal h4 { margin:0 0 10px 0; text-align:center; color:var(--navy); }
-  .mini-cal table { width:100%; border-collapse:collapse; text-align:center; }
-  .mini-cal th { color:var(--accent); padding-bottom:5px; }
-  .mini-cal td { padding:5px 0; cursor:pointer; border-radius:4px; }
-  .mini-cal td:hover { background: #f0e6d2; }
-  .mini-cal td.today-mark { background: var(--ruby); color:#fff; }
-  .mini-cal td.event { font-weight:bold; text-decoration: underline; color: var(--emerald); }
+  .btn-back { background: var(--navy); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8em; }
+  
+  /* ألوان المناسبات */
+  .event-official{ background:var(--emerald) !important; color:#fff !important }
+  .event-religious{ background:var(--navy) !important; color:#fff !important }
+  .salary{ background:var(--ruby) !important; color:#fff !important }
 
-  /* زر الرجوع */
-  .back-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.8em;
-    display: none;
-  }
-
-  .hidden { display: none !important; }
-
-  @media (max-width: 1000px) { .planner { flex-direction: column; } }
+  @media (max-width:1200px){ .planner{ flex-direction:column } }
 </style>
 </head>
 <body>
 
 <div class="planner">
-  <div class="page" id="pageRight">
+  <div class="page right">
     <div class="header">
-      <div class="logo">2026 PLANNER</div>
+      <div class="logo">2026</div>
       <div style="text-align: left;">
-        <div style="font-weight:bold">مذكرة الحياة اليومية</div>
-        <div class="signature-name">أ/ محمد ياسين حلمي</div>
+        <div class="signature-name">Mohamed Yassin Helmy</div>
       </div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active" onclick="showSection('cal', 'Right')">التقويم</div>
-      <div class="tab" onclick="showSection('notes', 'Right')">ملاحظات حرة</div>
-      <button class="back-btn" id="backBtnRight" onclick="resetView('Right')"><i class="fa fa-rotate-left"></i> رجوع للتقويم</button>
+    <div class="tabs" id="tabsRight">
+      <div class="tab active" data-target="calRight"><i class="fa fa-calendar"></i><span>التقويم</span></div>
+      <div class="tab" data-target="notesSection"><i class="fa fa-pen"></i><span>ملاحظات</span></div>
     </div>
 
-    <div id="calSectionRight" class="calendar-grid">
+    <div class="content">
+      <div id="calRight" class="section visible">
+        <div class="sec-h">يناير - مارس 2026</div>
+        <div class="months" id="monthsJanMar"></div>
       </div>
 
-    <div id="daySectionRight" class="hidden">
-      <h3 id="dateTitleRight">التاريخ: ...</h3>
-      <div class="class-table">
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
+      <div id="dayDetailRight" class="section">
+        <div class="sec-h">
+          <span id="dateTitleRight">التاريخ</span>
+          <button class="btn-back" onclick="showSection('calRight', 'right')">عودة</button>
+        </div>
+        <div style="padding:15px">
+          <label>الجدول اليومي (حصص):</label>
+          <table class="class-table">
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="notes-area" style="min-height:300px; margin-top:15px;"></div>
+        </div>
       </div>
-      <div class="notes-full" contenteditable="true">أكتب مهامك الشخصية هنا...</div>
-    </div>
 
-    <div id="notesSectionRight" class="hidden">
-      <div class="notes-full" contenteditable="true" style="min-height: 800px;">هذه المساحة مخصصة لتدوين الملاحظات الطويلة...</div>
+      <div id="notesSection" class="section">
+        <div class="sec-h">ملاحظات حرة</div>
+        <div class="notes-area"></div>
+      </div>
     </div>
   </div>
 
-  <div class="binder"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="binder">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
 
-  <div class="page" id="pageLeft">
+  <div class="page left">
     <div class="header">
-      <div class="logo">TEACHER PRO</div>
-      <div style="text-align: left;">
-        <div style="font-weight:bold">مخطط المعلم الاحترافي</div>
-        <div class="signature-name">أ/ محمد ياسين حلمي</div>
+      <div>
+        <div class="signature-name">Teacher's Plan</div>
       </div>
+      <div class="logo">MYH</div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active" onclick="showSection('cal', 'Left')">التقويم</div>
-      <div class="tab" onclick="showSection('notes', 'Left')">تحضير الدروس</div>
-      <button class="back-btn" id="backBtnLeft" onclick="resetView('Left')"><i class="fa fa-rotate-left"></i> رجوع</button>
+    <div class="tabs" id="tabsLeft">
+      <div class="tab active" data-target="calLeft"><i class="fa fa-briefcase"></i><span>العمل</span></div>
+      <div class="tab" data-target="expSection"><i class="fa fa-wallet"></i><span>المصاريف</span></div>
     </div>
 
-    <div id="calSectionLeft" class="calendar-grid">
+    <div class="content">
+      <div id="calLeft" class="section visible">
+        <div class="sec-h">أبريل - يوليو 2026</div>
+        <div class="months" id="monthsAprJul"></div>
       </div>
 
-    <div id="daySectionLeft" class="hidden">
-      <h3 id="dateTitleLeft">تحضير يوم: ...</h3>
-      <div class="class-table">
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
-        <div class="class-box"><span>حصة</span><input class="class-input" type="text"></div>
+      <div id="dayDetailLeft" class="section">
+        <div class="sec-h">
+          <span id="dateTitleLeft">تحضير اليوم</span>
+          <button class="btn-back" onclick="showSection('calLeft', 'left')">عودة</button>
+        </div>
+        <div style="padding:15px">
+           <table class="class-table">
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="notes-area" style="min-height:500px; margin-top:15px;"></div>
+        </div>
       </div>
-      <div class="notes-full" contenteditable="true">أكتب تفاصيل التحضير والأهداف التعليمية هنا...</div>
-    </div>
-
-    <div id="notesSectionLeft" class="hidden">
-      <div class="notes-full" contenteditable="true">مساحة عمل إضافية...</div>
     </div>
   </div>
 </div>
 
 <script>
-const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
+const monthsNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو'];
+const daysNames = ['أ','ن','ث','ر','خ','ج','س'];
+
+// المواعيد المحدثة 2026
 const events = {
-  "2026-02-18": "بداية شهر رمضان المبارك",
-  "2026-03-20": "عيد الفطر السعيد (تقريبي)",
-  "2026-05-27": "عيد الأضحى المبارك (تقريبي)",
-  "2026-01-01": "رأس السنة الميلادية"
+  '2026-02-18': {t:'بداية رمضان (متوقع)', type:'religious'},
+  '2026-03-20': {t:'عيد الفطر (تقريبي)', type:'official'},
+  '2026-05-27': {t:'عيد الأضحى (تقريبي)', type:'official'},
+  '2026-01-23': {t:'الراتب', type:'salary'},
+  '2026-02-23': {t:'الراتب', type:'salary'},
+  '2026-03-23': {t:'الراتب', type:'salary'},
+  '2026-04-23': {t:'الراتب', type:'salary'},
+  '2026-05-21': {t:'الراتب', type:'salary'}, // تقديم بسبب الجمعة
+  '2026-06-23': {t:'الراتب', type:'salary'},
+  '2026-07-23': {t:'الراتب', type:'salary'}
 };
 
 function buildCalendar(monthIdx, containerId) {
   const year = 2026;
-  const container = document.getElementById(containerId);
-  const date = new Date(year, monthIdx, 1);
-  const monthName = months[monthIdx];
+  const firstDay = new Date(year, monthIdx, 1).getDay();
+  const lastDate = new Date(year, monthIdx + 1, 0).getDate();
   
-  let html = `<div class="mini-cal"><h4>${monthName}</h4><table><tr><th>ح</th><th>ن</th><th>ث</th><th>ر</th><th>خ</th><th>ج</th><th>س</th></tr><tr>`;
+  let html = `<div class="mini"><table><tr style="background:#f1e7d2"><th colspan="7">${monthsNames[monthIdx]}</th></tr><tr class="wk">`;
+  daysNames.forEach(d => html += `<th>${d}</th>`);
+  html += `</tr><tr>`;
+
+  for(let i=0; i<firstDay; i++) html += `<td style="background:#f9f9f9"></td>`;
   
-  for (let i = 0; i < date.getDay(); i++) html += "<td></td>";
-  
-  while (date.getMonth() === monthIdx) {
-    const day = date.getDate();
-    const dateKey = `${year}-${String(monthIdx+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    let cls = events[dateKey] ? "event" : "";
+  for(let d=1; d<=lastDate; d++) {
+    const dateStr = `${year}-${String(monthIdx+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    let cls = 'active-day';
+    let title = '';
+    if(events[dateStr]) {
+      cls += ' event-' + events[dateStr].type;
+      title = events[dateStr].t;
+    }
     
-    html += `<td class="${cls}" onclick="openDay('${dateKey}', '${monthIdx < 4 ? 'Right' : 'Left'}')">${day}</td>`;
-    if (date.getDay() === 6) html += "</tr><tr>";
-    date.setDate(day + 1);
+    html += `<td class="${cls}" title="${title}" onclick="openDay('${dateStr}', ${monthIdx < 3 ? "'right'" : "'left'"})">${d}</td>`;
+    if((d + firstDay) % 7 === 0) html += `</tr><tr>`;
   }
-  html += "</tr></table></div>";
-  container.innerHTML += html;
+  html += `</tr></table></div>`;
+  document.getElementById(containerId).innerHTML += html;
 }
 
-function openDay(dateStr, side) {
-  document.getElementById(`calSection${side}`).classList.add('hidden');
-  document.getElementById(`notesSection${side}`).classList.add('hidden');
-  document.getElementById(`daySection${side}`).classList.remove('hidden');
-  document.getElementById(`backBtn${side}`).style.display = 'inline-block';
-  document.getElementById(`dateTitle${side}`).innerText = "يوم: " + dateStr + (events[dateStr] ? " - " + events[dateStr] : "");
-}
-
-function resetView(side) {
-  document.getElementById(`calSection${side}`).classList.remove('hidden');
-  document.getElementById(`daySection${side}`).classList.add('hidden');
-  document.getElementById(`notesSection${side}`).classList.add('hidden');
-  document.getElementById(`backBtn${side}`).style.display = 'none';
-}
-
-function showSection(type, side) {
-  resetView(side);
-  if (type === 'notes') {
-    document.getElementById(`calSection${side}`).classList.add('hidden');
-    document.getElementById(`notesSection${side}`).classList.remove('hidden');
+function openDay(date, side) {
+  if(side === 'right') {
+    document.getElementById('dateTitleRight').textContent = date;
+    showSection('dayDetailRight', 'right');
+  } else {
+    document.getElementById('dateTitleLeft').textContent = date;
+    showSection('dayDetailLeft', 'left');
   }
 }
 
-// تشغيل التقويمات عند التحميل
-window.onload = () => {
-  for (let i = 0; i < 4; i++) buildCalendar(i, "calSectionRight");
-  for (let i = 4; i < 7; i++) buildCalendar(i, "calSectionLeft");
-};
+function showSection(id, side) {
+  const page = document.querySelector(`.page.${side}`);
+  page.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  
+  // تحديث حالة التبويب
+  const tabs = document.getElementById(side === 'right' ? 'tabsRight' : 'tabsLeft');
+  tabs.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('data-target') === id);
+  });
+}
+
+// تهيئة التبويبات
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.onclick = function() {
+    const side = this.closest('.page').classList.contains('right') ? 'right' : 'left';
+    showSection(this.getAttribute('data-target'), side);
+  };
+});
+
+// بناء الأشهر
+for(let i=0; i<3; i++) buildCalendar(i, 'monthsJanMar');
+for(let i=3; i<7; i++) buildCalendar(i, 'monthsAprJul');
+
 </script>
 
 </body>
