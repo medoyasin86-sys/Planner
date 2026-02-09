@@ -3,289 +3,465 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Planner A — Vintage Dual-Page</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<title>مخطط محمد ياسين حلمي — 2026</title>
+
+<!-- خط القاهرة -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
 <style>
-  :root{
-    --ruby:#9B1C31; --navy:#0B1A39; --emerald:#0F7A5F;
-    --paper:#F3EAD7; /* كريمي عتيق */
-    --ink:#2f2a25; --line:#e1d6c2; --accent:#9a8364;
-    --shadow: rgba(0,0,0,.12);
-    --font:'Cairo',sans-serif;
+/* ===================================================================
+   الأساسيات
+   =================================================================== */
+:root{
+  --ruby:#9B1C31; 
+  --navy:#0B1A39; 
+  --emerald:#0F7A5F;
+  --paper:#F3EAD7;
+  --ink:#2f2a25; 
+  --line:#e1d6c2; 
+  --accent:#9a8364;
+  --shadow: rgba(0,0,0,.12);
+  --font:'Cairo',sans-serif;
+}
 
-    --tab-h:36px; --tab-r:10px; --tab-fs:.9em; /* تبويبات مصغّرة */
-  }
-  html,body{margin:0;height:100%;background:#efe9da;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
-  /* خلفية ورق عتيق بنسيج خفيف */
-  body::before{
-    content:""; position:fixed; inset:0; z-index:-2;
-    background:
-      radial-gradient(1200px 800px at 20% 0%, rgba(0,0,0,.06), transparent 60%),
-      radial-gradient(900px 700px at 80% 100%, rgba(0,0,0,.05), transparent 60%),
-      linear-gradient(0deg, rgba(255,255,255,.2), rgba(255,255,255,0)),
-      repeating-linear-gradient(90deg, rgba(0,0,0,.03), rgba(0,0,0,.03) 1px, transparent 1px, transparent 4px);
-    filter: contrast(1.03) saturate(1.02);
-  }
+html,body{
+  margin:0;
+  background:#efe9da;
+  color:var(--ink);
+  font-family:var(--font);
+  -webkit-font-smoothing:antialiased;
+}
 
-  .planner{
-    max-width:1800px; margin:0 auto; padding:20px;
-    display:flex; align-items:stretch; gap:14px; perspective:1800px;
-  }
-  .page{
-    flex:1; min-height:920px; background:var(--paper);
-    border-radius:20px; position:relative; overflow:hidden;
-    box-shadow:0 10px 28px var(--shadow), inset 0 0 0 1px rgba(0,0,0,.06);
-  }
-  .page::before{
-    /* ملمس ورق + حواف داكنة خفيفة */
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background:
-      radial-gradient(1200px 800px at 50% 50%, rgba(255,255,255,.18), transparent 60%),
-      linear-gradient(180deg, rgba(0,0,0,.05), transparent 14%, transparent 86%, rgba(0,0,0,.05)),
-      repeating-linear-gradient(0deg, rgba(0,0,0,.025), rgba(0,0,0,.025) 2px, transparent 2px, transparent 4px);
-    mix-blend-mode:multiply;
-  }
-  .page.right{ transform:rotateY(-2.2deg); box-shadow:0 10px 28px var(--shadow), inset -18px 0 30px rgba(0,0,0,.08), inset 0 0 0 1px rgba(0,0,0,.06) }
-  .page.left{  transform:rotateY( 2.2deg); box-shadow:0 10px 28px var(--shadow), inset  18px 0 30px rgba(0,0,0,.08), inset 0 0 0 1px rgba(0,0,0,.06) }
+/* ===================================================================
+   خلفية الورق العتيق
+   =================================================================== */
+body::before{
+  content:""; 
+  position:fixed; 
+  inset:0; 
+  z-index:-1;
+  background:
+    radial-gradient(1200px 800px at 20% 0%, rgba(0,0,0,.06), transparent 60%),
+    radial-gradient(900px 700px at 80% 100%, rgba(0,0,0,.05), transparent 60%),
+    linear-gradient(0deg, rgba(255,255,255,.2), rgba(255,255,255,0)),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.03), rgba(0,0,0,.03) 1px, transparent 1px, transparent 4px);
+}
 
-  /* الحلقات + الثقوب */
-  .binder{
-    width:68px; min-width:68px; display:flex; flex-direction:column; justify-content:space-between; align-items:center;
-    position:relative; padding:60px 0;
-  }
-  .binder::before{
-    content:""; position:absolute; top:40px; bottom:40px; width:12px; left:50%; transform:translateX(-50%);
-    background: radial-gradient(closest-side, rgba(0,0,0,.16), rgba(0,0,0,.05) 60%, transparent 70%);
-    border-radius:12px; filter:blur(1px);
-  }
-  .binder::after{
-    content:""; position:absolute; top:46px; bottom:46px; width:8px; left:50%; transform:translateX(-50%);
-    background:radial-gradient(circle at 50% 8px, #6e6f73 2.5px, transparent 2.7px) repeat-y;
-    background-size:8px 24px; opacity:.7;
-  }
-  .ring{
-    width:60px; height:60px; border-radius:50%; position:relative; z-index:2;
-    background:radial-gradient(120% 120% at 30% 30%, #fff 0%, #e8e9ec 25%, #cfd1d6 45%, #a8a9ad 62%, #8b8c90 75%, #6e6f73 100%);
-    box-shadow: inset 6px 6px 10px rgba(255,255,255,.85), inset -6px -6px 12px rgba(0,0,0,.25), 0 8px 18px rgba(0,0,0,.15);
-  }
-  .ring::after{
-    content:""; position:absolute; inset:9px; border-radius:50%;
-    background:radial-gradient(120% 120% at 70% 70%, #f7f7f9 0%, #dfe1e6 45%, #b9bbc2 70%, #94969d 100%);
-    box-shadow:inset 3px 3px 6px rgba(255,255,255,.8), inset -3px -3px 6px rgba(0,0,0,.25);
-  }
-  .ring.top{ margin-bottom:80px }
-  .ring.bottom{ margin-top:80px }
+/* ===================================================================
+   تنسيق التخطيط العام
+   =================================================================== */
+.planner{
+  max-width:1800px;
+  margin:0 auto;
+  padding:20px;
+  display:flex;
+  gap:14px;
+  perspective:1800px;
+}
 
-  .header{
-    display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid rgba(0,0,0,.08);
-  }
-  .logo{ font-weight:700; color:#7f7466; letter-spacing:3px }
-  .htitle{ font-size:1.05em; font-weight:700 }
-  .hsub{ font-size:.9em; color:#6d6358 }
+/* ===================================================================
+   الصفحة اليمنى واليسرى
+   =================================================================== */
+.page{
+  flex:1;
+  min-height:920px;
+  background:var(--paper);
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 10px 28px var(--shadow), inset 0 0 0 1px rgba(0,0,0,.06);
+}
 
-  /* تبويبات مصغرة */
-  .tabs{ display:flex; gap:8px; padding:10px 12px; flex-wrap:wrap }
-  .tab{
-    height:var(--tab-h); line-height:var(--tab-h); padding:0 10px; border-radius:var(--tab-r);
-    background:#efe4ce; color:#453a2f; border:1px solid #decfb6; text-decoration:none; font-size:var(--tab-fs);
-    box-shadow:0 2px 6px rgba(0,0,0,.05); display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-  }
-  .tab i{ color:#8c7b67 }
-  .tab:hover{ filter:brightness(1.03) }
-  .tab.ruby{ background:#caa3a8; border-color:#b98d93; color:#3a2327 }
-  .tab.navy{ background:#c7cbd5; border-color:#b5bac8; color:#182233 }
-  .tab.emerald{ background:#c7d7d2; border-color:#b2c7c0; color:#0a3e34 }
-  .tab.white{ background:#e9e2d4; border-color:#d9ceb8; color:#2c2a27 }
-  .tab.marmo{ background:#e6dcc7; border-color:#d8c9ae; color:#3c3329 }
+.page.right{ transform:rotateY(-1.8deg); }
+.page.left{  transform:rotateY(1.8deg); }
 
-  /* محتوى الصفحة (نفس المكان) */
-  .content{ padding:12px 16px 18px; display:flex; flex-direction:column; gap:12px }
-  .section{ background:rgba(255,255,255,.45); border:1px solid rgba(0,0,0,.08); border-radius:14px; overflow:hidden; }
-  .section .sec-h{ padding:10px 12px; font-weight:700; background:#f1e7d2; border-bottom:1px solid rgba(0,0,0,.08) }
+/* ===================================================================
+   السلك الحلزوني الواقعي
+   =================================================================== */
+.spiral{
+  width:78px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-  /* التقويم المصغّر */
-  .months{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:10px }
-  .mini{
-    background:#fff8ea; border:1px solid #e6d8bf; border-radius:12px; overflow:hidden;
-    box-shadow:0 2px 6px rgba(0,0,0,.05);
-  }
-  .mini .mh{ background:#efe2c7; color:#3b2f22; padding:8px 10px; font-weight:700; font-size:.95em; border-bottom:1px solid #e0d2b6; }
-  .mini table{ width:100%; border-collapse:collapse; table-layout:fixed; }
-  .mini th, .mini td{ text-align:center; font-size:.9em; padding:6px 0; border-bottom:1px solid #f5ead6 }
-  .mini tr:last-child td{ border-bottom:none }
-  .mini .wk th{ background:#fbf5e7; color:#6f5f4a; font-weight:700 }
-  .mini .wk th.weekend{ background:#f1e6d7; color:#7f6a4f }
-  .mini td.empty{ background:#faf3e4; color:#c9bda7 }
-  .mini td.weekend{ background:#fcf6ea; color:#8a7458 }
-  .mini td.salary{ background:var(--ruby)!important; color:#fff!important; border-radius:8px; font-weight:700 }
-  .mini td.event-official{ background:var(--emerald); color:#fff; border-radius:8px }
-  .mini td.event-religious{ background:var(--navy); color:#fff; border-radius:8px }
-  .mini td.event-school{ background:#9a8364; color:#fff; border-radius:8px }
-  .legend{ padding:8px 12px; color:#584b3a; font-size:.92em }
-  .legend .dot{ display:inline-block; width:12px; height:12px; border-radius:3px; margin-inline:6px; vertical-align:middle }
+.coil{
+  width:22px;
+  height:100%;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #444 0px,
+      #444 7px,
+      #ccc 7px,
+      #ccc 15px
+    );
+  border-radius:12px;
+  box-shadow: inset 3px 0 4px rgba(0,0,0,.55);
+}
 
-  /* سطر مسطرة */
-  .ruled{
-    background-image:
-      linear-gradient(to bottom, transparent calc(100% - 1px), var(--line) calc(100% - 1px));
-    background-size:100% 34px; background-repeat:repeat; min-height:180px;
-    border-top:1px solid rgba(0,0,0,.06);
-  }
+/* ===================================================================
+   الترويسة
+   =================================================================== */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.logo{
+  font-weight:700;
+  color:#7f7466;
+  letter-spacing:3px;
+}
+.htitle{ font-size:1.1em; font-weight:700 }
+.hsub{   font-size:.9em; color:#6d6358 }
 
-  /* التحضير اليومي — مربعات خالية مسطرة */
-  .prep-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:10px }
-  .prep-box{
-    background:#fffdf5; border:1px solid #eadfca; border-radius:12px; min-height:120px; position:relative; overflow:hidden;
-  }
-  .prep-box::before{
-    content:""; position:absolute; inset:0;
-    background-image:linear-gradient(to bottom, transparent 33px, var(--line) 34px);
-    background-size:100% 34px; mix-blend-mode:multiply; opacity:.9;
-  }
+/* ===================================================================
+   التبويبات الرئيسية
+   =================================================================== */
+.tabs{
+  display:flex;
+  gap:8px;
+  padding:10px 12px;
+}
+.tab{
+  background:#efe4ce;
+  border:1px solid #decfb6;
+  border-radius:10px;
+  padding:6px 10px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:.9em;
+  text-decoration:none;
+  color:#453a2f;
+}
+.tab:hover{ filter:brightness(1.03); }
+.tab.ruby{ background:#caa3a8; color:#2d1a1f }
+.tab.navy{ background:#c7cbd5; color:#111a2e }
+.tab.emerald{ background:#c7d7d2; color:#0a3e34 }
+.tab.marmo{ background:#e6dcc7 }
 
-  /* مهام */
-  .checklist{ padding:6px 10px }
-  .checklist .item{ display:flex; align-items:center; gap:10px; height:34px; border-bottom:1px solid var(--line) }
-  .checklist input[type=checkbox]{ transform:scale(1.2); accent-color:var(--ruby) }
+/* ===================================================================
+   تبويبات جانبية للشهور (الصفحة اليمنى)
+   =================================================================== */
+.side-months{
+  position:absolute;
+  top:130px;
+  right:-35px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:10;
+}
+.side-months a{
+  writing-mode:vertical-rl;
+  padding:6px 4px;
+  background:#e6dcc7;
+  border:1px solid #d3c4a8;
+  border-radius:8px;
+  color:#3c3329;
+  font-size:.82em;
+  text-align:center;
+  text-decoration:none;
+}
+.side-months a:hover{
+  background:#d8c7a8;
+}
 
-  /* المصاريف الشهرية / 4 أسابيع */
-  .expense{ padding:10px }
-  .exp-months, .exp-weeks{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px }
-  .chip{
-    background:#efe4ce; border:1px solid #decfb6; color:#453a2f; border-radius:10px; padding:6px 10px; cursor:pointer; font-size:.9em;
-  }
-  .chip.active{ background:#d7c8ac; font-weight:700 }
-  .ledger{ width:100%; border:1px solid #e6d8bf; border-radius:12px; overflow:hidden; }
-  .ledger thead th{ background:#efe2c7; color:#3b2f22; padding:10px; border-bottom:1px solid #e0d2b6 }
-  .ledger td{ background:#fffdf5; padding:6px 8px; border-bottom:1px solid #f0e6d4; border-right:1px solid #f3ead7; text-align:right }
-  .ledger td:last-child{ border-right:none }
-  .ledger tr:last-child td{ border-bottom:none }
+/* ===================================================================
+   المحتوى
+   =================================================================== */
+.content{ padding:12px; display:flex; flex-direction:column; gap:12px }
+.section{
+  background:rgba(255,255,255,.45);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:14px;
+}
+.sec-h{
+  padding:10px 12px;
+  background:#f1e7d2;
+  font-weight:700;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
 
-  /* زر اللغة */
-  .lang-btn{
-    position:fixed; top:16px; inset-inline-end:18px; z-index:5;
-    background:var(--navy); color:#fff; border:none; border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:700;
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
-  }
+/* ===================================================================
+   التقويم المصغّر
+   =================================================================== */
+.months{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:10px;
+}
+.mini{
+  background:#fff8ea;
+  border:1px solid #e6d8bf;
+  border-radius:12px;
+  overflow:hidden;
+}
+.mini .mh{
+  background:#efe2c7;
+  padding:8px;
+  font-weight:700;
+  border-bottom:1px solid #e0d2b6;
+  text-align:center;
+}
+.mini table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.mini th,.mini td{
+  text-align:center;
+  height:32px;
+  border-bottom:1px solid #f3e7d4;
+}
+.mini td.empty{ background:#f7f0e2; color:#c7b7a2 }
+.mini td.weekend{ background:#fcf6ea; color:#8a7458 }
+.mini td.salary{ background:var(--ruby)!important; color:#fff!important; border-radius:6px; }
+.mini td.event-official{ background:var(--emerald); color:#fff; border-radius:6px }
+.mini td.event-religious{ background:var(--navy); color:#fff; border-radius:6px }
+.mini td.event-school{ background:#9a8364; color:#fff; border-radius:6px }
 
-  @media (max-width:1200px){
-    .planner{ flex-direction:column }
-    .binder{ height:68px; width:auto; min-width:unset; padding:0; flex-direction:row }
-    .ring.top,.ring.bottom{ margin:20px }
-  }
-  @media (max-width:768px){
-    .months{ grid-template-columns:1fr 1fr }
-  }
+/* ===================================================================
+   سطر مسطرة
+   =================================================================== */
+.ruled{
+  background-image:
+    linear-gradient(to bottom, transparent calc(100% - 1px), var(--line) calc(100% - 1px));
+  background-size:100% 34px;
+  min-height:200px;
+}
+
+/* ===================================================================
+   مربعات التحضير
+   =================================================================== */
+.prep-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.prep-box{
+  background:#fffdf5;
+  border:1px solid #eadfca;
+  border-radius:12px;
+  min-height:120px;
+  position:relative;
+}
+.prep-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:linear-gradient(to bottom, transparent 34px, var(--line) 35px);
+  background-size:100% 34px;
+  opacity:.9;
+}
+
+/* ===================================================================
+   قائمة المهام
+   =================================================================== */
+.checklist{
+  padding:10px;
+}
+.item{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  height:34px;
+  border-bottom:1px solid var(--line);
+}
+.item input{
+  transform:scale(1.2);
+  accent-color:var(--ruby);
+}
+
+/* ===================================================================
+   جدول المصاريف الجديد
+   =================================================================== */
+.simple-ledger{
+  width:100%;
+  border:1px solid #d8c9ae;
+  border-radius:12px;
+}
+.simple-ledger th{
+  background:#efe2c7;
+  padding:10px;
+  border-bottom:1px solid #d8c9ae;
+}
+.simple-ledger td{
+  height:34px;
+  background:#fffdf5;
+  border-bottom:1px solid #e6dcc3;
+  padding:6px;
+}
+
+/* ===================================================================
+   جدول الحصص
+   =================================================================== */
+.teacher-periods{
+  position:absolute;
+  top:120px;
+  left:12px;
+  width:145px;
+}
+.period-table{
+  width:100%;
+  border:1px solid #d8c9ae;
+  border-radius:12px;
+  background:#faf4e6;
+}
+.period-table th{
+  background:#efe2c7;
+  padding:6px;
+}
+.period-table td{
+  border-bottom:1px solid #e6dcc3;
+  height:30px;
+  padding:4px;
+}
+
+/* ===================================================================
+   استجابة الشاشات
+   =================================================================== */
+@media(max-width:1200px){
+  .planner{ flex-direction:column }
+  .spiral{ height:80px; width:100%; }
+}
 </style>
 </head>
-<body>
-<button id="langToggle" class="lang-btn">English</button>
 
+<body>
+
+<!-- ===================================================================
+     تخطيط الصفحتين مع السلك الحلزوني
+     =================================================================== -->
 <div class="planner">
-  <!-- يمين (شخصي) -->
+
+  <!-- ===================== الصفحة اليمنى ===================== -->
   <div class="page right" id="rightPage">
+
+    <!-- تبويبات جانبية للشهور -->
+    <div class="side-months">
+      <a href="#m1">يناير</a>
+      <a href="#m2">فبراير</a>
+      <a href="#m3">مارس</a>
+    </div>
+
     <div class="header">
       <div class="logo">MYH</div>
       <div>
-        <div class="htitle" id="pTitle">صفحة الحياة اليومية الشخصية</div>
-        <div class="hsub" id="pSub">أ/ محمد ياسين حلمي — مخطط 2026</div>
+        <div class="htitle">صفحة الحياة اليومية</div>
+        <div class="hsub">أ/ محمد ياسين حلمي — مخطط 2026</div>
       </div>
     </div>
 
     <div class="tabs" id="rightTabs">
-      <a class="tab ruby" data-target="todaySection"><i class="fa fa-calendar-day"></i><span>اليوم</span></a>
-      <a class="tab white" data-target="notesSection"><i class="fa fa-pen"></i><span>ملاحظات</span></a>
-      <a class="tab emerald" data-target="tasksSection"><i class="fa fa-list-check"></i><span>مهام</span></a>
+      <a class="tab ruby" data-target="todaySection"><i class="fa fa-calendar-day"></i>اليوم</a>
+      <a class="tab navy" data-target="notesSection"><i class="fa fa-pen"></i>ملاحظات</a>
+      <a class="tab emerald" data-target="tasksSection"><i class="fa fa-list-check"></i>مهام</a>
     </div>
 
     <div class="content">
-      <!-- تقاويم يناير-مارس -->
+
+      <!-- تقاويم -->
       <div class="section">
-        <div class="sec-h" id="rightMonthsHead">يناير - مارس 2026</div>
+        <div class="sec-h">يناير - مارس 2026</div>
         <div class="months" id="monthsRight"></div>
-        <div class="legend">
-          <span class="dot" style="background:var(--emerald)"></span><span id="legOfficial">إجازة/مناسبة رسمية</span> &nbsp;
-          <span class="dot" style="background:var(--navy)"></span><span id="legReligious">مناسبة دينية</span> &nbsp;
-          <span class="dot" style="background:#9a8364"></span><span id="legSchool">مدرسي/أكاديمي</span> &nbsp;
-          <span class="dot" style="background:var(--ruby)"></span><span id="legSalary">يوم الراتب</span>
-        </div>
       </div>
 
-      <!-- اليوم (يظهر داخل نفس الصفحة) -->
+      <!-- اليوم -->
       <div class="section" id="todaySection">
-        <div class="sec-h" id="todayHead"><i class="fa fa-calendar"></i> اليوم — (اختر تاريخًا من التقويم)</div>
+        <div class="sec-h" id="todayHead">
+          <i class="fa fa-calendar"></i> اليوم — (اختر تاريخًا)
+        </div>
+
         <div style="padding:10px">
-          <!-- التحضير البسيط -->
-          <div class="prep-grid" id="prepGridRight">
+          <div class="prep-grid">
             <div class="prep-box"></div><div class="prep-box"></div>
             <div class="prep-box"></div><div class="prep-box"></div>
             <div class="prep-box"></div><div class="prep-box"></div>
             <div class="prep-box"></div><div class="prep-box"></div>
           </div>
-          <!-- ملاحظات مسطرة -->
-          <div class="ruled" style="border-radius:12px; border:1px solid #eadfca;"></div>
-          <!-- مناسبة اليوم -->
-          <div id="eventBarRight" style="margin-top:10px; padding:10px 12px; background:#f7efdf; border:1px solid #eadfca; border-radius:10px; color:#5a4d3b; display:none"></div>
+
+          <div class="ruled"></div>
+
+          <div id="eventBarRight" style="margin-top:10px; padding:10px; background:#f7efdf; border:1px solid #eadfca; border-radius:10px; display:none"></div>
         </div>
       </div>
 
       <!-- ملاحظات -->
       <div class="section" id="notesSection" style="display:none">
-        <div class="sec-h" id="notesHead">ملاحظات شخصية</div>
-        <div class="ruled" style="min-height:340px"></div>
+        <div class="sec-h">ملاحظات</div>
+        <div class="ruled"></div>
       </div>
 
       <!-- مهام -->
       <div class="section" id="tasksSection" style="display:none">
-        <div class="sec-h" id="tasksHead">مهام اليوم</div>
+        <div class="sec-h">مهام اليوم</div>
         <div class="checklist" id="personalTasks"></div>
         <div style="padding:10px">
-          <button id="addTaskR" class="chip">+ إضافة سطر</button>
-          <button id="clearTaskR" class="chip">تفريغ القائمة</button>
+          <button onclick="addItem(personalTasks)" class="tab marmo">+ إضافة</button>
+          <button onclick="personalTasks.innerHTML=''" class="tab marmo">مسح</button>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- الفاصل الحلقي -->
-  <div class="binder" aria-hidden="true">
-    <div class="ring top"></div><div class="ring bottom"></div>
-  </div>
+  <!-- ===================== السلك الحلزوني ===================== -->
+  <div class="spiral"><div class="coil"></div></div>
 
-  <!-- يسار (مهني) -->
+  <!-- ===================== الصفحة اليسرى ===================== -->
   <div class="page left" id="leftPage">
+
+    <!-- جدول الحصص -->
+    <div class="teacher-periods">
+      <table class="period-table">
+        <thead><tr><th>الحصة</th><th>الصف</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td></tr>
+          <tr><td>2</td><td></td></tr>
+          <tr><td>3</td><td></td></tr>
+          <tr><td>4</td><td></td></tr>
+          <tr><td>5</td><td></td></tr>
+          <tr><td>6</td><td></td></tr>
+          <tr><td>7</td><td></td></tr>
+          <tr><td>8</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="header">
       <div class="logo">MYH</div>
       <div>
-        <div class="htitle" id="tTitle">مركز المعلم الاحترافي</div>
-        <div class="hsub" id="tSub">أ/ محمد ياسين حلمي — مخطط معلم الفنون 2026</div>
+        <div class="htitle">مركز المعلم الاحترافي</div>
+        <div class="hsub">مخطط المعلم — 2026</div>
       </div>
     </div>
 
     <div class="tabs" id="leftTabs">
-      <a class="tab navy" data-target="prepSection"><i class="fa fa-palette"></i><span>التحضير</span></a>
-      <a class="tab emerald" data-target="proTasksSection"><i class="fa fa-check"></i><span>المهام</span></a>
-      <a class="tab marmo" data-target="expensesSection"><i class="fa fa-wallet"></i><span>المصاريف</span></a>
+      <a class="tab navy" data-target="prepSection"><i class="fa fa-palette"></i>التحضير</a>
+      <a class="tab emerald" data-target="proTasksSection"><i class="fa fa-check"></i>المهام</a>
+      <a class="tab marmo" data-target="expensesSection"><i class="fa fa-wallet"></i>المصاريف</a>
     </div>
 
     <div class="content">
-      <!-- تقاويم أبريل-يونيو -->
+
+      <!-- تقاويم -->
       <div class="section">
-        <div class="sec-h" id="leftMonthsHead">أبريل - يونيو 2026</div>
+        <div class="sec-h">أبريل - يونيو 2026</div>
         <div class="months" id="monthsLeft"></div>
-        <div class="legend">
-          <span class="dot" style="background:var(--emerald)"></span><span id="leg2Official">إجازة/مناسبة رسمية</span> &nbsp;
-          <span class="dot" style="background:var(--navy)"></span><span id="leg2Religious">مناسبة دينية</span> &nbsp;
-          <span class="dot" style="background:#9a8364"></span><span id="leg2School">مدرسي/أكاديمي</span> &nbsp;
-          <span class="dot" style="background:var(--ruby)"></span><span id="leg2Salary">يوم الراتب</span>
-        </div>
       </div>
 
-      <!-- التحضير (مربعات مسطرة فقط) -->
+      <!-- التحضير -->
       <div class="section" id="prepSection">
-        <div class="sec-h" id="prepHead">التحضير اليومي</div>
-        <div class="prep-grid" id="prepGridLeft" style="padding:10px">
+        <div class="sec-h">التحضير اليومي</div>
+        <div class="prep-grid" style="padding:10px">
           <div class="prep-box"></div><div class="prep-box"></div>
           <div class="prep-box"></div><div class="prep-box"></div>
           <div class="prep-box"></div><div class="prep-box"></div>
@@ -295,311 +471,253 @@
 
       <!-- مهام مهنية -->
       <div class="section" id="proTasksSection" style="display:none">
-        <div class="sec-h" id="proTasksHead">المهام المهنية</div>
+        <div class="sec-h">المهام المهنية</div>
         <div class="checklist" id="proTasks"></div>
         <div style="padding:10px">
-          <button id="addTaskL" class="chip">+ إضافة سطر</button>
-          <button id="clearTaskL" class="chip">تفريغ القائمة</button>
+          <button onclick="addItem(proTasks)" class="tab marmo">+ إضافة</button>
+          <button onclick="proTasks.innerHTML=''" class="tab marmo">مسح</button>
         </div>
       </div>
 
-      <!-- المصاريف الشهرية (4 أسابيع ثابتة) -->
+      <!-- المصاريف -->
       <div class="section" id="expensesSection" style="display:none">
-        <div class="sec-h" id="expHead">المصاريف — صفحات أسبوعية</div>
-        <div class="expense">
-          <div class="exp-months" id="expMonths"></div>
-          <div class="exp-weeks" id="expWeeks"></div>
-          <div id="ledgerWrap"></div>
-        </div>
+        <div class="sec-h">المصاريف</div>
+        <div id="ledgerWrap" style="padding:10px"></div>
       </div>
 
-      <!-- أسفل: شريط مناسبة اليوم للمهنية أيضًا -->
-      <div id="eventBarLeft" style="margin-top:10px; padding:10px 12px; background:#f7efdf; border:1px solid #eadfca; border-radius:10px; color:#5a4d3b; display:none"></div>
+      <div id="eventBarLeft" style="margin-top:10px; padding:10px; background:#f7efdf; border:1px solid #eadfca; border-radius:10px; display:none"></div>
+
     </div>
   </div>
 </div>
 
 <script>
-/* ================== إعدادات عامة + i18n ================== */
-const START = new Date(2026, 0, 25); // 25 Jan 2026
-const END   = new Date(2026, 5, 30); // 30 Jun 2026 (تصحيح يونيو)
-const MONTHS_RANGE = [0,1,2,3,4,5]; // Jan..Jun
+/* ===================================================================
+   نطاق التواريخ
+   =================================================================== */
+const START = new Date(2026,0,25);
+const END   = new Date(2026,5,30);
 
-const i18n = {
-  ar:{
-    dir:'rtl', langBtn:'English',
-    months:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
-    wshort:['أحد','اثن','ثلا','أرب','خمي','جمع','سبت'],
-    rightH:'يناير - مارس 2026', leftH:'أبريل - يونيو 2026',
-    leg:{off:'إجازة/مناسبة رسمية', rel:'مناسبة دينية', sch:'مدرسي/أكاديمي', sal:'يوم الراتب'},
-    pTitle:'صفحة الحياة اليومية الشخصية', pSub:'أ/ محمد ياسين حلمي — مخطط 2026',
-    tTitle:'مركز المعلم الاحترافي', tSub:'أ/ محمد ياسين حلمي — مخطط معلم الفنون 2026',
-    tabsR:{today:'اليوم', notes:'ملاحظات', tasks:'مهام'},
-    tabsL:{prep:'التحضير', pro:'المهام', exp:'المصاريف'},
-    todayHead:'اليوم — (اختر تاريخًا من التقويم)', notesHead:'ملاحظات شخصية', tasksHead:'مهام اليوم',
-    prepHead:'التحضير اليومي', proTasksHead:'المهام المهنية', expHead:'المصاريف — صفحات أسبوعية',
-    add:'+ إضافة سطر', clear:'تفريغ القائمة',
-    ledger:{balance:'الرصيد', item:'البند', amount:'المبلغ', method:'وسيلة الدفع', notes:'ملاحظات', card:'بطاقة', wallet:'محفظة'},
-    week:'أسبوع', month:'شهر', noEvent:'لا توجد مناسبة لهذا اليوم.'
-  },
-  en:{
-    dir:'ltr', langBtn:'العربية',
-    months:['January','February','March','April','May','June','July','August','September','October','November','December'],
-    wshort:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-    rightH:'Jan – Mar 2026', leftH:'Apr – Jun 2026',
-    leg:{off:'Official Holiday/Event', rel:'Religious', sch:'School/Academic', sal:'Salary Day'},
-    pTitle:'Personal Daily Page', pSub:'Mr. Mohamed Yassin Helmy — Planner 2026',
-    tTitle:'Teacher’s Pro Center', tSub:'Mr. Mohamed Yassin Helmy — Art Teacher Planner 2026',
-    tabsR:{today:'Today', notes:'Notes', tasks:'Tasks'},
-    tabsL:{prep:'Preparation', pro:'Work Tasks', exp:'Expenses'},
-    todayHead:'Today — (Pick a date from calendar)', notesHead:'Personal Notes', tasksHead:'Today’s Tasks',
-    prepHead:'Daily Preparation', proTasksHead:'Professional Tasks', expHead:'Expenses — Weekly Pages',
-    add:'+ Add Line', clear:'Clear List',
-    ledger:{balance:'Balance', item:'Item', amount:'Amount', method:'Payment', notes:'Notes', card:'Card', wallet:'Wallet'},
-    week:'Week', month:'Month', noEvent:'No event for this date.'
-  }
-};
-let lang = localStorage.getItem('plannerLang') || 'ar';
-
-/* ================== مناسبات 2026 (قابلة للتحديث) ================== */
-const events = {
-  '2026-01-01': {title_ar:'رأس السنة الميلادية', title_en:'New Year’s Day', type:'official'},
-  '2026-01-27': {title_ar:'الإسراء والمعراج (تقريبي)', title_en:'Isra and Mi’raj (approx.)', type:'religious'},
-  '2026-03-20': {title_ar:'بداية رمضان (تقريبي)', title_en:'Start of Ramadan (approx.)', type:'religious'},
-  '2026-03-29': {title_ar:'عيد الفطر (تقريبي)', title_en:'Eid Al-Fitr (approx.)', type:'official'},
-  '2026-03-30': {title_ar:'إجازة عيد الفطر (تقريبي)', title_en:'Eid Al-Fitr Holiday (approx.)', type:'official'},
-  '2026-06-05': {title_ar:'وقفة عرفة (تقريبي)', title_en:'Arafat Day (approx.)', type:'religious'},
-  '2026-06-06': {title_ar:'عيد الأضحى (تقريبي)', title_en:'Eid Al-Adha (approx.)', type:'official'},
-  '2026-06-07': {title_ar:'إجازة عيد الأضحى (تقريبي)', title_en:'Eid Al-Adha Holiday (approx.)', type:'official'},
-  '2026-09-15': {title_ar:'المولد النبوي (تقريبي)', title_en:'Prophet’s Birthday (approx.)', type:'religious'},
-  '2026-11-18': {title_ar:'العيد الوطني العماني', title_en:'Oman National Day', type:'official'},
-  // أمثلة مدرسية:
-  '2026-02-07': {title_ar:'فعالية مدرسية (مثال)', title_en:'School Activity (sample)', type:'school'},
-  '2026-04-15': {title_ar:'امتحان منتصف الفصل (مثال)', title_en:'Midterm Exam (sample)', type:'school'}
-};
-
-function inRange(d){
-  return d >= START && d <= END;
-}
+function inRange(d){ return d>=START && d<=END; }
 function ymd(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+
+/* ===================================================================
+   تعديل راتب (23 بشرط الجمعة/السبت)
+   =================================================================== */
 function salaryDay(y,m){
-  const d = new Date(y,m,23);
-  const w = d.getDay(); // 0 Sun..6 Sat
-  return (w===5 || w===6) ? 21 : 23; // Fri/Sat -> 21
+  const d=new Date(y,m,23);
+  const w=d.getDay();
+  return (w===5||w===6)?21:23;
 }
 
-/* ================== بناء التقويم ================== */
-function buildMonth(y,m,pack){
-  const wrap = document.createElement('div'); wrap.className='mini';
-  const head = document.createElement('div'); head.className='mh'; head.textContent = `${pack.months[m]} ${y}`;
-  const table = document.createElement('table');
-  const trh = document.createElement('tr'); trh.className='wk';
-  pack.wshort.forEach((w,i)=>{ const th=document.createElement('th'); th.textContent=w; if(i===5||i===6) th.classList.add('weekend'); trh.appendChild(th); });
+/* ===================================================================
+   مناسبات 2026 بعد التعديل
+   =================================================================== */
+const events = {
+  "2026-01-01": {title:"رأس السنة الميلادية", type:"official"},
+
+  /* رمضان */
+  "2026-02-18": {title:"بداية رمضان", type:"religious"},
+
+  /* عيد الفطر حسب التعديل */
+  "2026-03-19": {title:"عيد الفطر", type:"official"},
+  "2026-03-20": {title:"إجازة عيد الفطر", type:"official"},
+
+  /* عيد الأضحى */
+  "2026-05-27": {title:"وقفة عرفة", type:"religious"},
+  "2026-05-28": {title:"عيد الأضحى", type:"official"},
+  "2026-05-29": {title:"إجازة عيد الأضحى", type:"official"},
+
+  /* مناسبات إضافية */
+  "2026-11-18": {title:"العيد الوطني العماني", type:"official"}
+};
+
+/* ===================================================================
+   بناء التقويم
+   =================================================================== */
+function buildMonth(y,m){
+  const wrap=document.createElement('div'); wrap.className='mini';
+  const head=document.createElement('div'); head.className='mh'; head.textContent=`${["يناير","فبراير","مارس","أبريل","مايو","يونيو"][m]} ${y}`;
+  const table=document.createElement('table');
+
+  const trh=document.createElement('tr');
+  ["أحد","اثن","ثلا","أرب","خمي","جمع","سبت"].forEach((txt, i)=>{
+    const th=document.createElement('th');
+    th.textContent=txt;
+    if(i===5||i===6) th.classList.add('weekend');
+    trh.appendChild(th);
+  });
+
   table.appendChild(trh);
 
-  const first = new Date(y,m,1), last = new Date(y,m+1,0);
-  let dow = first.getDay(); // 0 Sun
-  let tr = document.createElement('tr');
+  const first=new Date(y,m,1);
+  const last=new Date(y,m+1,0);
+  let dow=first.getDay();
+  let tr=document.createElement('tr');
 
-  for(let i=0;i<dow;i++){ const td=document.createElement('td'); td.className='empty'; tr.appendChild(td); }
+  for(let i=0;i<dow;i++){
+    const td=document.createElement('td'); 
+    td.className='empty';
+    tr.appendChild(td);
+  }
 
-  const sDay = salaryDay(y,m);
+  const sDay=salaryDay(y,m);
+
   for(let d=1; d<=last.getDate(); d++){
     if(dow===7){ table.appendChild(tr); tr=document.createElement('tr'); dow=0; }
-    const td=document.createElement('td'); td.textContent=d;
-    const cur = new Date(y,m,d);
-    const key = ymd(y,m,d);
-    const w = cur.getDay(); if(w===5||w===6) td.classList.add('weekend');
 
-    // حدّ النطاق (25 يناير — 30 يونيو)
+    const td=document.createElement('td');
+    td.textContent=d;
+
+    const cur=new Date(y,m,d);
+    const key=ymd(y,m,d);
+    const w=cur.getDay();
+
+    if(w===5||w===6) td.classList.add('weekend');
+
     if(!inRange(cur)){
-      td.classList.add('empty'); td.style.opacity=.45; td.style.cursor='not-allowed';
-      tr.appendChild(td); dow++; continue;
+      td.classList.add('empty');
+      td.style.opacity=.45;
+    } else {
+      if(events[key]){
+        const t=events[key].type;
+        if(t==="official") td.classList.add('event-official');
+        else if(t==="religious") td.classList.add('event-religious');
+      }
+      if(d===sDay) td.classList.add('salary');
+      td.style.cursor='pointer';
+      td.onclick=()=>openDay(y,m,d);
     }
 
-    // مناسبات
-    if(events[key]){
-      const t=events[key].type;
-      if(t==='official') td.classList.add('event-official');
-      else if(t==='religious') td.classList.add('event-religious');
-      else if(t==='school') td.classList.add('event-school');
-      td.title = (lang==='ar'? events[key].title_ar : events[key].title_en);
-    }
-    // راتب
-    if(d===sDay){ td.classList.add('salary'); td.title = (td.title? td.title+' • ' : '') + (lang==='ar'?'يوم الراتب':'Salary Day'); }
-
-    td.style.cursor='pointer';
-    td.addEventListener('click', ()=> openDay(y,m,d));
-    tr.appendChild(td); dow++;
+    tr.appendChild(td);
+    dow++;
   }
-  if(dow>0 && dow<7){ for(let i=dow;i<7;i++){ const td=document.createElement('td'); td.className='empty'; tr.appendChild(td); } }
-  table.appendChild(tr);
 
+  if(dow>0 && dow<7){
+    for(let i=dow;i<7;i++){
+      const td=document.createElement('td'); td.className='empty';
+      tr.appendChild(td);
+    }
+  }
+
+  table.appendChild(tr);
   wrap.appendChild(head); wrap.appendChild(table);
   return wrap;
 }
 
+/* ===================================================================
+   عرض التقويم
+   =================================================================== */
 function renderCalendars(){
-  const pack=i18n[lang];
-  document.getElementById('rightMonthsHead').textContent=pack.rightH;
-  document.getElementById('leftMonthsHead').textContent =pack.leftH;
-  const right=document.getElementById('monthsRight'); const left=document.getElementById('monthsLeft');
+  const right=document.getElementById('monthsRight');
+  const left=document.getElementById('monthsLeft');
+
   right.innerHTML=''; left.innerHTML='';
 
-  // يمين: يناير-مارس / يسار: أبريل-يونيو
-  [0,1,2].forEach(m=> right.appendChild(buildMonth(2026,m,pack)));
-  [3,4,5].forEach(m=> left.appendChild(buildMonth(2026,m,pack)));
-
-  // أساطير
-  document.getElementById('legOfficial').textContent=pack.leg.off;
-  document.getElementById('legReligious').textContent=pack.leg.rel;
-  document.getElementById('legSchool').textContent=pack.leg.sch;
-  document.getElementById('legSalary').textContent=pack.leg.sal;
-  document.getElementById('leg2Official').textContent=pack.leg.off;
-  document.getElementById('leg2Religious').textContent=pack.leg.rel;
-  document.getElementById('leg2School').textContent=pack.leg.sch;
-  document.getElementById('leg2Salary').textContent=pack.leg.sal;
+  [0,1,2].forEach(m=> right.appendChild(buildMonth(2026,m)));
+  [3,4,5].forEach(m=> left.appendChild(buildMonth(2026,m)));
 }
 
-/* ================== صفحة اليوم + عرض المناسبة ================== */
+/* ===================================================================
+   فتح يوم
+   =================================================================== */
 function openDay(y,m,d){
-  const pack=i18n[lang];
-  const dt = new Date(y,m,d);
-  const head = document.getElementById('todayHead');
-  const locale = (lang==='ar' ? 'ar-EG' : 'en-US');
-  const dayName = dt.toLocaleDateString(locale,{weekday:'long'});
-  const dateStr = dt.toLocaleDateString(locale,{year:'numeric',month:'long',day:'numeric'});
-  head.innerHTML = `<i class="fa fa-calendar"></i> ${dayName} — ${dateStr}`;
+  const dt=new Date(y,m,d);
+  const dayName=dt.toLocaleDateString('ar-EG',{weekday:'long'});
+  const dateStr=dt.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('todayHead').innerHTML = `<i class='fa fa-calendar'></i> ${dayName} — ${dateStr}`;
 
-  const key = ymd(y,m,d);
-  const evR = document.getElementById('eventBarRight');
-  const evL = document.getElementById('eventBarLeft');
-  const title = events[key] ? (lang==='ar'?events[key].title_ar:events[key].title_en) : pack.noEvent;
-  [evR,evL].forEach(ev=>{
-    ev.textContent = title; ev.style.display='block';
-  });
+  const key=ymd(y,m,d);
+  const title = events[key]?events[key].title:"لا توجد مناسبة لهذا اليوم.";
+
+  const ev1=document.getElementById('eventBarRight');
+  const ev2=document.getElementById('eventBarLeft');
+  ev1.textContent=title; ev1.style.display='block';
+  ev2.textContent=title; ev2.style.display='block';
 }
 
-/* ================== تبويبات نفس المكان ================== */
-function setupTabs(containerId){
-  const cont = document.getElementById(containerId);
-  cont?.addEventListener('click', (e)=>{
-    const a = e.target.closest('.tab'); if(!a) return;
-    const targ = a.getAttribute('data-target'); if(!targ) return;
-    const page = cont.closest('.page');
-    page.querySelectorAll('.section[id]').forEach(sec=>{
-      if(sec.id===targ) sec.style.display='';
-      else if(page.contains(sec)) sec.style.display='none';
+/* ===================================================================
+   تبويبات
+   =================================================================== */
+function setupTabs(id){
+  const cont=document.getElementById(id);
+  cont.addEventListener('click', e=>{
+    const tab=e.target.closest('.tab');
+    if(!tab) return;
+    const page=cont.closest('.page');
+    const target=tab.getAttribute('data-target');
+
+    page.querySelectorAll('.section').forEach(sec=>{
+      sec.style.display = sec.id===target? "block":"none";
     });
   });
 }
 
-/* ================== قوائم مهام ================== */
-function addItem(container){ const div=document.createElement('div'); div.className='item'; const cb=document.createElement('input'); cb.type='checkbox'; const span=document.createElement('div'); span.style.flex='1'; span.style.height='100%'; div.appendChild(cb); div.appendChild(span); container.appendChild(div); }
-
-/* ================== مصاريف: 6 شهور × 4 أسابيع ================== */
-const monthsForExp = [0,1,2,3,4,5];
-function renderExpenses(){
-  const pack=i18n[lang];
-  const mwrap = document.getElementById('expMonths'); const wwrap = document.getElementById('expWeeks'); const target=document.getElementById('ledgerWrap');
-  mwrap.innerHTML=''; wwrap.innerHTML=''; target.innerHTML='';
-  let curM = monthsForExp[0], curW=1;
-
-  function drawWeeks(){
-    wwrap.innerHTML='';
-    for(let w=1; w<=4; w++){
-      const chip=document.createElement('button'); chip.className='chip'; chip.textContent = `${pack.week} ${w}`;
-      if(w===curW) chip.classList.add('active');
-      chip.addEventListener('click',()=>{ curW=w; drawWeeks(); drawLedger(); });
-      wwrap.appendChild(chip);
-    }
-  }
-  function drawMonths(){
-    mwrap.innerHTML='';
-    monthsForExp.forEach(m=>{
-      const chip=document.createElement('button'); chip.className='chip'; chip.textContent = `${pack.month} — ${i18n[lang].months[m]}`;
-      if(m===curM) chip.classList.add('active');
-      chip.addEventListener('click',()=>{ curM=m; curW=1; drawMonths(); drawWeeks(); drawLedger(); });
-      mwrap.appendChild(chip);
-    });
-  }
-  function drawLedger(){
-    target.innerHTML='';
-    const table=document.createElement('table'); table.className='ledger';
-    table.innerHTML = `
-      <thead><tr>
-        <th>${pack.ledger.item}</th>
-        <th>${pack.ledger.amount}</th>
-        <th>${pack.ledger.method}</th>
-        <th>${pack.ledger.notes}</th>
-      </tr></thead>
-      <tbody></tbody>`;
-    const tb = table.querySelector('tbody');
-    for(let r=0;r<12;r++){
-      const tr=document.createElement('tr');
-      tr.innerHTML = `<td>&nbsp;</td><td>&nbsp;</td><td>${pack.ledger.card} / ${pack.ledger.wallet}</td><td>&nbsp;</td>`;
-      tb.appendChild(tr);
-    }
-    target.appendChild(table);
-  }
-  drawMonths(); drawWeeks(); drawLedger();
+/* ===================================================================
+   المهام
+   =================================================================== */
+function addItem(container){
+  const div=document.createElement('div');
+  div.className='item';
+  const cb=document.createElement('input'); cb.type='checkbox';
+  const cell=document.createElement('div'); cell.style.flex='1';
+  div.appendChild(cb); div.appendChild(cell);
+  container.appendChild(div);
 }
 
-/* ================== اللغة ================== */
-function applyLang(){
-  const pack=i18n[lang];
-  document.documentElement.dir = pack.dir;
-  document.getElementById('langToggle').textContent = pack.langBtn;
+/* ===================================================================
+   المصاريف
+   =================================================================== */
+function renderLedger(){
+  const wrap=document.getElementById('ledgerWrap');
+  wrap.innerHTML='';
 
-  document.getElementById('pTitle').textContent=pack.pTitle; document.getElementById('pSub').textContent=pack.pSub;
-  document.getElementById('tTitle').textContent=pack.tTitle; document.getElementById('tSub').textContent=pack.tSub;
+  const table=document.createElement('table');
+  table.className='simple-ledger';
 
-  // تبويبات
-  const rightTabs=document.getElementById('rightTabs').querySelectorAll('.tab');
-  rightTabs[0].querySelector('span').textContent=pack.tabsR.today;
-  rightTabs[1].querySelector('span').textContent=pack.tabsR.notes;
-  rightTabs[2].querySelector('span').textContent=pack.tabsR.tasks;
+  table.innerHTML=`
+    <thead>
+      <tr>
+        <th>اليوم</th>
+        <th>التاريخ</th>
+        <th>البيان</th>
+        <th>دخل</th>
+        <th>صرف</th>
+        <th>الرصيد</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
 
-  const leftTabs=document.getElementById('leftTabs').querySelectorAll('.tab');
-  leftTabs[0].querySelector('span').textContent=pack.tabsL.prep;
-  leftTabs[1].querySelector('span').textContent=pack.tabsL.pro;
-  leftTabs[2].querySelector('span').textContent=pack.tabsL.exp;
+  const tb=table.querySelector('tbody');
+  for(let r=0;r<12;r++){
+    const tr=document.createElement('tr');
+    tr.innerHTML="<td></td><td></td><td></td><td></td><td></td><td></td>";
+    tb.appendChild(tr);
+  }
 
-  document.getElementById('todayHead').innerHTML = `<i class="fa fa-calendar"></i> ${pack.todayHead}`;
-  document.getElementById('notesHead').textContent=pack.notesHead;
-  document.getElementById('tasksHead').textContent=pack.tasksHead;
-  document.getElementById('prepHead').textContent=pack.prepHead;
-  document.getElementById('proTasksHead').textContent=pack.proTasksHead;
-  document.getElementById('expHead').textContent=pack.expHead;
-
-  document.getElementById('addTaskR').textContent=pack.add;
-  document.getElementById('clearTaskR').textContent=pack.clear;
-  document.getElementById('addTaskL').textContent=pack.add;
-  document.getElementById('clearTaskL').textContent=pack.clear;
-
-  renderCalendars();
-  renderExpenses();
+  wrap.appendChild(table);
 }
 
-/* ================== Init ================== */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // تبويبات
-  setupTabs('rightTabs'); setupTabs('leftTabs');
+/* ===================================================================
+   Init
+   =================================================================== */
+document.addEventListener('DOMContentLoaded',()=>{
+
+  setupTabs('rightTabs');
+  setupTabs('leftTabs');
 
   // مهام افتراضية
-  const personal = document.getElementById('personalTasks');
-  const pro = document.getElementById('proTasks');
-  for(let i=0;i<12;i++){ addItem(personal); }
-  for(let i=0;i<10;i++){ addItem(pro); }
-  document.getElementById('addTaskR').onclick=()=>addItem(personal);
-  document.getElementById('clearTaskR').onclick=()=>personal.innerHTML='';
-  document.getElementById('addTaskL').onclick=()=>addItem(pro);
-  document.getElementById('clearTaskL').onclick=()=>pro.innerHTML='';
+  window.personalTasks=document.getElementById('personalTasks');
+  window.proTasks=document.getElementById('proTasks');
 
-  // لغة
-  applyLang();
-  document.getElementById('langToggle').onclick=()=>{ lang=(lang==='ar'?'en':'ar'); localStorage.setItem('plannerLang',lang); applyLang(); };
+  for(let i=0;i<10;i++) addItem(personalTasks);
+  for(let i=0;i<8;i++) addItem(proTasks);
+
+  renderCalendars();
+  renderLedger();
 });
 </script>
+
 </body>
 </html>
