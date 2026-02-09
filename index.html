@@ -1,229 +1,244 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Pro Teacher Planner 2026 — Vintage Luxury</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reenie+Beanie&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<style>
-  :root{
-    --ruby:#801818; --navy:#1a2a44; --emerald:#1b4d3e;
-    --paper:#f4ecd8; 
-    --leather:#3d2b1f;
-    --ink:#2f2a25; --line:#d6c8af; --accent:#b5a084;
-    --gold:#c5a059;
-  }
-  
-  html,body{margin:0; min-height:100vh; background:#2c1e14; color:var(--ink); font-family:'Cairo',sans-serif;}
-  
-  /* خلفية فاخرة بنسيج جلدي */
-  body {
-    background: radial-gradient(circle, #4d3a2b 0%, #2c1e14 100%);
-    padding: 20px;
-  }
+    <meta charset="UTF-8">
+    <title>سجل الفنون التشكيلية 2026 - الإصدار الملكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vintage-paper: #fdfaf3;
+            --royal-navy: #1a2e44;
+            --antique-gold: #9d7e3d;
+            --deep-ruby: #631d1d;
+            --ink-black: #2d2d2d;
+            --line-tan: #e5dcc5;
+        }
 
-  .planner-container {
-    max-width: 1400px; margin: 0 auto; display: flex; position: relative;
-    background: var(--leather); padding: 15px; border-radius: 15px;
-    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-  }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .page-container { margin: 0 !important; box-shadow: none !important; border: none !important; page-break-after: always !important; -webkit-print-color-adjust: exact; }
+            @page { size: A4 landscape; margin: 0; }
+        }
 
-  .page {
-    flex: 1; min-height: 1000px; background: var(--paper);
-    position: relative; padding: 30px; box-sizing: border-box;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
-  }
-  
-  .page.right { border-radius: 5px 20px 20px 5px; margin-left: 2px; }
-  .page.left { border-radius: 20px 5px 5px 20px; margin-right: 2px; }
+        body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 10px; color: var(--ink-black); }
+        .dashboard { max-width: 600px; margin: 0 auto 15px; background: white; padding: 20px; border-radius: 12px; text-align: center; border: 3px double var(--antique-gold); }
+        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 12px 40px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 5px; transition: 0.3s; }
+        .btn-premium:hover { background: var(--antique-gold); color: white; }
 
-  /* السلك الحلزوني الفاخر */
-  .spiral-binder {
-    width: 40px; background: transparent; position: relative; z-index: 10;
-    display: flex; flex-direction: column; justify-content: space-around; align-items: center;
-    padding: 20px 0; margin: 0 -20px;
-  }
-  .wire {
-    width: 50px; height: 12px; background: linear-gradient(180deg, #d1d1d1 0%, #757575 50%, #4a4a4a 100%);
-    border-radius: 10px; margin: 8px 0; transform: rotate(-15deg);
-    box-shadow: 2px 4px 5px rgba(0,0,0,0.3); position: relative;
-  }
-  .wire::after { content: ''; position: absolute; left: 5px; top: 2px; width: 40px; height: 3px; background: rgba(255,255,255,0.3); border-radius: 5px; }
+        .page-container {
+            width: 297mm; height: 210mm; background: var(--vintage-paper); margin: 5px auto; padding: 8mm 12mm;
+            box-sizing: border-box; display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); border: 1px solid #d1c7a7;
+            background-image: radial-gradient(circle at 2px 2px, rgba(157, 126, 61, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
 
-  /* الاسم الانسيابي (Signature Style) */
-  .signature {
-    font-family: 'Reenie Beanie', cursive; font-size: 2.2em; color: var(--navy);
-    line-height: 1; margin-top: 5px; display: block;
-  }
+        /* الإطار الزخرفي */
+        .page-container::before {
+            content: ""; position: absolute; top: 5mm; bottom: 5mm; left: 5mm; right: 5mm;
+            border: 1px solid var(--antique-gold); pointer-events: none; opacity: 0.4;
+        }
 
-  /* الجداول المصغرة (Professional Side) */
-  .mini-grid-container {
-    display: flex; gap: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.3);
-    padding: 10px; border-radius: 8px; border: 1px solid var(--line);
-  }
-  .mini-table { font-size: 0.75em; border-collapse: collapse; flex: 1; }
-  .mini-table th, .mini-table td { border: 1px solid var(--line); padding: 4px; text-align: center; }
-  .mini-table th { background: var(--accent); color: white; }
+        header { display: grid; grid-template-columns: 1.5fr 1fr 1.5fr; align-items: center; border-bottom: 2px solid var(--antique-gold); margin-bottom: 15px; padding-bottom: 10px; }
+        
+        .logo-section { display: flex; align-items: center; gap: 15px; }
+        .initials-logo {
+            font-family: 'Mrs Saint Delafield', cursive; font-size: 40px; color: var(--antique-gold);
+            border: 2px solid var(--antique-gold); width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            background: var(--royal-navy); box-shadow: 0 0 0 3px var(--vintage-paper), 0 0 0 4px var(--antique-gold);
+        }
+        
+        .official-title { font-family: 'Cairo'; font-weight: 900; color: var(--royal-navy); font-size: 18px; line-height: 1.2; }
+        .official-title span { display: block; color: var(--antique-gold); font-size: 12px; letter-spacing: 1px; }
 
-  /* التقاويم */
-  .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-  .calendar-box { background: #fffdf5; border: 1px solid var(--line); border-radius: 5px; padding: 5px; }
-  .calendar-box h4 { margin: 0 0 5px 0; font-size: 0.9em; text-align: center; color: var(--ruby); }
-  .calendar-box table { width: 100%; font-size: 0.7em; border-collapse: collapse; }
-  .calendar-box td { padding: 2px; text-align: center; border-bottom: 1px solid #f0e6d4; }
-  
-  /* تمييز الأيام */
-  .day-salary { background: #ffd700 !important; font-weight: bold; border-radius: 3px; }
-  .day-event { background: var(--ruby) !important; color: white !important; border-radius: 50%; }
+        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; overflow: hidden; min-width: 100px; box-shadow: 3px 3px 0 var(--antique-gold); }
+        .date-month { background: var(--deep-ruby); color: white; font-size: 12px; padding: 3px; font-weight: bold; }
+        .date-day { font-size: 38px; font-weight: 900; line-height: 1; padding: 5px 0; color: var(--royal-navy); }
 
-  /* مسطرة الملاحظات (طول الصفحة) */
-  .full-notes {
-    background-image: linear-gradient(var(--line) 1px, transparent 1px);
-    background-size: 100% 30px; line-height: 30px; min-height: 600px;
-    padding: 0 10px; color: #444; font-size: 1.1em;
-  }
+        /* المحتوى الرئيسي */
+        .main-grid { display: grid; grid-template-columns: 1fr 200px; gap: 20px; flex: 1; min-height: 0; }
+        
+        .content-left { display: flex; flex-direction: column; gap: 15px; }
+        
+        /* جدول الحصص الأفقي */
+        .horizontal-schedule { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .horizontal-schedule th { background: var(--royal-navy); color: var(--antique-gold); font-size: 12px; padding: 6px; border: 1px solid var(--antique-gold); }
+        .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; }
 
-  .section-title {
-    border-bottom: 2px solid var(--gold); color: var(--leather);
-    padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; display: flex; align-items: center; gap: 10px;
-  }
+        .section-header { 
+            background: var(--royal-navy); color: var(--antique-gold); padding: 5px 15px; 
+            font-family: 'Cairo'; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between;
+            border-right: 5px solid var(--antique-gold); margin-bottom: 8px;
+        }
 
-  /* تبويبات */
-  .tabs-row { display: flex; gap: 5px; margin-bottom: 15px; }
-  .tab-btn {
-    padding: 8px 15px; background: var(--accent); color: white; border: none;
-    border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: 0.3s;
-  }
-  .tab-btn:hover { background: var(--leather); }
+        .work-area { flex: 1; background: white; border: 1px solid #d1c7a7; position: relative; padding: 10px; }
+        .lines { background-image: repeating-linear-gradient(transparent, transparent 24px, var(--line-tan) 25px); line-height: 25px; height: 100%; }
 
-</style>
+        .notes-sidebar { display: flex; flex-direction: column; height: 100%; }
+        .notes-area { flex: 1; background: #fffcf5; border: 1px solid #d1c7a7; border-top: 3px solid var(--deep-ruby); padding: 10px; }
+
+        /* السلك الحلزوني */
+        .spiral-binding {
+            position: absolute; left: 50%; top: 110px; bottom: 120px;
+            transform: translateX(-50%); width: 30px; z-index: 100;
+            display: flex; flex-direction: column; justify-content: space-around; align-items: center;
+        }
+        .spiral-hole {
+            width: 14px; height: 14px; background: #334155; border-radius: 3px;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.8), 1px 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+        }
+        .spiral-wire-effect {
+            position: absolute; width: 25px; height: 8px; background: linear-gradient(to bottom, #94a3b8, #475569, #1e293b);
+            left: -5px; top: 3px; border-radius: 4px; transform: rotate(-10deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        footer { border-top: 2px solid var(--antique-gold); margin-top: 15px; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .signature { font-family: 'Mrs Saint Delafield', cursive; font-size: 38px; color: var(--royal-navy); }
+
+        .mini-cal-container { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .mini-month { border: 1px solid #d1c7a7; background: white; font-size: 8px; width: 65px; text-align: center; }
+        .mini-month-title { background: var(--royal-navy); color: white; padding: 2px; font-size: 7px; }
+    </style>
 </head>
 <body>
 
-<div class="planner-container">
-  <div class="page right">
-    <div style="text-align: left; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 20px;">
-      <span class="signature" id="userName">Mohamed Yassin Helmy</span>
-      <small style="color: var(--accent);">مخطط الحياة اليومية 2026</small>
+    <div class="dashboard no-print">
+        <h2 style="font-family:'Cairo'; color:var(--royal-navy)">سجل الفنون التشكيلية 2026 - الإصدار الفاخر</h2>
+        <p>تحضير ذكي، تصميم عتيق، وتقويم هجري معدل</p>
+        <button class="btn-premium" onclick="generate()">إصدار السجل الكامل (يناير - يوليو)</button>
     </div>
 
-    <div class="section-title"><i class="fa fa-calendar-alt"></i> تقويم النصف الأول (يناير - يونيو)</div>
-    <div class="months-grid" id="calContainerRight">
-      </div>
+    <div id="print-area"></div>
 
-    <div class="section-title"><i class="fa fa-edit"></i> ملاحظات حرة وأفكار</div>
-    <div class="full-notes" contenteditable="true">
-      ابدأ كتابة ملاحظاتك هنا...
-    </div>
-  </div>
-
-  <div class="spiral-binder">
     <script>
-      for(let i=0; i<25; i++) document.write('<div class="wire"></div>');
+        const educationalEvents = {
+            "2026-01-11": "تولي السلطان هيثم",
+            "2026-02-01": "بداية الفصل الدراسي 2",
+            "2026-02-18": "بداية شهر رمضان المبارك",
+            "2026-03-20": "عيد الفطر السعيد (تقريبي)",
+            "2026-05-17": "امتحانات (1-4)",
+            "2026-05-24": "امتحانات (5-11)",
+            "2026-05-27": "عيد الأضحى المبارك (تقريبي)",
+            "2026-06-04": "نهاية عام الطلاب",
+            "2026-07-01": "إجازة الكادر التدريسي"
+        };
+
+        const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
+        const daysAr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+
+        function buildMiniCal(m) {
+            let html = `<div class="mini-month"><div class="mini-month-title">${monthNames[m]}</div>`;
+            html += `<table style="width:100%; border-collapse:collapse;"><tr>`;
+            ['ح','ن','ث','ر','خ'].forEach(d => html += `<td style="font-weight:bold; font-size:6px">${d}</td>`);
+            html += `</tr>`;
+            let daysInMonth = new Date(2026, m + 1, 0).getDate();
+            let firstDay = new Date(2026, m, 1).getDay();
+            let day = 1;
+            for(let i=0; i<5; i++) {
+                html += `<tr>`;
+                for(let j=0; j<7; j++) {
+                    if(j > 0 && j < 6) { // فقط أيام العمل
+                        if( (i===0 && j < firstDay) || day > daysInMonth ) {
+                            html += `<td></td>`;
+                        } else {
+                            html += `<td style="font-size:7px">${day}</td>`;
+                            day++;
+                        }
+                    } else if (day <= daysInMonth) { day++; }
+                }
+                html += `</tr>`;
+                if(day > daysInMonth) break;
+            }
+            return html + `</table></div>`;
+        }
+
+        function generate() {
+            const area = document.getElementById('print-area');
+            let output = '';
+            let d = new Date(2026, 0, 25);
+            let end = new Date(2026, 6, 31);
+
+            while (d <= end) {
+                if (d.getDay() >= 0 && d.getDay() <= 4) {
+                    const dayName = d.toLocaleDateString('ar-EG', { weekday: 'long' });
+                    const dateStr = `${d.getDate()} ${monthNames[d.getMonth()]} 2026`;
+                    
+                    output += `
+                    <div class="page-container">
+                        <header>
+                            <div class="logo-section">
+                                <div class="initials-logo">MYH</div>
+                                <div class="official-title">الأستاذ محمد ياسين حلمي<span>سجل الفنون التشكيلية • 2026</span></div>
+                            </div>
+                            <div class="date-badge">
+                                <div class="date-month">${monthNames[d.getMonth()]} 2026</div>
+                                <div class="date-day">${d.getDate()}</div>
+                                <div style="font-size:11px; font-weight:bold; color:var(--antique-gold)">${dayName}</div>
+                            </div>
+                            <div style="text-align:left; font-family:'Cairo'; font-size:12px; color:var(--royal-navy)">
+                                سلطنة عمان<br>وزارة التربية والتعليم
+                            </div>
+                        </header>
+
+                        <div class="main-grid">
+                            <div class="content-left">
+                                <table class="horizontal-schedule">
+                                    <thead>
+                                        <tr>
+                                            <th>الحصة</th>
+                                            ${[1,2,3,4,5,6,7,8].map(n => `<th>${n}</th>`).join('')}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="background:#f8f4e9; font-weight:bold; text-align:center; font-size:11px">الصف</td>
+                                            ${Array(8).fill('<td></td>').join('')}
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="section-header">
+                                    <span>مساحة العمل والتحضير الفني</span>
+                                    <span style="font-size:9px; opacity:0.8">إبداع بلا حدود</span>
+                                </div>
+                                <div class="work-area">
+                                    <div class="lines"></div>
+                                </div>
+                            </div>
+
+                            <div class="notes-sidebar">
+                                <div class="section-header" style="background:var(--deep-ruby)">
+                                    <span>ملاحظات التنفيذ</span>
+                                </div>
+                                <div class="notes-area">
+                                    <div class="lines"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spiral-binding">
+                            ${Array(12).fill('<div class="spiral-hole"><div class="spiral-wire-effect"></div></div>').join('')}
+                        </div>
+
+                        <footer>
+                            <div class="signature">Mo.Yasin</div>
+                            <div class="mini-cal-container">
+                                ${[0,1,2,3,4,5,6].map(m => buildMiniCal(m)).join('')}
+                            </div>
+                            <div style="text-align:left; font-size:9px; font-family:'Cairo'">
+                                ${educationalEvents[d.toISOString().split('T')[0]] || 'يوم عمل اعتيادي'}
+                            </div>
+                        </footer>
+                    </div>`;
+                }
+                d.setDate(d.getDate() + 1);
+            }
+            area.innerHTML = output;
+        }
     </script>
-  </div>
-
-  <div class="page left">
-    <div class="section-title"><i class="fa fa-briefcase"></i> لوحة التحكم للمعلم الاحترافي</div>
-    
-    <div class="tabs-row">
-      <button class="tab-btn">التحضير الذكي</button>
-      <button class="tab-btn">سجل الإنجاز</button>
-      <button class="tab-btn">الميزانية</button>
-    </div>
-
-    <div class="mini-grid-container">
-      <table class="mini-table">
-        <thead>
-          <tr><th colspan="6">جدول الحصص الأسبوعي</th></tr>
-          <tr><td>أحد</td><td>اثنين</td><td>ثلاثاء</td><td>أربعاء</td><td>خميس</td></tr>
-        </thead>
-        <tbody>
-          <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-        </tbody>
-      </table>
-
-      <table class="mini-table">
-        <thead>
-          <tr><th colspan="3">توزيع الصفوف</th></tr>
-          <tr><td>الصف</td><td>الشعبة</td><td>العدد</td></tr>
-        </thead>
-        <tbody>
-          <tr><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>-</td><td>-</td><td>-</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section-title"><i class="fa fa-tasks"></i> التحضير اليومي والمهام المهنية</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: white;">
-        <h5 style="margin:0 0 10px 0; color: var(--navy);">أهداف الحصص</h5>
-        <div class="full-notes" style="min-height: 300px; font-size: 0.9em;"></div>
-      </div>
-      <div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: white;">
-        <h5 style="margin:0 0 10px 0; color: var(--navy);">قائمة المهام العاجلة</h5>
-        <div class="full-notes" style="min-height: 300px; font-size: 0.9em;"></div>
-      </div>
-    </div>
-
-    <div class="section-title" style="margin-top:20px;"><i class="fa fa-info-circle"></i> دليل المناسبات الهامة</div>
-    <div id="eventsList" style="font-size: 0.85em; color: var(--leather); column-count: 2;">
-      </div>
-  </div>
-</div>
-
-<script>
-const events2026 = {
-  '2026-01-27': 'الإسراء والمعراج',
-  '2026-02-18': 'بداية شهر رمضان المبارك',
-  '2026-02-22': 'يوم التأسيس السعودي',
-  '2026-03-20': 'عيد الفطر المبارك (تقريبي)',
-  '2026-05-27': 'وقفة عرفة',
-  '2026-05-28': 'عيد الأضحى المبارك'
-};
-
-function getSalaryDay(month) {
-  // مثال: يوم 27 من كل شهر
-  return 27;
-}
-
-function generateCalendar() {
-  const container = document.getElementById('calContainerRight');
-  const evList = document.getElementById('eventsList');
-  const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
-  
-  for (let m = 0; m < 6; m++) {
-    let html = `<div class="calendar-box"><h4>${monthNames[m]}</h4><table>`;
-    html += `<tr><td>ح</td><td>ن</td><td>ث</td><td>ر</td><td>خ</td><td>ج</td><td>س</td></tr><tr>`;
-    
-    let firstDay = new Date(2026, m, 1).getDay();
-    let daysInMonth = new Date(2026, m + 1, 0).getDate();
-    
-    for (let i = 0; i < firstDay; i++) html += `<td></td>`;
-    
-    for (let d = 1; d <= daysInMonth; d++) {
-      let dateStr = `2026-${String(m+1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      let className = "";
-      if (d === getSalaryDay(m)) className = "day-salary";
-      if (events2026[dateStr]) className = "day-event";
-      
-      html += `<td class="${className}">${d}</td>`;
-      if ((d + firstDay) % 7 === 0) html += `</tr><tr>`;
-    }
-    html += `</tr></table></div>`;
-    container.innerHTML += html;
-  }
-
-  // ملء قائمة المناسبات
-  for (let date in events2026) {
-    evList.innerHTML += `<div>• ${events2026[date]} (${date})</div>`;
-  }
-}
-
-window.onload = generateCalendar;
-</script>
 </body>
 </html>
