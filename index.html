@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سجل الفنون التشكيلية 2026 - الإصدار المالي والمهام</title>
+    <title>سجل الفنون التشكيلية 2026 - الإصدار التفاعلي</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,9 +22,20 @@
             @page { size: A4 landscape; margin: 0; }
         }
 
-        body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 20px; }
-        .dashboard { max-width: 700px; margin: 0 auto 30px; background: white; padding: 25px; border-radius: 15px; text-align: center; border: 4px double var(--antique-gold); }
-        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 15px 50px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; font-size: 18px; }
+        body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 20px; scroll-behavior: smooth; }
+        
+        /* شريط الأدوات العائم */
+        .dashboard { 
+            position: sticky; top: 10px; z-index: 1000;
+            max-width: 800px; margin: 0 auto 30px; 
+            background: rgba(255, 255, 255, 0.95); padding: 15px; 
+            border-radius: 15px; text-align: center; 
+            border: 3px double var(--antique-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 10px 30px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; transition: 0.3s; }
+        .btn-premium:hover { background: var(--antique-gold); color: var(--royal-navy); }
         
         .spread-container { display: flex; justify-content: center; gap: 0; margin-bottom: 40px; }
         .page-container {
@@ -36,13 +47,12 @@
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--antique-gold); margin-bottom: 5px; }
         .initials-logo { font-family: 'Mrs Saint Delafield', cursive; font-size: 35px; color: var(--antique-gold); border: 2px solid var(--antique-gold); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--royal-navy); }
         
-        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; min-width: 70px; }
+        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; min-width: 70px; cursor: pointer; }
         .date-month { background: var(--deep-ruby); color: white; font-size: 11px; padding: 2px; }
         .date-day { font-size: 28px; font-weight: 900; color: var(--royal-navy); line-height: 1; }
 
         .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
 
-        /* تعديل الحصص: إزالة الأرقام */
         .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; }
         .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 10px; border: 1px solid var(--antique-gold); padding: 6px 2px; }
         .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
@@ -52,51 +62,58 @@
         .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; }
         .lines { background-image: repeating-linear-gradient(transparent, transparent 27px, var(--line-tan) 28px); line-height: 28px; height: 100%; }
 
-        /* ماب الألوان للتقويم */
+        /* التفاعل في التقويم الصغير */
         .mini-cal-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
         .mini-month { border: 1px solid var(--antique-gold); background: white; font-size: 8px; text-align: center; }
-        .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; }
+        .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; cursor: pointer; }
+        .mini-month td { cursor: pointer; transition: 0.2s; }
+        .mini-month td:hover:not(:empty) { background: var(--antique-gold) !important; color: white !important; }
         
-        .day-event { background: var(--deep-ruby) !important; color: white !important; border-radius: 2px; }
+        .day-event { background: var(--deep-ruby) !important; color: white !important; border-radius: 2px; font-weight: bold; }
         .day-salary { background: var(--salary-green) !important; color: white !important; border-radius: 2px; }
         .day-weekend { background: var(--weekend-bg); color: #bbb; }
 
-        /* التوقيع الانسيابي */
         .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
         
         .finance-table { width: 100%; border-collapse: collapse; flex: 1; }
         .finance-table th { background: var(--royal-navy); color: white; font-size: 11px; border: 1px solid var(--antique-gold); padding: 8px; }
         .finance-table td { border: 1px solid var(--antique-gold); background: white; height: 30px; }
 
-        footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 10px; display: flex; justify-content: space-between; align-items: center; }
+        footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 11px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--royal-navy); }
+        .event-text { color: var(--deep-ruby); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="dashboard no-print">
-        <h2 style="font-family:'Cairo'; color:var(--royal-navy)">سجل الفنون التشكيلية 2026</h2>
-        <p>التحضير اليومي + الفاصل الزمني (5 دقائق) + الملف المالي حتى يوليو</p>
-        <button class="btn-premium" onclick="generate()">توليد السجل الكامل</button>
+        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية التفاعلي 2026</h2>
+        <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn-premium" onclick="generate()">توليد السجل وتفعيل الانتقال</button>
+            <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
+        </div>
+        <p style="font-size:12px; margin-top:10px;">* اضغط على أي تاريخ في التقاويم الصغيرة للانتقال السريع لصفحة اليوم.</p>
     </div>
 
     <div id="print-area"></div>
 
     <script>
         const events = {
-            "1-11": "تولي السلطان هيثم", "1-15": "الإسراء والمعراج",
-            "2-1": "بداية الفصل 2", "2-24": "يوم المعلم العماني",
-            "3-1": "بداية رمضان تقديراً", "3-30": "عيد الفطر تقديراً",
-            "7-1": "إجازة الكادر الإداري والتدريسي"
+            "1-11": "مناسبة: ذكرى تولي جلالة السلطان هيثم بن طارق المعظم",
+            "1-15": "مناسبة: ذكرى الإسراء والمعراج",
+            "2-1": "حدث: بداية الفصل الدراسي الثاني",
+            "2-24": "مناسبة: يوم المعلم العماني",
+            "3-1": "حدث: بداية شهر رمضان المبارك (تقديرياً)",
+            "3-30": "مناسبة: عيد الفطر السعيد (تقديرياً)",
+            "7-1": "حدث: بدء إجازة الكادر الإداري والتدريسي"
         };
 
         const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
-        
-        // أوقات الحصص مع فاصل 5 دقائق
-        const scheduleTimes = [
-            "07:35 - 08:15", "08:20 - 09:00", "09:05 - 09:45", "09:50 - 10:30", 
-            "الفسحة", 
-            "10:55 - 11:35", "11:40 - 12:20", "12:25 - 13:05", "13:10 - 13:50"
-        ];
+        const scheduleTimes = ["07:35 - 08:15", "08:20 - 09:00", "09:05 - 09:45", "09:50 - 10:30", "الفسحة", "10:55 - 11:35", "11:40 - 12:20", "12:25 - 13:05", "13:10 - 13:50"];
+
+        function scrollToId(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
 
         function getSalaryDay(m) {
             let d = new Date(2026, m, 23);
@@ -104,7 +121,9 @@
         }
 
         function buildMiniCal(m) {
-            let html = `<div class="mini-month"><div class="mini-month-title">${monthNames[m]}</div><table style="width:100%; border-collapse:collapse;"><tr>`;
+            let html = `<div class="mini-month">
+                <div class="mini-month-title" onclick="scrollToId('month-fin-${m}')">${monthNames[m]}</div>
+                <table style="width:100%; border-collapse:collapse;"><tr>`;
             ['ح','ن','ث','ر','خ','ج','س'].forEach(d => html += `<td style="font-weight:bold; font-size:7px;">${d}</td>`);
             html += `</tr>`;
             
@@ -123,7 +142,7 @@
                         if (day === getSalaryDay(m)) cls = "day-salary";
                         if (events[dateKey]) cls = "day-event";
                         
-                        html += `<td class="${cls}">${day}</td>`;
+                        html += `<td class="${cls}" onclick="scrollToId('day-${m+1}-${day}')">${day}</td>`;
                         day++;
                     }
                 }
@@ -136,26 +155,26 @@
             const area = document.getElementById('print-area');
             let output = '';
             
-            for (let m = 0; m <= 6; m++) { // من يناير (0) إلى يوليو (6)
+            for (let m = 0; m <= 6; m++) {
                 let daysInMonth = new Date(2026, m + 1, 0).getDate();
                 
                 for (let day = 1; day <= daysInMonth; day++) {
                     let d = new Date(2026, m, day);
                     let weekDay = d.getDay();
                     
-                    if (weekDay !== 5 && weekDay !== 6) { // استثناء الجمعة والسبت
+                    if (weekDay !== 5 && weekDay !== 6) {
                         const dateKey = `${m+1}-${day}`;
                         const dayNameAr = ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس"][weekDay];
 
                         output += `
-                        <div class="spread-container">
+                        <div class="spread-container" id="day-${m+1}-${day}">
                             <div class="page-container">
                                 <header>
                                     <div style="display:flex; align-items:center; gap:8px">
                                         <div class="initials-logo">MYH</div>
                                         <div style="font-family:'Cairo'; font-size:14px; font-weight:900;">محمد ياسين حلمي</div>
                                     </div>
-                                    <div class="date-badge">
+                                    <div class="date-badge" onclick="scrollToId('month-fin-${m}')">
                                         <div class="date-month">${monthNames[m]}</div>
                                         <div class="date-day">${day}</div>
                                     </div>
@@ -168,19 +187,22 @@
                                 <div class="section-header">التحضير الذهني والوسائل</div>
                                 <div class="notes-area"><div class="lines"></div></div>
                                 <div class="mini-cal-container">${[0,1,2].map(mm => buildMiniCal(mm)).join('')}</div>
-                                <footer><span>${events[dateKey] || "يوم عمل اعتيادي"}</span><div class="signature-fluid">Mo.Yasin</div></footer>
+                                <footer>
+                                    <span class="event-text">${events[dateKey] || "يوم عمل اعتيادي"}</span>
+                                    <div class="signature-fluid">Mo.Yasin</div>
+                                </footer>
                             </div>
                             <div class="page-container">
                                 <div class="section-header" style="background:var(--deep-ruby)">المهام اليومية</div>
                                 <div style="display: grid; grid-template-columns: 40px 1fr; gap: 10px; flex: 1;">
                                     <div style="display:flex; flex-direction:column; border-left:1px dashed var(--antique-gold)">
-                                        ${Array(15).fill('<div style="height:30px; border-bottom:1px solid #eee; display:flex; align-items:center;"><div style="width:15px; height:15px; border:1px solid var(--royal-navy)"></div></div>').join('')}
+                                        ${Array(14).fill('<div style="height:30px; border-bottom:1px solid #eee; display:flex; align-items:center;"><div style="width:15px; height:15px; border:1px solid var(--royal-navy)"></div></div>').join('')}
                                     </div>
                                     <div class="notes-area"><div class="lines"></div></div>
                                 </div>
                                 <div class="section-header">توجيهات فنية</div>
                                 <div style="height:80px; background:white; border:1px solid #ddd; margin-bottom:10px"></div>
-                                <div class="mini-cal-container">${[3,4,5].map(mm => buildMiniCal(mm)).join('')}</div>
+                                <div class="mini-cal-container">${[3,4,5,6].slice(0,3).map(mm => buildMiniCal(mm)).join('')}</div>
                                 <footer><span>سجل 2026 المطور</span><div style="text-align:left">نهاية الدوام 13:50</div></footer>
                             </div>
                         </div>`;
@@ -189,7 +211,7 @@
 
                 // صفحة الماليات الشهرية
                 output += `
-                <div class="spread-container">
+                <div class="spread-container" id="month-fin-${m}">
                     <div class="page-container">
                         <div class="section-header" style="background:var(--salary-green)">الملخص المالي لشهر ${monthNames[m]}</div>
                         <table class="finance-table">
@@ -201,7 +223,10 @@
                     <div class="page-container">
                         <div class="section-header">ملاحظات الميزانية والمشتريات</div>
                         <div class="notes-area"><div class="lines"></div></div>
-                        <div style="padding:20px; display:flex; justify-content:center;">${buildMiniCal(m)}</div>
+                        <div style="padding:20px; display:flex; justify-content:center; flex-direction:column; align-items:center;">
+                            <p style="font-family:'Cairo'; font-weight:bold; color:var(--royal-navy)">تقويم الشهر</p>
+                            ${buildMiniCal(m)}
+                        </div>
                         <footer><span>الفنون التشكيلية</span><span>2026</span></footer>
                     </div>
                 </div>`;
