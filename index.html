@@ -3,154 +3,565 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بلانر أ/ محمد ياسين حلمي - الصفحة اليمنى</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>بلانر أ/ محمد ياسين حلمي - احترافي وشخصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Great+Vibes&family=Marhey&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary-brown: #7A5230;
+            --light-brown: #d8c3a5;
+            --dark-blue-gray: #4a6a7c;
+            --light-gray: #f2f2f2;
+            --medium-gray: #e0e6ed;
+            --dark-gray-text: #333;
+            --light-text: #888;
+            --signature-font: 'Great Vibes', cursive;
+            --body-font: 'Cairo', sans-serif;
+            --title-font: 'Marhey', sans-serif;
+        }
+
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8f8f8;
+            font-family: var(--body-font);
+            background-color: var(--light-gray);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            color: #333;
+            color: var(--dark-gray-text);
+            direction: rtl; /* Ensure RTL for the whole page */
         }
+
         .planner-container {
+            display: flex;
+            gap: 20px; /* Space between the two pages */
+            max-width: 1800px; /* Max width for the whole spread */
             width: 100%;
-            max-width: 900px;
+            justify-content: center;
+        }
+
+        .planner-page {
+            flex: 1; /* Each page takes equal width */
             background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            min-height: 900px; /* Standard height for a planner page */
+            position: relative;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
         }
+
         .header .logo {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4em;
-            color: #7a5230; /* لون قريب من البني الذهبي */
+            font-family: var(--signature-font);
+            font-size: 3.5em;
+            color: var(--primary-brown);
             line-height: 0.7;
-            margin-right: 20px;
+            margin-left: 20px;
         }
+
         .header .title {
             text-align: right;
             flex-grow: 1;
         }
+
         .header h1 {
             margin: 0;
-            font-size: 1.8em;
-            color: #555;
+            font-size: 1.6em;
+            color: var(--dark-gray-text);
+            font-family: var(--title-font);
         }
+
         .header p {
             margin: 5px 0 0;
-            font-size: 0.9em;
-            color: #888;
+            font-size: 0.85em;
+            color: var(--light-text);
         }
-        .content-area {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+
         .tabs-section {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            width: 100%;
+            gap: 12px;
+            margin-bottom: 25px;
         }
+
         .tab-button {
             display: flex;
             align-items: center;
-            background-color: #e0e6ed; /* لون خلفية للزر */
-            padding: 15px 20px;
-            border-radius: 10px;
+            background-color: var(--medium-gray);
+            padding: 12px 18px;
+            border-radius: 8px;
             text-decoration: none;
-            color: #444;
-            font-size: 1.1em;
+            color: var(--dark-gray-text);
+            font-size: 1em;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            border: none;
+            text-align: right;
+            width: 100%;
         }
-        .tab-button:hover {
-            background-color: #d1d8e0;
+
+        .tab-button:hover, .tab-button.active {
+            background-color: var(--primary-brown);
+            color: #fff;
             transform: translateY(-2px);
         }
-        .tab-button i {
-            margin-left: 15px; /* مسافة بين الأيقونة والنص */
-            font-size: 1.5em;
-            color: #7a5230;
+        .tab-button.active i {
+            color: #fff;
         }
+
+        .tab-button i {
+            margin-left: 12px;
+            font-size: 1.3em;
+            color: var(--primary-brown);
+            transition: color 0.3s ease;
+        }
+
         .tab-button span {
             flex-grow: 1;
-            text-align: right; /* محاذاة النص لليمين */
+            text-align: right;
         }
-        .grid-area {
+
+        .tab-content {
+            display: none; /* Hidden by default */
+            flex-grow: 1;
+            padding: 15px 0;
+            border-top: 1px dashed var(--medium-gray);
+            margin-top: 10px;
+        }
+        .tab-content.active {
+            display: block; /* Shown when active */
+        }
+
+        /* Specific content styles */
+        .grid-background {
+            background-image: linear-gradient(to bottom, transparent 95%, #eee 95%),
+                              linear-gradient(to left, transparent 95%, #eee 95%);
+            background-size: 30px 30px;
+            height: 100%;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+            min-height: 200px; /* Ensure visibility */
+            padding: 15px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .card-item {
             background-color: #fdfdfd;
-            border: 1px solid #eee;
+            border: 1px solid var(--medium-gray);
             border-radius: 10px;
-            min-height: 300px;
-            padding: 20px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-            line-height: 1.8;
-            background-image: linear-gradient(to bottom, transparent 95%, #eee 95%);
-            background-size: 100% 30px; /* خطوط شبكية بسيطة */
+            padding: 15px;
+            position: relative;
+            min-height: 80px;
         }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-family: 'Great Vibes', cursive;
+
+        .card-item::before { /* Checkbox placeholder */
+            content: "\f0c5"; /* FontAwesome square icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--light-text);
+            font-size: 1.1em;
+        }
+
+        .card-item textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            font-family: var(--body-font);
+            font-size: 0.9em;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background-color: #fdfdfd;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-left: 10px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-item label {
+            flex-grow: 1;
+            font-size: 0.95em;
+        }
+
+        .creative-ideas-content .grid-background {
+            min-height: 400px;
+            position: relative;
+        }
+        .creative-ideas-content .grid-background::before {
+            content: "\f0eb"; /* Lightbulb icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             font-size: 2em;
-            color: #aaa;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+            color: var(--light-brown);
         }
-        /* FontAwesome for icons */
-        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+        .creative-ideas-content .grid-background::after {
+            content: "\f53f"; /* Paint palette icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: var(--dark-blue-gray);
+        }
+
+        .art-projects-content .project-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .art-projects-content .project-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .art-projects-content .project-form input[type="text"],
+        .art-projects-content .project-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-family: var(--body-font);
+            box-sizing: border-box;
+        }
+        .art-projects-content .project-form textarea {
+            grid-column: 1 / -1; /* Full width */
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .expenses-content .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdfdfd;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+        }
+        .expenses-content .expense-item span {
+            flex-grow: 1;
+        }
+        .expenses-content .expense-item input {
+            width: 80px;
+            text-align: left;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            padding: 5px;
+            margin-left: 10px;
+        }
+
+        .notes-personal-content .grid-background {
+            min-height: 400px;
+        }
+
+
+        .footer {
+            margin-top: auto; /* Pushes footer to the bottom */
+            text-align: center;
+            font-family: var(--signature-font);
+            font-size: 2.5em;
+            color: var(--light-text);
+            border-top: 1px solid var(--light-gray);
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .planner-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .planner-page {
+                min-height: auto; /* Allow pages to shrink on smaller screens */
+            }
+            .header .logo {
+                font-size: 3em;
+            }
+            .header h1 {
+                font-size: 1.4em;
+            }
+            .footer {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .planner-page {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            .header .logo {
+                font-size: 2.5em;
+            }
+            .header h1 {
+                font-size: 1.2em;
+            }
+            .header p {
+                font-size: 0.8em;
+            }
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 0.95em;
+            }
+            .tab-button i {
+                font-size: 1.2em;
+                margin-left: 10px;
+            }
+            .footer {
+                font-size: 1.8em;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="planner-container">
-        <div class="header">
-            <div class="logo">MYH</div>
-            <div class="title">
-                <h1>أ/ محمد ياسين حلمي</h1>
-                <p>مخطط معلم الفنون التشكيلية 2026</p>
+        <div class="planner-page personal-page">
+            <div class="header">
+                <div class="logo">MYH</div>
+                <div class="title">
+                    <h1>صفحة الحياة اليومية الشخصية</h1>
+                    <p>أ/ محمد ياسين حلمي - مخطط 2026</p>
+                </div>
+            </div>
+
+            <div class="tabs-section">
+                <button class="tab-button" data-tab="personal-daily-tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>مهام اليوم</span>
+                </button>
+                <button class="tab-button" data-tab="expenses">
+                    <i class="fas fa-wallet"></i>
+                    <span>المصروفات</span>
+                </button>
+                <button class="tab-button" data-tab="notes-personal">
+                    <i class="fas fa-clipboard"></i>
+                    <span>ملاحظات</span>
+                </button>
+            </div>
+
+            <div id="personal-daily-tasks" class="tab-content">
+                <h3>مهامك اليومية الشخصية</h3>
+                <div class="checkbox-list">
+                    <div class="checkbox-item"><input type="checkbox" id="ptask1"><label for="ptask1">الذهاب إلى صالة الألعاب الرياضية</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask2"><label for="ptask2">قراءة 30 دقيقة</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask3"><label for="ptask3">التسوق للمنزل</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask4"><label for="ptask4">الاتصال بالعائلة</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask5"><label for="ptask5">تخطيط وجبات الأسبوع</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask6"><label for="ptask6">تعلم شيء جديد</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="ptask7"><label for="ptask7">وقت للاسترخاء</label></div>
+                </div>
+            </div>
+
+            <div id="expenses" class="tab-content">
+                <h3>تتبع مصروفاتك اليومية</h3>
+                <div class="expenses-content">
+                    <div class="expense-item"><span>بقالة</span><input type="text" placeholder="SAR 0.00"></div>
+                    <div class="expense-item"><span>مواصلات</span><input type="text" placeholder="SAR 0.00"></div>
+                    <div class="expense-item"><span>طعام خارج المنزل</span><input type="text" placeholder="SAR 0.00"></div>
+                    <div class="expense-item"><span>ترفيه</span><input type="text" placeholder="SAR 0.00"></div>
+                    <div class="expense-item"><span>أخرى</span><input type="text" placeholder="SAR 0.00"></div>
+                </div>
+            </div>
+
+            <div id="notes-personal" class="tab-content">
+                <h3>ملاحظاتك الشخصية</h3>
+                <div class="grid-background">
+                    <textarea placeholder="اكتب ملاحظاتك الشخصية هنا..."></textarea>
+                </div>
+            </div>
+
+            <div class="footer">
+                M.Y.H
             </div>
         </div>
 
-        <div class="content-area">
+        <div class="planner-page professional-page">
+            <div class="header">
+                <div class="logo">MYH</div>
+                <div class="title">
+                    <h1>مركز المعلم الاحترافي</h1>
+                    <p>أ/ محمد ياسين حلمي - مخطط معلم الفنون 2026</p>
+                </div>
+            </div>
+
             <div class="tabs-section">
-                <a href="daily-preparation.html" class="tab-button">
-                    <i class="fas fa-paint-brush"></i>
+                <button class="tab-button" data-tab="daily-preparation">
+                    <i class="fas fa-palette"></i>
                     <span>التحضير اليومي</span>
-                </a>
-                <a href="daily-tasks.html" class="tab-button">
+                </button>
+                <button class="tab-button" data-tab="daily-tasks-professional">
                     <i class="fas fa-check-square"></i>
                     <span>المهام اليومية</span>
-                </a>
-                <a href="notes.html" class="tab-button">
-                    <i class="fas fa-sticky-note"></i>
-                    <span>الملاحظات</span>
-                </a>
+                </button>
+                <button class="tab-button" data-tab="creative-ideas">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Creative Ideas</span>
+                </button>
+                <button class="tab-button" data-tab="art-projects">
+                    <i class="fas fa-pencil-ruler"></i>
+                    <span>Art Projects</span>
+                </button>
             </div>
-            <div class="grid-area">
-                <p style="text-align: center; color: #bbb;">مساحة عمل / شبكة للكتابة الحرة</p>
-                <br><br><br><br><br><br><br>
-            </div>
-        </div>
 
-        <div class="footer">
-            M.Y.H Freehand
+            <div id="daily-preparation" class="tab-content">
+                <h3>بطاقات التحضير اليومي</h3>
+                <div class="card-grid">
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                    <div class="card-item"><textarea placeholder="الموضوع / الأهداف"></textarea></div>
+                </div>
+            </div>
+
+            <div id="daily-tasks-professional" class="tab-content">
+                <h3>المهام اليومية المهنية</h3>
+                <div class="checkbox-list">
+                    <div class="checkbox-item"><input type="checkbox" id="task1"><label for="task1">تجهيز أدوات الرسم للدرس</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="task2"><label for="task2">تقييم أعمال الطلاب</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="task3"><label for="task3">مراجعة خطة الدرس</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="task4"><label for="task4">الرد على استفسارات أولياء الأمور</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="task5"><label for="task5">ترتيب وتنظيم مرسم المدرسة</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="task6"><label for="task6">البحث عن أفكار لمشاريع جديدة</label></div>
+                </div>
+            </div>
+
+            <div id="creative-ideas" class="tab-content">
+                <h3>أفكار إبداعية</h3>
+                <div class="grid-background creative-ideas-content">
+                    <textarea placeholder="سجل أفكارك الإبداعية هنا. ارسم، اكتب، ابتكر!"></textarea>
+                </div>
+            </div>
+
+            <div id="art-projects" class="tab-content">
+                <h3>مشاريع فنية</h3>
+                <div class="art-projects-content">
+                    <div class="project-form">
+                        <div>
+                            <label for="projectTitle">عنوان المشروع:</label>
+                            <input type="text" id="projectTitle" placeholder="مثال: مشروع البورتريه بالألوان الزيتية">
+                        </div>
+                        <div>
+                            <label for="startDate">تاريخ البدء / الانتهاء:</label>
+                            <input type="text" id="startDate" placeholder="DD/MM/YYYY - DD/MM/YYYY">
+                        </div>
+                        <label for="materials">المواد المطلوبة:</label>
+                        <textarea id="materials" placeholder="الألوان، الفرش، القماش، إلخ."></textarea>
+                        <label for="steps">الخطوات / العملية:</label>
+                        <textarea id="steps" placeholder="1. رسم الخطوط الأساسية&#10;2. تطبيق الطبقات الأولى من اللون&#10;3. التفاصيل..."></textarea>
+                        <label for="notes">ملاحظات / أفكار:</label>
+                        <textarea id="notes" placeholder="ملاحظات إضافية حول المشروع."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                M.Y.H
+            </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function setupTabs(pageElement, defaultTabId) {
+                const tabButtons = pageElement.querySelectorAll('.tab-button');
+                const tabContents = pageElement.querySelectorAll('.tab-content');
+
+                function activateTab(tabId) {
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    tabButtons.forEach(button => {
+                        button.classList.remove('active');
+                    });
+
+                    const targetContent = pageElement.querySelector(`#${tabId}`);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                    const targetButton = pageElement.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                    if (targetButton) {
+                        targetButton.classList.add('active');
+                    }
+                }
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tabId = button.dataset.tab;
+                        activateTab(tabId);
+                    });
+                });
+
+                // Activate default tab on load
+                if (defaultTabId) {
+                    activateTab(defaultTabId);
+                } else if (tabButtons.length > 0) {
+                    activateTab(tabButtons[0].dataset.tab);
+                }
+            }
+
+            // Setup tabs for the Personal Page
+            const personalPage = document.querySelector('.personal-page');
+            setupTabs(personalPage, 'personal-daily-tasks'); // Default active tab for personal page
+
+            // Setup tabs for the Professional Page
+            const professionalPage = document.querySelector('.professional-page');
+            setupTabs(professionalPage, 'daily-preparation'); // Default active tab for professional page
+        });
+    </script>
 </body>
 </html>
