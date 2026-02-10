@@ -82,8 +82,7 @@
         .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
 
         .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 9px; border: 1px solid var(--antique-gold); padding: 4px 2px; }
-        .horizontal-schedule .period-num { background: var(--antique-gold); color: white; font-size: 10px; font-weight: bold; font-family: 'Cairo'; }
+        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 9px; border: 1px solid var(--antique-gold); padding: 4px 1px; line-height: 1.2; }
         .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
 
         .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
@@ -126,7 +125,7 @@
             <button class="btn-premium" onclick="generate()">توليد السجل الكامل</button>
             <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
         </div>
-        <p style="font-size:12px; margin-top:10px; color:#555;">تم إضافة ترقيم الحصص - "MYH" الفخامة في التفاصيل.</p>
+        <p style="font-size:12px; margin-top:10px; color:#555;">تم إضافة ترقيم الحصص مع المواعيد بدقة.</p>
     </div>
 
     <div id="print-area"></div>
@@ -141,19 +140,12 @@
             "3-30": "مناسبة: عيد الفطر السعيد (تقديرياً)"
         };
 
-        const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
+        const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
 
-        // مصفوفة الحصص مع الترقيم
-        const periods = [
-            { n: "1", t: "7:35 - 8:15" },
-            { n: "2", t: "8:20 - 9:00" },
-            { n: "3", t: "9:05 - 9:45" },
-            { n: "4", t: "9:50 - 10:30" },
-            { n: "ف", t: "الفسحة" },
-            { n: "5", t: "10:55 - 11:35" },
-            { n: "6", t: "11:40 - 12:20" },
-            { n: "7", t: "12:25 - 1:05" },
-            { n: "8", t: "1:10 - 1:50" }
+        // مصفوفة الحصص المحدثة بالترقيم والمواعيد
+        const scheduleTimes = [
+            "الحصة 1<br>7:35 - 8:15", "الحصة 2<br>8:20 - 9:00", "الحصة 3<br>9:05 - 9:45", "الحصة 4<br>9:50 - 10:30",
+            "الفسحة", "الحصة 5<br>10:55 - 11:35", "الحصة 6<br>11:40 - 12:20", "الحصة 7<br>12:25 - 1:05", "الحصة 8<br>1:10 - 1:50"
         ];
 
         function scrollToId(id) {
@@ -250,17 +242,8 @@
                                 ${headerHTML(m, day)}
                                 <div class="day-label">${dayNameAr}</div>
                                 <table class="horizontal-schedule">
-                                    <thead>
-                                        <tr>
-                                            ${periods.map(p => `<th>${p.t}</th>`).join('')}
-                                        </tr>
-                                        <tr class="period-num">
-                                            ${periods.map(p => `<td>${p.n}</td>`).join('')}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>${Array(9).fill('<td></td>').join('')}</tr>
-                                    </tbody>
+                                    <thead><tr>${scheduleTimes.map(t => `<th>${t}</th>`).join('')}</tr></thead>
+                                    <tbody><tr>${Array(9).fill('<td></td>').join('')}</tr></tbody>
                                 </table>
                                 <div class="section-header">التحضير الذهني والوسائل</div>
                                 <div class="notes-area"><div class="lines"></div></div>
