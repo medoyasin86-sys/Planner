@@ -24,7 +24,6 @@
 
         body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 20px; scroll-behavior: smooth; }
 
-        /* شريط الأدوات العائم */
         .dashboard {
             position: sticky; top: 10px; z-index: 1000;
             max-width: 600px; margin: 0 auto 30px;
@@ -44,7 +43,6 @@
             position: relative; border: 1px solid #d1c7a7;
         }
 
-        /* --- تصميم الترويسة الفاخر --- */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 3px double var(--antique-gold); 
@@ -84,7 +82,8 @@
         .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
 
         .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 10px; border: 1px solid var(--antique-gold); padding: 6px 2px; }
+        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 9px; border: 1px solid var(--antique-gold); padding: 4px 2px; }
+        .horizontal-schedule .period-num { background: var(--antique-gold); color: white; font-size: 10px; font-weight: bold; font-family: 'Cairo'; }
         .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
 
         .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
@@ -92,7 +91,6 @@
         .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; }
         .lines { background-image: repeating-linear-gradient(transparent, transparent 27px, var(--line-tan) 28px); line-height: 28px; height: 100%; }
 
-        /* التفاعل في التقويم الصغير */
         .mini-cal-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
         .mini-month { border: 1px solid var(--antique-gold); background: white; font-size: 8px; text-align: center; }
         .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; cursor: pointer; }
@@ -105,7 +103,6 @@
 
         .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
 
-        /* --- تنسيقات الصفحة المالية --- */
         .finance-layout { display: flex; gap: 10px; flex: 1; }
         .finance-main { flex: 3; display: flex; flex-direction: column; }
         .finance-sidebar { flex: 1; display: flex; flex-direction: column; gap: 10px; }
@@ -129,7 +126,7 @@
             <button class="btn-premium" onclick="generate()">توليد السجل الكامل</button>
             <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
         </div>
-        <p style="font-size:12px; margin-top:10px; color:#555;">تم تصميم السجل بهوية "MYH" الفاخرة - اضغط توليد للبدء.</p>
+        <p style="font-size:12px; margin-top:10px; color:#555;">تم إضافة ترقيم الحصص - "MYH" الفخامة في التفاصيل.</p>
     </div>
 
     <div id="print-area"></div>
@@ -146,9 +143,17 @@
 
         const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
 
-        const scheduleTimes = [
-            "7:35 ص - 8:15 ص", "8:20 ص - 9:00 ص", "9:05 ص - 9:45 ص", "9:50 ص - 10:30 ص",
-            "الفسحة", "10:55 ص - 11:35 ص", "11:40 ص - 12:20 م", "12:25 م - 1:05 م", "1:10 م - 1:50 م"
+        // مصفوفة الحصص مع الترقيم
+        const periods = [
+            { n: "1", t: "7:35 - 8:15" },
+            { n: "2", t: "8:20 - 9:00" },
+            { n: "3", t: "9:05 - 9:45" },
+            { n: "4", t: "9:50 - 10:30" },
+            { n: "ف", t: "الفسحة" },
+            { n: "5", t: "10:55 - 11:35" },
+            { n: "6", t: "11:40 - 12:20" },
+            { n: "7", t: "12:25 - 1:05" },
+            { n: "8", t: "1:10 - 1:50" }
         ];
 
         function scrollToId(id) {
@@ -231,7 +236,6 @@
             for (let m = 0; m < monthNames.length; m++) {
                 let daysInMonth = new Date(2026, m + 1, 0).getDate();
 
-                // 1. توليد الصفحات اليومية
                 for (let day = 1; day <= daysInMonth; day++) {
                     let d = new Date(2026, m, day);
                     let weekDay = d.getDay();
@@ -246,8 +250,17 @@
                                 ${headerHTML(m, day)}
                                 <div class="day-label">${dayNameAr}</div>
                                 <table class="horizontal-schedule">
-                                    <thead><tr>${scheduleTimes.map(t => `<th>${t}</th>`).join('')}</tr></thead>
-                                    <tbody><tr>${Array(9).fill('<td></td>').join('')}</tr></tbody>
+                                    <thead>
+                                        <tr>
+                                            ${periods.map(p => `<th>${p.t}</th>`).join('')}
+                                        </tr>
+                                        <tr class="period-num">
+                                            ${periods.map(p => `<td>${p.n}</td>`).join('')}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>${Array(9).fill('<td></td>').join('')}</tr>
+                                    </tbody>
                                 </table>
                                 <div class="section-header">التحضير الذهني والوسائل</div>
                                 <div class="notes-area"><div class="lines"></div></div>
@@ -288,7 +301,6 @@
                     }
                 }
 
-                // 2. توليد الصفحات المالية
                 for (let week = 1; week <= 4; week += 2) { 
                     output += `<div class="spread-container" id="month-fin-${m}-${week}">`;
                     output += generateFinancialPage(m, week);
