@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>المخطط الشخصي 2026 - الإصدار الفاخر</title>
+    <title>المخطط الشخصي 2026 - الإصدار الفاخر المطور</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -44,7 +44,7 @@
             position: relative; border: 1px solid #d1c7a7;
         }
 
-        /* --- تصميم الترويسة الفاخر الجديد --- */
+        /* --- تصميم الترويسة الفاخر --- */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 3px double var(--antique-gold); 
@@ -105,7 +105,7 @@
 
         .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
 
-        /* --- تنسيقات الصفحة المالية الجديدة --- */
+        /* --- تنسيقات الصفحة المالية --- */
         .finance-layout { display: flex; gap: 10px; flex: 1; }
         .finance-main { flex: 3; display: flex; flex-direction: column; }
         .finance-sidebar { flex: 1; display: flex; flex-direction: column; gap: 10px; }
@@ -194,7 +194,6 @@
         }
 
         function headerHTML(m, day = null) {
-            // ترويسة فخمة بدون صور
             let dateBadgeHTML = "";
             if (day) {
                 dateBadgeHTML = `
@@ -260,13 +259,26 @@
                             </div>
 
                             <div class="page-container">
-                                <div class="section-header" style="background:var(--deep-ruby)">المهام اليومية</div>
-                                <div style="display: grid; grid-template-columns: 40px 1fr; gap: 10px; flex: 1;">
-                                    <div style="display:flex; flex-direction:column; border-left:1px dashed var(--antique-gold)">
-                                        ${Array(14).fill('<div style="height:30px; border-bottom:1px solid #eee; display:flex; align-items:center;"><div style="width:15px; height:15px; border:1px solid var(--royal-navy)"></div></div>').join('')}
+                                <div class="section-header" style="background:var(--deep-ruby)">المهام والملاحظات</div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; flex: 1; margin-bottom:10px;">
+                                    
+                                    <div style="background:white; border:1px solid #d1c7a7; padding:5px; display:flex; flex-direction:column;">
+                                        <div style="text-align:center; font-size:10px; font-weight:bold; color:var(--royal-navy); border-bottom:1px solid var(--antique-gold); margin-bottom:5px;">قائمة المهام</div>
+                                        ${Array(14).fill(`
+                                            <div style="height:28px; border-bottom:1px dashed #ccc; display:flex; align-items:center; margin-bottom:2px;">
+                                                <div style="width:12px; height:12px; border:1px solid var(--royal-navy); margin-left:5px; flex-shrink:0;"></div>
+                                                <div style="flex:1;"></div>
+                                            </div>
+                                        `).join('')}
                                     </div>
-                                    <div class="notes-area"><div class="lines"></div></div>
+
+                                    <div class="notes-area" style="margin:0;">
+                                        <div class="lines"></div>
+                                    </div>
+                                    
                                 </div>
+
                                 <div class="section-header">توجيهات فنية</div>
                                 <div style="height:80px; background:white; border:1px solid #ddd; margin-bottom:10px"></div>
                                 <div class="mini-cal-container">${[3,4,5].map(mm => buildMiniCal(mm)).join('')}</div>
@@ -276,18 +288,11 @@
                     }
                 }
 
-                // 2. توليد الصفحات المالية (4 صفحات - صفحة لكل أسبوع)
-                // يتم عرضها كـ Spread (صفحتين بجانب بعضهما) لتوفير الورق أو للعرض المزدوج
+                // 2. توليد الصفحات المالية
                 for (let week = 1; week <= 4; week += 2) { 
-                    // نولد صفحتين في كل لفة (مثلاً الأسبوع 1 و 2)
                     output += `<div class="spread-container" id="month-fin-${m}-${week}">`;
-                    
-                    // الصفحة الأولى في الفردة (Week X)
                     output += generateFinancialPage(m, week);
-                    
-                    // الصفحة الثانية في الفردة (Week X+1)
                     output += generateFinancialPage(m, week + 1);
-
                     output += `</div>`;
                 }
             }
