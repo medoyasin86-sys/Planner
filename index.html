@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سجل الفنون التشكيلية 2026 - الإصدار التفاعلي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+    <title>المخطط الشخصي 2026 - الإصدار الفاخر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     <style>
         :root {
             --vintage-paper: #fdfaf3;
@@ -27,18 +27,15 @@
         /* شريط الأدوات العائم */
         .dashboard {
             position: sticky; top: 10px; z-index: 1000;
-            max-width: 900px; margin: 0 auto 30px;
-            background: rgba(255, 255, 255, 0.95); padding: 15px;
+            max-width: 600px; margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.98); padding: 15px;
             border-radius: 15px; text-align: center;
             border: 3px double var(--antique-gold);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 10px 18px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; transition: 0.3s; display:inline-flex; align-items:center; gap:8px; }
+        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 10px 25px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; transition: 0.3s; font-size: 16px; }
         .btn-premium:hover { background: var(--antique-gold); color: var(--royal-navy); }
-        .btn-premium input[type="file"] { display:none; }
-
-        .preview-row { display:flex; justify-content:center; align-items:center; gap:14px; margin-top:8px; flex-wrap:wrap; }
 
         .spread-container { display: flex; justify-content: center; gap: 0; margin-bottom: 40px; }
         .page-container {
@@ -47,16 +44,42 @@
             position: relative; border: 1px solid #d1c7a7;
         }
 
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--antique-gold); margin-bottom: 5px; gap:10px; }
-        .initials-logo { font-family: 'Mrs Saint Delafield', cursive; font-size: 35px; color: var(--antique-gold); border: 2px solid var(--antique-gold); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--royal-navy); }
+        /* --- تصميم الترويسة الفاخر الجديد --- */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 3px double var(--antique-gold); 
+            padding-bottom: 8px; margin-bottom: 10px; 
+        }
+        
+        .header-text-block {
+            flex: 1;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        
+        .header-name {
+            font-family: 'Cairo'; font-weight: 900; font-size: 18px; color: var(--royal-navy);
+            margin: 0; line-height: 1.2;
+        }
+        
+        .header-title {
+            font-family: 'Amiri'; font-size: 12px; color: var(--deep-ruby); letter-spacing: 0.5px;
+            font-weight: bold; margin-top: 2px;
+        }
 
-        /* أماكن الصور في الترويسة */
-        .ministry-logo, #logo-preview { height: 38px; width: auto; border: 1px dashed var(--antique-gold); background: #fff; padding: 2px; border-radius: 6px; object-fit: contain; }
-        .user-photo, #photo-preview { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--antique-gold); object-fit: cover; background: #fff; }
+        .myh-logo {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 42px; color: var(--antique-gold);
+            line-height: 0.8;
+            padding: 0 20px;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+            border-left: 1px solid var(--line-tan);
+            border-right: 1px solid var(--line-tan);
+            margin: 0 15px;
+        }
 
-        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 8px; min-width: 70px; cursor: pointer; }
-        .date-month { background: var(--deep-ruby); color: white; font-size: 11px; padding: 2px; }
-        .date-day { font-size: 28px; font-weight: 900; color: var(--royal-navy); line-height: 1; }
+        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 6px; min-width: 60px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        .date-month { background: var(--royal-navy); color: var(--antique-gold); font-size: 10px; padding: 2px; font-weight: bold; font-family: 'Cairo'; }
+        .date-day { font-size: 26px; font-weight: 900; color: var(--deep-ruby); line-height: 1; font-family: 'Cairo'; padding: 2px 0; }
 
         .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
 
@@ -64,7 +87,7 @@
         .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 10px; border: 1px solid var(--antique-gold); padding: 6px 2px; }
         .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
 
-        .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; }
+        .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
 
         .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; }
         .lines { background-image: repeating-linear-gradient(transparent, transparent 27px, var(--line-tan) 28px); line-height: 28px; height: 100%; }
@@ -82,9 +105,17 @@
 
         .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
 
-        .finance-table { width: 100%; border-collapse: collapse; flex: 1; }
-        .finance-table th { background: var(--royal-navy); color: white; font-size: 11px; border: 1px solid var(--antique-gold); padding: 8px; }
-        .finance-table td { border: 1px solid var(--antique-gold); background: white; height: 30px; }
+        /* --- تنسيقات الصفحة المالية الجديدة --- */
+        .finance-layout { display: flex; gap: 10px; flex: 1; }
+        .finance-main { flex: 3; display: flex; flex-direction: column; }
+        .finance-sidebar { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+        .finance-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .finance-table th { background: var(--royal-navy); color: white; font-size: 11px; border: 1px solid var(--antique-gold); padding: 6px; }
+        .finance-table td { border: 1px solid var(--antique-gold); background: white; height: 32px; font-size: 12px; text-align: center; }
+
+        .weekly-summary { border: 2px solid var(--antique-gold); background: #fff; padding: 10px; border-radius: 8px; margin-top: auto; }
+        .summary-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #ddd; padding: 4px 0; font-size: 11px; font-family: 'Cairo'; font-weight: bold; }
 
         footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 11px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--royal-navy); }
         .event-text { color: var(--deep-ruby); font-weight: bold; }
@@ -93,43 +124,17 @@
 <body>
 
     <div class="dashboard no-print">
-        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية التفاعلي 2026</h2>
-
+        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية 2026 (النسخة الفاخرة)</h2>
         <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-            <button class="btn-premium" onclick="generate()">توليد السجل وتفعيل الانتقال</button>
+            <button class="btn-premium" onclick="generate()">توليد السجل الكامل</button>
             <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
-
-            <!-- أزرار تحميل الصور المحلية -->
-            <label class="btn-premium" title="تحميل شعار الوزارة">
-                تحميل شعار الوزارة
-                <input id="logo-input" type="file" accept="image/*">
-            </label>
-
-            <label class="btn-premium" title="تحميل الصورة الشخصية">
-                تحميل الصورة الشخصية
-                <input id="photo-input" type="file" accept="image/*">
-            </label>
         </div>
-
-        <!-- معاينات فورية -->
-        <div class="preview-row">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-family:'Cairo'; font-weight:700; color:var(--royal-navy);">معاينة الشعار:</span>
-                <img id="logo-preview" alt="معاينة الشعار">
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-family:'Cairo'; font-weight:700; color:var(--royal-navy);">معاينة الصورة:</span>
-                <img id="photo-preview" alt="معاينة الصورة">
-            </div>
-        </div>
-
-        <p style="font-size:12px; margin-top:10px;">* اضغط على أي تاريخ في التقاويم الصغيرة للانتقال السريع لصفحة اليوم.</p>
+        <p style="font-size:12px; margin-top:10px; color:#555;">تم تصميم السجل بهوية "MYH" الفاخرة - اضغط توليد للبدء.</p>
     </div>
 
     <div id="print-area"></div>
 
     <script>
-        /* أحداث ثابتة كما هي (لن يظهر يوليو بعد الآن) */
         const events = {
             "1-11": "مناسبة: ذكرى تولي جلالة السلطان هيثم بن طارق المعظم",
             "1-15": "مناسبة: ذكرى الإسراء والمعراج",
@@ -137,28 +142,14 @@
             "2-24": "مناسبة: يوم المعلم العماني",
             "3-1": "حدث: بداية شهر رمضان المبارك (تقديرياً)",
             "3-30": "مناسبة: عيد الفطر السعيد (تقديرياً)"
-            // "7-1": "حدث: بدء إجازة الكادر الإداري والتدريسي" // تم استبعاده مع حذف يوليو
         };
 
-        /* حذف يوليو: نكتفي بالأشهر من يناير إلى يونيو */
         const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
 
-        /* تحويل التوقيت إلى 12 ساعة (ص/م) */
         const scheduleTimes = [
-            "7:35 ص - 8:15 ص",
-            "8:20 ص - 9:00 ص",
-            "9:05 ص - 9:45 ص",
-            "9:50 ص - 10:30 ص",
-            "الفسحة",
-            "10:55 ص - 11:35 ص",
-            "11:40 ص - 12:20 م",
-            "12:25 م - 1:05 م",
-            "1:10 م - 1:50 م"
+            "7:35 ص - 8:15 ص", "8:20 ص - 9:00 ص", "9:05 ص - 9:45 ص", "9:50 ص - 10:30 ص",
+            "الفسحة", "10:55 ص - 11:35 ص", "11:40 ص - 12:20 م", "12:25 م - 1:05 م", "1:10 م - 1:50 م"
         ];
-
-        /* تخزين صور الشعار والصورة الشخصية (تعمل قبل/بعد التوليد) */
-        let ministryLogoDataUrl = localStorage.getItem('ministryLogo') || "";
-        let userPhotoDataUrl = localStorage.getItem('userPhoto') || "";
 
         function scrollToId(id) {
             const el = document.getElementById(id);
@@ -170,9 +161,10 @@
             return (d.getDay() === 5 || d.getDay() === 6) ? 21 : 23;
         }
 
-        function buildMiniCal(m) {
-            let html = `<div class="mini-month">
-                <div class="mini-month-title" onclick="scrollToId('month-fin-${m}')">${monthNames[m]}</div>
+        function buildMiniCal(m, isSidebar = false) {
+            let style = isSidebar ? "border:2px solid var(--royal-navy); box-shadow: 3px 3px 0 var(--antique-gold);" : "";
+            let html = `<div class="mini-month" style="${style}">
+                <div class="mini-month-title" onclick="scrollToId('month-fin-${m}-1')">${monthNames[m]}</div>
                 <table style="width:100%; border-collapse:collapse;"><tr>`;
             ['ح','ن','ث','ر','خ','ج','س'].forEach(d => html += `<td style="font-weight:bold; font-size:7px;">${d}</td>`);
             html += `</tr>`;
@@ -201,20 +193,34 @@
             return html + `</table></div>`;
         }
 
-        function headerHTML(m, day) {
+        function headerHTML(m, day = null) {
+            // ترويسة فخمة بدون صور
+            let dateBadgeHTML = "";
+            if (day) {
+                dateBadgeHTML = `
+                <div class="date-badge" onclick="scrollToId('month-fin-${m}-1')">
+                    <div class="date-month">${monthNames[m]}</div>
+                    <div class="date-day">${day}</div>
+                </div>`;
+            } else {
+                 dateBadgeHTML = `
+                <div class="date-badge" style="background:var(--royal-navy); border-color:var(--antique-gold)">
+                    <div class="date-month" style="color:white">شهر</div>
+                    <div class="date-day" style="font-size:18px; color:var(--antique-gold); padding:6px 0;">${monthNames[m]}</div>
+                </div>`;
+            }
+
             return `
             <header>
-                <div style="display:flex; align-items:center; gap:10px">
-                    <img class="ministry-logo" src="${ministryLogoDataUrl || ''}" alt="شعار الوزارة">
-                    <div class="initials-logo">MYH</div>
-                    <div style="font-family:'Cairo'; font-size:14px; font-weight:900;">محمد ياسين حلمي</div>
+                <div class="header-text-block">
+                    <h1 class="header-name">أ: محمد ياسين حلمي</h1>
+                    <div class="header-title">المخطط الشخصي للفصل الدراسي الثاني ٢٠٢٦ م</div>
                 </div>
-                <div style="display:flex; align-items:center; gap:10px">
-                    <img class="user-photo" src="${userPhotoDataUrl || ''}" alt="الصورة الشخصية">
-                    <div class="date-badge" onclick="scrollToId('month-fin-${m}')">
-                        <div class="date-month">${monthNames[m]}</div>
-                        <div class="date-day">${day}</div>
-                    </div>
+                
+                <div class="myh-logo">MYH</div>
+
+                <div style="display:flex; align-items:center;">
+                    ${dateBadgeHTML}
                 </div>
             </header>`;
         }
@@ -226,11 +232,11 @@
             for (let m = 0; m < monthNames.length; m++) {
                 let daysInMonth = new Date(2026, m + 1, 0).getDate();
 
+                // 1. توليد الصفحات اليومية
                 for (let day = 1; day <= daysInMonth; day++) {
                     let d = new Date(2026, m, day);
                     let weekDay = d.getDay();
 
-                    // استبعاد الجمعة والسبت
                     if (weekDay !== 5 && weekDay !== 6) {
                         const dateKey = `${m+1}-${day}`;
                         const dayNameAr = ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس"][weekDay];
@@ -270,75 +276,70 @@
                     }
                 }
 
-                // صفحة الماليات الشهرية
-                output += `
-                <div class="spread-container" id="month-fin-${m}">
-                    <div class="page-container">
-                        <div class="section-header" style="background:var(--salary-green)">الملخص المالي لشهر ${monthNames[m]}</div>
-                        <table class="finance-table">
-                            <thead><tr><th>التاريخ</th><th>البيان</th><th>صرف</th><th>دخل</th></tr></thead>
-                            <tbody>${Array(18).fill('<tr><td></td><td></td><td></td><td></td></tr>').join('')}</tbody>
-                        </table>
-                        <footer><div class="signature-fluid">Mo.Yasin</div></footer>
-                    </div>
-                    <div class="page-container">
-                        <div class="section-header">ملاحظات الميزانية والمشتريات</div>
-                        <div class="notes-area"><div class="lines"></div></div>
-                        <div style="padding:20px; display:flex; justify-content:center; flex-direction:column; align-items:center;">
-                            <p style="font-family:'Cairo'; font-weight:bold; color:var(--royal-navy)">تقويم الشهر</p>
-                            ${buildMiniCal(m)}
-                        </div>
-                        <footer><span>الفنون التشكيلية</span><span>2026</span></footer>
-                    </div>
-                </div>`;
+                // 2. توليد الصفحات المالية (4 صفحات - صفحة لكل أسبوع)
+                // يتم عرضها كـ Spread (صفحتين بجانب بعضهما) لتوفير الورق أو للعرض المزدوج
+                for (let week = 1; week <= 4; week += 2) { 
+                    // نولد صفحتين في كل لفة (مثلاً الأسبوع 1 و 2)
+                    output += `<div class="spread-container" id="month-fin-${m}-${week}">`;
+                    
+                    // الصفحة الأولى في الفردة (Week X)
+                    output += generateFinancialPage(m, week);
+                    
+                    // الصفحة الثانية في الفردة (Week X+1)
+                    output += generateFinancialPage(m, week + 1);
+
+                    output += `</div>`;
+                }
             }
             area.innerHTML = output;
-
-            // بعد التوليد، تأكد من تطبيق الصور (إن كانت محمّلة سابقًا)
-            updateImages();
         }
 
-        /* تحديث جميع الصور عبر المستند */
-        function updateImages() {
-            if (ministryLogoDataUrl) {
-                document.querySelectorAll('.ministry-logo').forEach(img => img.src = ministryLogoDataUrl);
-                const lp = document.getElementById('logo-preview');
-                if (lp) lp.src = ministryLogoDataUrl;
-            }
-            if (userPhotoDataUrl) {
-                document.querySelectorAll('.user-photo').forEach(img => img.src = userPhotoDataUrl);
-                const pp = document.getElementById('photo-preview');
-                if (pp) pp.src = userPhotoDataUrl;
-            }
-        }
+        function generateFinancialPage(m, week) {
+            return `
+            <div class="page-container">
+                ${headerHTML(m)}
+                
+                <div class="section-header" style="background:var(--salary-green); justify-content:center;">
+                    التقرير المالي - الأسبوع ${week}
+                </div>
 
-        /* تحميل الصور محليًا وتخزينها */
-        function handleImageUpload(input, type) {
-            const file = input.files && input.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (type === 'logo') {
-                    ministryLogoDataUrl = reader.result;
-                    localStorage.setItem('ministryLogo', ministryLogoDataUrl);
-                } else {
-                    userPhotoDataUrl = reader.result;
-                    localStorage.setItem('userPhoto', userPhotoDataUrl);
-                }
-                updateImages();
-            };
-            reader.readAsDataURL(file);
-        }
+                <div class="finance-layout">
+                    <div class="finance-main">
+                        <table class="finance-table">
+                            <thead><tr><th style="width:20%">اليوم</th><th>البند / البيان</th><th>المبلغ</th></tr></thead>
+                            <tbody>
+                                ${Array(10).fill('<tr><td></td><td></td><td></td></tr>').join('')}
+                            </tbody>
+                        </table>
+                        
+                        <div class="notes-area" style="flex:1; max-height:150px;">
+                            <span style="font-size:10px; color:var(--royal-navy); font-weight:bold;">ملاحظات مالية إضافية:</span>
+                            <div class="lines"></div>
+                        </div>
+                    </div>
 
-        // ربط الأحداث عند التحميل
-        window.addEventListener('DOMContentLoaded', () => {
-            const logoInput = document.getElementById('logo-input');
-            const photoInput = document.getElementById('photo-input');
-            if (logoInput) logoInput.addEventListener('change', (e) => handleImageUpload(e.target, 'logo'));
-            if (photoInput) photoInput.addEventListener('change', (e) => handleImageUpload(e.target, 'photo'));
-            // إظهار المعاينة المخزنة مسبقًا إن وجدت
-            updateImages();
-        });
+                    <div class="finance-sidebar">
+                        <div style="text-align:center;">
+                            <span style="font-family:'Cairo'; font-size:10px; font-weight:bold; color:var(--royal-navy)">خريطة الشهر</span>
+                            ${buildMiniCal(m, true)}
+                        </div>
+
+                        <div class="weekly-summary">
+                            <div style="background:var(--royal-navy); color:var(--antique-gold); text-align:center; padding:3px; font-size:12px; margin-bottom:5px; font-weight:bold;">ملخص الأسبوع</div>
+                            <div class="summary-row"><span>إجمالي الدخل</span><span>.........</span></div>
+                            <div class="summary-row"><span>المصروفات</span><span>.........</span></div>
+                            <div class="summary-row"><span>الادخار</span><span>.........</span></div>
+                            <div class="summary-row" style="border:none; margin-top:5px; background:#eee;"><span>الصافي</span><span>.........</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer>
+                    <span>الفنون التشكيلية</span>
+                    <div class="signature-fluid">Mo.Yasin</div>
+                </footer>
+            </div>`;
+        }
     </script>
 </body>
 </html>
