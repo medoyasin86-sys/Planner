@@ -2,335 +2,231 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>البلانر الرقمي 2026 — توليد PDF (Landscape | الأحد)</title>
+  <title>MYH Luxury Planner 2026 Generator</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="توليد PDF لبلانر عربي 2026 (يناير–يونيو) متوافق مع تطبيقات التدوين — اتجاه عرضي، بداية الأسبوع الأحد، روابط داخلية، جدول حصص 8×40 دقيقة." />
-
-  <!-- محمّل ذكي للـ pdfmake: يحاول jsDelivr ثم unpkg ثم النسخة المحلية إن وُجدت -->
-  <script>
-    (function loadPdfMake(){
-      function add(src, ok, bad){
-        var s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=bad||function(){}; document.head.appendChild(s);
-      }
-      function ready(){ window.__PDFMAKE_READY__=true; document.dispatchEvent(new Event('pdfmake-ready')); }
-      // خطوة 1: jsDelivr
-      add('https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/pdfmake.min.js', function(){
-        add('https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/vfs_fonts.js', ready, function(){
-          // vfs_fonts من unpkg
-          add('https://unpkg.com/pdfmake@0.2.10/build/vfs_fonts.js', ready, function(){ ready(); });
-        });
-      }, function(){
-        // خطوة 2: unpkg
-        add('https://unpkg.com/pdfmake@0.2.10/build/pdfmake.min.js', function(){
-          add('https://unpkg.com/pdfmake@0.2.10/build/vfs_fonts.js', ready, function(){ ready(); });
-        }, function(){
-          // خطوة 3: محليًا (اختياريًا إن وضعت الملفات داخل libs/pdfmake/)
-          add('./libs/pdfmake/pdfmake.min.js', function(){
-            add('./libs/pdfmake/vfs_fonts.js', ready, ready);
-          }, ready);
-        });
-      });
-    })();
-  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/pdfmake.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/vfs_fonts.js"></script>
 
   <style>
-    :root{ --brand:#6C5CE7; --ink:#222; --lines:#DADDE6; --bg:#fff; --soft:#f7f8fb; --ok:#0a8; --err:#c33; --warn:#c60 }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Arabic",system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    .wrap{max-width:1100px;margin:0 auto;padding:20px}
-    header{background:linear-gradient(135deg,#FDCFE8,#81ECEC);border-radius:18px;box-shadow:0 8px 28px rgba(0,0,0,.12);padding:18px;margin:18px 0;color:#111;position:relative}
-    header h1{margin:0 0 6px;font-size:clamp(22px,4vw,30px)}
-    header p{margin:4px 0 10px}
-    .status{position:absolute;inset-inline-start:16px;inset-block-start:16px;background:#fff;border:1px solid var(--lines);border-radius:999px;padding:6px 10px;box-shadow:0 8px 20px rgba(0,0,0,.08);font-size:13px}
-    .ok{color:var(--ok);font-weight:700}.err{color:var(--err);font-weight:700}.warn{color:var(--warn);font-weight:700}
-    .grid{display:grid;gap:16px} @media(min-width:900px){.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
-    .card{background:var(--soft);border:1px solid var(--lines);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:16px;margin:12px 0}
-    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-    .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:800;color:#fff;background:var(--brand);box-shadow:0 8px 20px rgba(0,0,0,.08)}
-    .btn.gray{background:#2F3443}.btn.green{background:#00B894}
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-    input[type="text"]{width:100%;padding:10px;border:1px solid var(--lines);border-radius:10px;background:#fff}
-    textarea{width:100%;min-height:220px;border:1px solid var(--lines);border-radius:10px;padding:10px;background:#0b1020;color:#cfe1ff;direction:ltr}
-    .muted{opacity:.8}
-    .tag{display:inline-block;padding:4px 8px;border-radius:999px;border:1px dashed var(--lines);font-size:12px;margin:2px}
+    :root { 
+      --royal-blue: #192a56; 
+      --gold: #b8860b; 
+      --silk: #f5f5f5; 
+      --text: #2f3640;
+    }
+    body { 
+      margin: 0; background: #f0f2f5; color: var(--text); 
+      font-family: system-ui, -apple-system, sans-serif; 
+    }
+    .container { max-width: 900px; margin: 40px auto; padding: 20px; }
+    header { 
+      background: linear-gradient(135deg, var(--royal-blue), #273c75); 
+      color: #fff; padding: 40px; border-radius: 20px; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      border-bottom: 5px solid var(--gold);
+      text-align: center;
+    }
+    .card { 
+      background: #fff; border-radius: 15px; padding: 25px; 
+      margin-top: -30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .btn { 
+      background: var(--gold); color: white; border: none; 
+      padding: 15px 30px; border-radius: 10px; cursor: pointer; 
+      font-weight: bold; font-size: 16px; transition: 0.3s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(184, 134, 11, 0.4); }
+    .status-badge { 
+      display: inline-block; padding: 5px 15px; border-radius: 20px; 
+      font-size: 12px; background: #e1f5fe; color: #01579b; margin-bottom: 15px;
+    }
+    textarea { 
+      width: 100%; height: 150px; border: 1px solid #ddd; 
+      border-radius: 10px; padding: 10px; font-family: monospace; 
+    }
+    input[type="file"] { margin: 15px 0; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div id="libStatus" class="status">التحقّق من pdfmake...</div>
-      <h1>البلانر الرقمي 2026 — توليد PDF (Landscape | الأحد)</h1>
-      <p class="muted">صفحات يومية/أسبوعية/شهرية/سنوية — روابط تنقّل داخلية — تقاويم مصغّرة (يناير–يونيو) — جدول حصص: ٨ × ٤٠ دقيقة + ٥ دقائق بين الحصص + فسحة ٢٥ دقيقة بعد الرابعة.</p>
-      <div class="row" style="margin-top:6px">
-        <label>خط عربي (TTF):</label>
-        <input id="fontFile" type="file" accept=".ttf" />
-        <button id="btnLoadFont" class="btn" disabled>تحميل الخط</button>
-        <span id="fontStatus" class="muted"></span>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button id="btnDownload" class="btn green" disabled>توليد وتنزيل PDF</button>
-        <button id="btnOpen" class="btn gray" disabled>توليد وفتح في نافذة</button>
-      </div>
-      <p id="topErr" class="err"></p>
-      <p class="muted" style="margin-top:4px">لتظهر العربية سليمة داخل PDF: حمّل خط TTF عربي قبل التوليد. قد يحجب المتصفح النوافذ المنبثقة؛ استخدم “تنزيل” كخيار مضمون.</p>
-    </header>
 
-    <section class="grid cols-2">
-      <article class="card">
-        <h3>إعدادات عامة</h3>
-        <div class="row">
-          <span class="tag">حجم الصفحة: 2160 × 1620</span>
-          <span class="tag">اتجاه: Landscape</span>
-          <span class="tag">الأسبوع يبدأ: الأحد</span>
-        </div>
-        <label for="docTitle">عنوان المستند:</label>
-        <input id="docTitle" type="text" value="Arabic Planner 2026 (Jan–Jun) — Landscape, Sunday Start" />
-      </article>
+<div class="container">
+  <header>
+    <h1>MYH Luxury Planner 2026</h1>
+    <p>توليد البلانر التفاعلي لـ iPad 10.2 (نسخة السيد محمد ياسين)</p>
+  </header>
 
-      <article class="card">
-        <h3>أحداث سلطنة عُمان (يناير ⇢ يونيو 2026) — JSON</h3>
-        <p class="muted">تُستخدم لتلوين التقويمات المصغّرة داخل الصفحات اليومية.</p>
-        <textarea id="evJson">{
-  "2026-01-15": { "name": "نهاية الفصل الدراسي الأول", "type": "education" },
-  "2026-01-18": { "name": "الإسراء والمعراج (عطلة)", "type": "religious" },
-  "2026-01-18_to_2026-01-22": { "name": "إجازة منتصف العام", "type": "education" },
-  "2026-02-19": { "name": "بداية رمضان 1447هـ (حسب إعلان سلطنة عمان)", "type": "religious" },
-  "2026-03-20_to_2026-03-23": { "name": "عطلة عيد الفطر", "type": "religious" },
-  "2026-05-27": { "name": "يوم عرفة", "type": "religious" },
-  "2026-05-28_to_2026-05-30": { "name": "عطلة عيد الأضحى", "type": "religious" },
-  "2026-06-01_to_2026-06-30": { "name": "فترة اختبارات نهاية الفصل الدراسي الثاني", "type": "assessment" },
-  "2026-06-17": { "name": "رأس السنة الهجرية 1448هـ", "type": "religious" }
+  <div class="card">
+    <div class="status-badge">نظام الروابط الداخلية: مفعل ✅</div>
+    
+    <h3>1. إعداد الخط العربي (خطوة إجبارية)</h3>
+    <p style="font-size: 13px; color: #666;">يرجى اختيار ملف خط TTF من جهازك لضمان ظهور اللغة العربية بشكل سليم.</p>
+    <input type="file" id="fontFile" accept=".ttf" />
+    <button class="btn" id="btnLoadFont" style="background: var(--royal-blue);">تحميل الخط</button>
+    <span id="fontStatus"></span>
+
+    <hr style="margin: 30px 0; opacity: 0.2;">
+
+    <h3>2. تخصيص المناسبات (سلطنة عمان)</h3>
+    <textarea id="evJson">{
+  "2026-01-11": { "name": "يوم تولي السلطان", "type": "national" },
+  "2026-03-20": { "name": "عيد الفطر المبارك", "type": "religious" },
+  "2026-05-27": { "name": "يوم عرفة", "type": "religious" }
 }</textarea>
-        <div class="row" style="margin-top:10px">
-          <button id="btnCheckJson" class="btn" disabled>تحقّق من JSON</button>
-          <span id="jsonStatus" class="muted"></span>
-        </div>
-      </article>
-    </section>
+
+    <div style="margin-top: 30px; display: flex; gap: 10px;">
+      <button id="btnDownload" class="btn" disabled>تحميل البلانر التفاعلي PDF</button>
+      <button id="btnOpen" class="btn" style="background: #2f3640;" disabled>معاينة سريعة</button>
+    </div>
   </div>
+</div>
 
-  <script>
-    // عناصر الواجهة
-    const libStatus   = document.getElementById('libStatus');
-    const topErr      = document.getElementById('topErr');
-    const btnLoadFont = document.getElementById('btnLoadFont');
-    const btnDownload = document.getElementById('btnDownload');
-    const btnOpen     = document.getElementById('btnOpen');
-    const btnCheck    = document.getElementById('btnCheckJson');
-    const fontFile    = document.getElementById('fontFile');
-    const fontStatus  = document.getElementById('fontStatus');
-    const evJsonEl    = document.getElementById('evJson');
-    const jsonStatus  = document.getElementById('jsonStatus');
-    const docTitleEl  = document.getElementById('docTitle');
+<script>
+    const COLORS = { royal: "#192a56", gold: "#b8860b", silk: "#f9f9f9", lines: "#dcdde1" };
+    let customFontLoaded = false;
 
-    function showErr(msg){ topErr.textContent = msg; console.error(msg) }
-    function clearErr(){ topErr.textContent = '' }
-
-    // تفعيل الواجهة بعد تحميل pdfmake
-    function enableUIAfterLib(){
-      if (window.__PDFMAKE_READY__ && typeof pdfMake !== 'undefined') {
-        libStatus.textContent = '✔ pdfmake جاهزة'; libStatus.className = 'status ok';
-        btnLoadFont.disabled = false; btnCheck.disabled = false;
-      } else {
-        libStatus.textContent = '✖ pdfmake غير محمّلة (تحقّق من الاتصال أو وفّر النسخة المحلية في libs/pdfmake/)';
-        libStatus.className = 'status err';
-      }
-    }
-    document.addEventListener('pdfmake-ready', enableUIAfterLib);
-    // إن وصلت الصفحة قبل حدثنا:
-    setTimeout(enableUIAfterLib, 400);
-
-    // تحميل الخط العربي
-    btnLoadFont.addEventListener('click', async ()=>{
-      clearErr();
-      try{
-        const f = fontFile.files?.[0];
-        if(!f){ alert('اختر ملف خط TTF أولًا'); return }
-        const base64 = await fileToBase64(f);
-        pdfMake.vfs = pdfMake.vfs || {};
-        pdfMake.vfs['NotoSansArabic-Regular.ttf'] = base64.split(',')[1]; // فقط البيانات بدون المقدمة
-        pdfMake.fonts = { Noto: { normal:'NotoSansArabic-Regular.ttf', bold:'NotoSansArabic-Regular.ttf' } };
-        fontStatus.textContent = '✔ تم تحميل الخط: ' + f.name; fontStatus.className = 'ok';
-        btnDownload.disabled = false; btnOpen.disabled = false;
-      }catch(e){ showErr('فشل تحميل الخط: '+e.message) }
+    // معالجة الخط
+    document.getElementById('btnLoadFont').addEventListener('click', async () => {
+        const file = document.getElementById('fontFile').files[0];
+        if (!file) return alert("اختر ملف الخط أولاً");
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64String = e.target.result.split(',')[1];
+            pdfMake.vfs = { 'CustomFont.ttf': base64String };
+            pdfMake.fonts = { MyFont: { normal: 'CustomFont.ttf', bold: 'CustomFont.ttf' } };
+            customFontLoaded = true;
+            document.getElementById('fontStatus').innerText = "✅ تم تحميل الخط بنجاح";
+            document.getElementById('btnDownload').disabled = false;
+            document.getElementById('btnOpen').disabled = false;
+        };
+        reader.readAsDataURL(file);
     });
 
-    function fileToBase64(file){
-      return new Promise((res, rej)=>{
-        const r=new FileReader();
-        r.onload=()=>res(r.result);
-        r.onerror=rej;
-        r.readAsDataURL(file);
-      });
-    }
-
-    // التحقق من JSON
-    btnCheck.addEventListener('click', ()=>{
-      try{ JSON.parse(evJsonEl.value); jsonStatus.textContent='✔ JSON صحيح'; jsonStatus.className='ok'; }
-      catch(e){ jsonStatus.textContent='✖ JSON خطأ: '+e.message; jsonStatus.className='err'; }
-    });
-
-    // ثوابت التخطيط
-    const PAGE = { w:2160, h:1620, orient:'landscape' };
-    const COLORS = { brand:"#6C5CE7", lines:"#DADDE6", religious:"#F48FB1", education:"#90CAF9", assessment:"#FFCC80" };
-    const AR_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-    const START = new Date(2026,0,1);
-    const END   = new Date(2026,5,30);
-
-    function ymd(d){ return d.toISOString().slice(0,10) }
-    function fmtHM(d){ return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0') }
-    function* eachDay(from,to){ const d=new Date(from); while(d<=to){ yield new Date(d); d.setDate(d.getDate()+1) } }
-    function sundayStart(d){ const t=new Date(d); while(t.getDay()!==0){ t.setDate(t.getDate()-1) } return t }
-
-    // جدول الحصص (٨×٤٠ + ٥ دقائق بين الحصص + ٢٥ دقيقة بعد الرابعة)
-    function buildPeriods(){
-      const list=[]; let cur=new Date(2000,0,1,7,35);
-      const addMin=m=>new Date(cur.getTime()+m*60000);
-      for(let i=1;i<=8;i++){ const end=addMin(40); list.push({no:i,start:cur,end});
-        if(i===4) cur=new Date(end.getTime()+25*60000);
-        else if(i<8) cur=new Date(end.getTime()+5*60000);
-      }
-      return list;
-    }
-    const PERIODS = buildPeriods();
-
-    function periodsTable(){
-      const body=[[{text:'جدول الحصص', colSpan:3, alignment:'right', bold:true, color:'#111'},'','']];
-      for(const p of PERIODS){ body.push([{text:`الحصة ${p.no}`,alignment:'right'},{text:`${fmtHM(p.start)} – ${fmtHM(p.end)}`,alignment:'left'},{text:''}]); }
-      return { table:{ widths:['*','*','*'], body }, layout:{ fillColor:r=>r===0?'#eef2ff':null, hLineColor:COLORS.lines, vLineColor:COLORS.lines } };
-    }
-
-    function ruledCard(w,h,rows=10){
-      const lines=[]; const m=14, top=h-m, bottom=m, step=(top-bottom)/Math.max(1,rows);
-      for(let i=0;i<=rows;i++){ lines.push({ type:'line', x1:m, y1:top-i*step, x2:w-m, y2:top-i*step, lineColor:COLORS.lines }); }
-      return { canvas:[ { type:'rect', x:0,y:0, w, h, r:8, lineColor:COLORS.lines, color:'#fff' }, ...lines ] };
-    }
-
-    function eventsOnDate(d,ev){
-      const out=[]; const key=ymd(d); if(ev[key]) out.push(ev[key]);
-      for(const [k,v] of Object.entries(ev)){ if(k.includes('_to_')){ const [s,e]=k.split('_to_'); const sd=new Date(s), ed=new Date(e); if(sd<=d && d<=ed) out.push(v); } }
-      return out;
-    }
-
-    function miniCalendar(month,year,evMap){
-      const N=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-      const head={ text:`${N[month-1]} ${year}`, style:'miniHead', margin:[0,0,0,4], color:COLORS.brand, alignment:'right' };
-      const start=sundayStart(new Date(year,month-1,1));
-      const rows=[ ['ح','ن','ث','ر','خ','ج','س'].map(d=>({text:d,alignment:'center',bold:true,fillColor:'#f0f3ff'})) ];
-      let cur=new Date(start);
-      for(let r=0;r<6;r++){
-        const row=[];
-        for(let c=0;c<7;c++){
-          const inMonth=(cur.getMonth()===month-1); const evs=inMonth?eventsOnDate(cur,evMap):[];
-          const dots=evs.slice(0,3).map(e=>{
-            const col=e.type==='education'?COLORS.education:(e.type==='assessment'?COLORS.assessment:COLORS.religious);
-            return { canvas:[{type:'ellipse',x:6,y:18,color:col,r1:2.5,r2:2.5}] };
-          });
-          row.push({
-            stack:[
-              {text:inMonth?String(cur.getDate()):' ',alignment:'right',color:inMonth?'#111':'#aaa'},
-              {columns:dots.map(d=>({stack:[d],width:10})),columnGap:2,margin:[0,2,0,0]}
+    // بناء محتوى الصفحة اليومية مع الهوية البصرية
+    function createDailyPage(dateStr, evMap) {
+        return {
+            padding: [20, 20, 20, 20],
+            id: `day-${dateStr}`,
+            stack: [
+                // Header
+                {
+                    columns: [
+                        { text: "Mr. Mo. Yasin", style: 'signature', color: COLORS.gold },
+                        { text: dateStr, alignment: 'left', style: 'dateHeader' }
+                    ]
+                },
+                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 500, y2: 5, lineWidth: 1, lineColor: COLORS.gold }] },
+                
+                // Main Content Area
+                {
+                    margin: [0, 20, 0, 0],
+                    columns: [
+                        // Left Column: Schedule
+                        {
+                            width: '40%',
+                            stack: [
+                                { text: "جدول الحصص اليومي", style: 'sectionTitle' },
+                                {
+                                    table: {
+                                        widths: ['*', '*'],
+                                        body: [
+                                            [{text: '07:35 - 08:15', fontSize: 10}, {text: 'الحصة 1', alignment: 'center'}],
+                                            [{text: '08:20 - 09:00', fontSize: 10}, {text: 'الحصة 2', alignment: 'center'}],
+                                            [{text: '09:05 - 09:45', fontSize: 10}, {text: 'الحصة 3', alignment: 'center'}],
+                                            [{text: '09:50 - 10:30', fontSize: 10}, {text: 'الحصة 4', alignment: 'center'}],
+                                            [{text: 'الفسحة', colSpan: 2, alignment: 'center', fillColor: COLORS.silk}, ''],
+                                            [{text: '10:55 - 11:35', fontSize: 10}, {text: 'الحصة 5', alignment: 'center'}],
+                                            [{text: '11:40 - 12:20', fontSize: 10}, {text: 'الحصة 6', alignment: 'center'}],
+                                            [{text: '12:25 - 01:05', fontSize: 10}, {text: 'الحصة 7', alignment: 'center'}],
+                                            [{text: '01:10 - 01:50', fontSize: 10}, {text: 'الحصة 8', alignment: 'center'}]
+                                        ]
+                                    },
+                                    layout: 'lightHorizontalLines'
+                                }
+                            ]
+                        },
+                        // Right Column: Cards
+                        {
+                            width: '60%',
+                            margin: [20, 0, 0, 0],
+                            stack: [
+                                { text: "بطاقات العمل الـ 5", style: 'sectionTitle' },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 40, r: 5, lineColor: COLORS.lines }] },
+                                { text: " ", margin: [0, 5] },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 40, r: 5, lineColor: COLORS.lines }] },
+                                { text: " ", margin: [0, 5] },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 40, r: 5, lineColor: COLORS.lines }] },
+                                { text: " ", margin: [0, 5] },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 40, r: 5, lineColor: COLORS.lines }] },
+                                { text: " ", margin: [0, 5] },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 40, r: 5, lineColor: COLORS.lines }] },
+                                { text: "الحسابات والمهام", style: 'sectionTitle', margin: [0, 20, 0, 10] },
+                                {
+                                    table: {
+                                        widths: ['*', '30%'],
+                                        body: [
+                                            [{text: 'البند', fillColor: COLORS.royal, color: 'white'}, {text: 'المبلغ', fillColor: COLORS.royal, color: 'white'}],
+                                            ['', ''], ['', '']
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
-            border:[true,true,true,true], borderColor:COLORS.lines, fillColor:inMonth?null:'#fafafa'
-          });
-          cur.setDate(cur.getDate()+1);
-        }
-        rows.push(row);
-      }
-      return [ head, { table:{ widths:['*','*','*','*','*','*','*'], body:rows }, layout:{ hLineColor:COLORS.lines, vLineColor:COLORS.lines }, margin:[0,0,0,8] } ];
+            pageBreak: 'after'
+        };
     }
 
-    function dailyPage(d,ev){
-      const title={ text:`${AR_DAYS[d.getDay()]} ${ymd(d)}`, style:'h1', color:COLORS.brand, margin:[0,0,0,8] };
-      const left=[ ruledCard(1160,140,6),{text:' ',margin:[0,6,0,0]},
-                   ruledCard(1160,140,6),{text:' ',margin:[0,6,0,0]},
-                   ruledCard(1160,140,6),{text:' ',margin:[0,6,0,0]},
-                   ruledCard(1160,140,6),{text:' ',margin:[0,6,0,0]},
-                   ruledCard(1160,140,6),{text:' ',margin:[0,10,0,0]},
-                   periodsTable() ];
-      const right=[ {text:'قائمة مهام',bold:true,margin:[0,0,0,6]},
-        { table:{widths:[20,'*'], body:Array.from({length:10},()=>[
-          [{canvas:[{type:'rect',x:0,y:0,w:16,h:16,r:3,lineColor:COLORS.lines}]},{text:'',border:[false,false,false,true]}]
-        ]) }, layout:{hLineColor:COLORS.lines,vLineColor:'transparent'} },
-        {text:' ',margin:[0,10,0,0]},{text:'ملاحظات اليوم',bold:true,margin:[0,0,0,6]}, ruledCard(840,300,10),
-        {text:' ',margin:[0,10,0,0]},{text:'الحسابات اليومية',bold:true,margin:[0,0,0,6]}, ruledCard(840,220,8),
-        {text:' ',margin:[0,10,0,6]},{text:'التقاويم المصغّرة (يناير–يونيو):',bold:true,margin:[0,0,0,6]},
-        ...[1,2,3,4,5,6].flatMap(m=>miniCalendar(m,2026,ev)) ];
-      return { id:`day-${ymd(d)}`, stack:[ title, {columns:[{stack:left,width:1160},{stack:right,width:840}],columnGap:16} ], pageBreak:'after' };
+    async function generatePDF(open) {
+        let evMap = JSON.parse(document.getElementById('evJson').value);
+        
+        let docDefinition = {
+            pageSize: { width: 1620 / 2.83, height: 2160 / 2.83 }, // iPad 10.2 scaling
+            defaultStyle: { font: 'MyFont', alignment: 'right' },
+            styles: {
+                signature: { fontSize: 18, italics: true },
+                dateHeader: { fontSize: 14, bold: true, color: COLORS.royal },
+                sectionTitle: { fontSize: 12, bold: true, color: COLORS.royal, margin: [0, 10, 0, 5] }
+            },
+            content: [
+                // Cover Page
+                {
+                    stack: [
+                        { text: "MY CUSTOM PLANNER", fontSize: 35, color: COLORS.gold, bold: true, margin: [0, 150, 0, 10] },
+                        { text: "2026", fontSize: 50, color: 'white', bold: true },
+                        { text: "MR. MO. YASIN", fontSize: 20, color: COLORS.gold, margin: [0, 50, 0, 0] }
+                    ],
+                    alignment: 'center',
+                    fillColor: COLORS.royal,
+                    pageBreak: 'after'
+                },
+                // Index with Hyperlinks
+                {
+                    text: "الفهرس التفاعلي", style: 'dateHeader', alignment: 'center', margin: [0, 20]
+                },
+                {
+                    columns: [
+                        { text: "شهر يناير", linkToDestination: "day-2026-01-01", color: 'blue', decoration: 'underline' },
+                        { text: "شهر فبراير", linkToDestination: "day-2026-02-01", color: 'blue', decoration: 'underline' }
+                    ],
+                    margin: [0, 20]
+                }
+            ]
+        };
+
+        // إضافة أيام عينة (يمكنك عمل حلقة تكرارية لـ 180 يوم)
+        docDefinition.content.push(createDailyPage("2026-01-01", evMap));
+        docDefinition.content.push(createDailyPage("2026-02-01", evMap));
+
+        if (open) pdfMake.createPdf(docDefinition).open();
+        else pdfMake.createPdf(docDefinition).download('MYH_Luxury_Planner_2026.pdf');
     }
 
-    function weeklyAccounts(ws){
-      return { id:`week-${ymd(ws)}`, stack:[
-        { text:`الحسابات الأسبوعية — أسبوع ${ymd(ws)}`, style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
-        { table:{ widths:['20%','40%','13%','13%','14%'], body:[
-            [{text:'التاريخ',bold:true,fillColor:'#eef2ff'},{text:'البند',bold:true,fillColor:'#eef2ff'},
-             {text:'دخل',bold:true,fillColor:'#eef2ff'},{text:'صرف',bold:true,fillColor:'#eef2ff'},{text:'صافي',bold:true,fillColor:'#eef2ff'}],
-            ...Array.from({length:20},()=>['','','','',''])
-          ]}, layout:{ hLineColor:COLORS.lines, vLineColor:COLORS.lines } }
-      ], pageBreak:'after' };
-    }
+    document.getElementById('btnDownload').onclick = () => generatePDF(false);
+    document.getElementById('btnOpen').onclick = () => generatePDF(true);
+</script>
 
-    function monthlyAccounts(m){
-      const N=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-      return { id:`month-2026-${String(m).padStart(2,'0')}-accounts`, stack:[
-        { text:`الحسابات الشهرية — ${N[m-1]} 2026`, style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
-        weeklyAccounts(new Date(2026,m-1,1)).stack[1]
-      ], pageBreak:'after' };
-    }
-
-    function indexPage(weeks, days){
-      const monthLinks=[1,2,3,4,5,6].map(m=>({ text:`شهر ${String(m).padStart(2,'0')}`, linkToDestination:`month-2026-${String(m).padStart(2,'0')}-accounts`, margin:[8,0,8,0] }));
-      const weekLinks =weeks.map(d=>({ text:`أسبوع ${ymd(d)}`, linkToDestination:`week-${ymd(d)}`, margin:[8,0,8,0] }));
-      const dayLinks  =days.slice(0,90).map(d=>({ text: ymd(d), linkToDestination:`day-${ymd(d)}`, margin:[8,0,8,0] }));
-      return { id:'index', stack:[
-        { text:'فهرس الربط الداخلي', style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
-        { text:'انتقل سريعًا إلى الحسابات أو الأيام:', margin:[0,0,0,8] },
-        { columns:[
-          { width:'33%', stack:[{text:'الشهور',bold:true,margin:[0,0,0,6]},...monthLinks] },
-          { width:'33%', stack:[{text:'الأسابيع (الأحد بداية)',bold:true,margin:[0,0,0,6]},...weekLinks] },
-          { width:'34%', stack:[{text:'عينة من الأيام',bold:true,margin:[0,0,0,6]},...dayLinks] }
-        ], columnGap:16 }
-      ], pageBreak:'after' };
-    }
-
-    function buildDocDefinition(evMap){
-      const weeks=[]; let ws=sundayStart(START);
-      while(ws<=END){ weeks.push(new Date(ws)); ws.setDate(ws.getDate()+7) }
-      const daysArr=[...eachDay(START,END)];
-      const content=[];
-      content.push(indexPage(weeks, daysArr));
-      content.push({ id:'year-2026', stack:[ { text:'الحسابات السنوية — 2026', style:'h1', color:COLORS.brand, margin:[0,0,0,8] }, weeklyAccounts(new Date(2026,0,1)).stack[1] ], pageBreak:'after' });
-      for(let m=1;m<=6;m++) content.push(monthlyAccounts(m));
-      for(const w of weeks) content.push(weeklyAccounts(w));
-      for(const d of daysArr) content.push(dailyPage(d, evMap));
-      return {
-        pageSize:{ width: PAGE.w, height: PAGE.h },
-        pageOrientation: PAGE.orient,
-        info:{ title: docTitleEl.value || 'Arabic Planner 2026 (Jan–Jun) — Landscape, Sunday Start' },
-        defaultStyle:{ font:'Noto', alignment:'right', fontSize:22, color:'#111' },
-        styles:{ h1:{ fontSize:40, bold:true }, miniHead:{ fontSize:26, bold:true } },
-        content
-      };
-    }
-
-    // توليد
-    btnDownload.addEventListener('click', ()=>generate(false));
-    btnOpen.addEventListener('click',     ()=>generate(true));
-
-    function generate(openInstead){
-      clearErr();
-      try{
-        if(typeof pdfMake === 'undefined'){ showErr('pdfmake غير مُحمّلة.'); return }
-        if(!pdfMake.vfs || !pdfMake.vfs['NotoSansArabic-Regular.ttf']){
-          showErr('حمّل خط TTF عربي عبر زر "تحميل الخط" قبل التوليد.'); return
-        }
-        let evMap;
-        try{ evMap = JSON.parse(evJsonEl.value) }catch(e){ showErr('JSON غير صحيح: '+e.message); return }
-        const dd = buildDocDefinition(evMap);
-        if(openInstead) pdfMake.createPdf(dd).open();
-        else pdfMake.createPdf(dd).download('Planner_OM_AR_2026_JanJun_GoodNotes.pdf');
-      }catch(e){ showErr('خطأ أثناء التوليد: '+e.message) }
-    }
-  </script>
 </body>
 </html>
