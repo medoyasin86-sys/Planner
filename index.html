@@ -2,31 +2,26 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <title>MYH Elite Planner 2026</title>
+    <title>MYH Paper-Scrap Elite Planner 2026</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
     <style>
-        :root { 
-            --royal-blue: #0f172a; 
-            --ruby: #9f1239; 
-            --emerald: #065f46; 
-            --gold: #b8860b; 
-        }
-        body { font-family: system-ui, sans-serif; background: #f1f5f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .setup-box { background: white; padding: 50px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2); text-align: center; border-bottom: 8px solid var(--gold); }
-        .btn-gen { background: var(--royal-blue); color: var(--gold); border: 2px solid var(--gold); padding: 18px 50px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 20px; transition: 0.4s; }
+        :root { --royal: #0f172a; --ruby: #9f1239; --emerald: #064e3b; --gold: #b8860b; --paper: #fdfbf7; }
+        body { font-family: system-ui, sans-serif; background: #e2e8f0; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .setup-box { background: white; padding: 50px; border-radius: 30px; text-align: center; border-bottom: 8px solid var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .btn-gen { background: var(--royal); color: var(--gold); border: 2px solid var(--gold); padding: 18px 50px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 20px; transition: 0.4s; }
         .btn-gen:hover { background: var(--gold); color: white; transform: scale(1.05); }
-        .status { margin-top: 20px; font-weight: bold; color: var(--emerald); }
+        .status { margin-top: 20px; color: var(--emerald); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="setup-box">
-    <h1 style="color: var(--royal-blue); font-size: 32px;">MYH Elite Planner 2026</h1>
-    <p style="color: #64748b;">نظام الجواهر: كحلي، ياقوتي، زمردي (نسخة آيباد 10.2)</p>
+    <h1 style="color: var(--royal);">MYH Master Scrapbook 2026</h1>
+    <p>تصميم قصاصات الورق الفاخرة - آيباد 10.2</p>
     <input type="file" id="fontFile" accept=".ttf" style="margin: 25px 0;" />
     <br>
-    <button class="btn-gen" id="genBtn">تحميل الإصدار الملكي 📥</button>
+    <button class="btn-gen" id="genBtn">توليد البلانر الورقي 🎨</button>
     <div id="status" class="status"></div>
 </div>
 
@@ -34,200 +29,146 @@
     let fontB64 = "";
     document.getElementById('fontFile').onchange = (e) => {
         const reader = new FileReader();
-        reader.onload = () => { 
-            fontB64 = reader.result.split(',')[1]; 
-            document.getElementById('status').innerText = "✅ تم دمج الخط الفاخر";
-        };
+        reader.onload = () => { fontB64 = reader.result.split(',')[1]; document.getElementById('status').innerText = "✅ الخط جاهز"; };
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    const THEME = { 
-        royal: "#0f172a", ruby: "#9f1239", emerald: "#064e3b", gold: "#b8860b", 
-        bg: "#f8fafc", line: "#e2e8f0" 
-    };
+    const THEME = { royal: "#0f172a", ruby: "#9f1239", emerald: "#064e3b", gold: "#b8860b", paper: "#fdfbf7", ink: "#334155" };
+    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
 
-    function getSchedule() {
+    function format12h(h, m) {
+        const ampm = h >= 12 ? 'م' : 'ص';
+        h = h % 12 || 12;
+        return `${h}:${m.toString().padStart(2, '0')} ${ampm}`;
+    }
+
+    function getSchedule12h() {
         let times = [];
         let start = new Date(); start.setHours(7, 35, 0);
         for(let i=1; i<=8; i++) {
+            let sStr = format12h(start.getHours(), start.getMinutes());
             let end = new Date(start.getTime() + 40 * 60000);
-            times.push(`${start.getHours()}:${start.getMinutes().toString().padStart(2,'0')} - ${end.getHours()}:${end.getMinutes().toString().padStart(2,'0')}`);
+            let eStr = format12h(end.getHours(), end.getMinutes());
+            times.push(`${sStr} - ${eStr}`);
             if(i === 4) start = new Date(end.getTime() + 25 * 60000); 
             else start = new Date(end.getTime() + 5 * 60000);
         }
         return times;
     }
 
+    // وظيفة لرسم التبويبات الجانبية (Side Tabs)
+    function getSideTabs() {
+        return {
+            stack: months.map((m, i) => ({
+                text: m, 
+                linkToDestination: 'm-' + i, 
+                fontSize: 9, 
+                margin: [0, 5], 
+                color: 'white', 
+                fillColor: (i % 2 === 0 ? THEME.ruby : THEME.emerald),
+                alignment: 'center'
+            })),
+            absolutePosition: { x: 805, y: 100 } // وضعها في أقصى يمين الصفحة
+        };
+    }
+
     document.getElementById('genBtn').onclick = () => {
-        if(!fontB64) return alert("يرجى رفع خط TTF أولاً لضمان عدم تشوه النص");
-        document.getElementById('status').innerText = "⏳ جاري صقل الصفحات وتجهيز الحسابات...";
+        if(!fontB64) return alert("يرجى اختيار الخط أولاً");
+        document.getElementById('status').innerText = "⏳ جاري تنسيق القصاصات والروابط...";
 
         pdfMake.vfs = { 'F.ttf': fontB64 };
         pdfMake.fonts = { MyFont: { normal: 'F.ttf', bold: 'F.ttf', italics: 'F.ttf' } };
 
-        const schedule = getSchedule();
+        const schedule = getSchedule12h();
         let docContent = [];
 
-        // 1. الغلاف الفخم
+        // 1. الغلاف
         docContent.push({
             stack: [
                 { text: '2026', fontSize: 100, color: THEME.gold, bold: true, margin: [0, 150, 0, 0] },
-                { text: 'Mr. Mo. Yasin', fontSize: 45, color: 'white', italics: true, margin: [0, 20] },
-                { canvas: [{ type: 'line', x1: 200, y1: 0, x2: 400, y2: 0, lineWidth: 2, lineColor: THEME.gold }] },
-                { text: 'ELITE PROFESSIONAL PLANNER', fontSize: 15, color: THEME.gold, margin: [0, 40], letterSpacing: 8 }
+                { text: 'Mr. Mo. Yasin', fontSize: 40, color: 'white', margin: [0, 10] },
+                { text: 'PERSONAL SCRAPBOOK PLANNER', fontSize: 12, color: THEME.gold, letterSpacing: 5 }
             ],
             fillColor: THEME.royal, alignment: 'center', pageBreak: 'after'
-        });
-
-        // 2. الفهرس التفاعلي
-        docContent.push({
-            id: 'main-index',
-            padding: [40, 40],
-            stack: [
-                { text: 'الفهرس الرقمي الذكي', fontSize: 30, color: THEME.royal, margin: [0, 0, 0, 30], alignment: 'center' },
-                {
-                    table: {
-                        widths: ['*', '*', '*'],
-                        body: [
-                            [{text: 'يناير', linkToDestination: 'm-0', style: 'idx'}, {text: 'فبراير', linkToDestination: 'm-1', style: 'idx'}, {text: 'مارس', linkToDestination: 'm-2', style: 'idx'}],
-                            [{text: 'أبريل', linkToDestination: 'm-3', style: 'idx'}, {text: 'مايو', linkToDestination: 'm-4', style: 'idx'}, {text: 'يونيو', linkToDestination: 'm-5', style: 'idx'}],
-                            [{text: 'يوليو', linkToDestination: 'm-6', style: 'idx'}, {text: 'ملخص الحسابات السنوي', style: 'idx', colSpan: 2}, '']
-                        ]
-                    }, layout: 'noBorders'
-                }
-            ], pageBreak: 'after'
         });
 
         let start = new Date(2026, 0, 1);
         let end = new Date(2026, 6, 31);
 
         for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            let monthIdx = d.getMonth();
             let dateStr = d.toLocaleDateString('ar-OM', { weekday: 'long', day: 'numeric', month: 'long' });
-            let pageId = d.getDate() === 1 ? { id: 'm-' + d.getMonth() } : {};
+            let pageId = d.getDate() === 1 ? { id: 'm-' + monthIdx } : {};
 
-            // --- الصفحة اليمين (العمل - ياقوتي) ---
+            // --- صفحة اليمين: العمل (ستايل القصاصات) ---
             docContent.push({
                 ...pageId,
-                padding: [25, 20, 25, 20],
+                background: [ { canvas: [{ type: 'rect', x: 20, y: 20, w: 780, h: 555, r: 10, fillColor: THEME.paper, lineColor: THEME.gold, lineWidth: 0.5 }] } ],
+                padding: [40, 30, 60, 30],
                 stack: [
-                    {
-                        columns: [
-                            { text: 'Mr. Mo. Yasin', fontSize: 22, color: THEME.gold, italics: true },
-                            { text: dateStr, fontSize: 16, color: THEME.royal, bold: true, alignment: 'left' }
-                        ]
-                    },
-                    { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 520, y2: 5, lineWidth: 1.5, lineColor: THEME.ruby }] },
-                    {
-                        margin: [0, 15, 0, 0],
-                        columns: [
-                            {
-                                width: '38%',
-                                stack: [
-                                    { text: 'الجدول الدراسي', color: THEME.ruby, bold: true, margin: [0, 5] },
-                                    {
-                                        table: {
-                                            widths: ['*'],
-                                            body: schedule.map(t => [{text: t, fontSize: 10, margin: [0, 6], color: THEME.royal}])
-                                        }, layout: 'lightHorizontalLines'
-                                    },
-                                    { text: 'قائمة مهام العمل', color: THEME.ruby, bold: true, margin: [0, 15, 0, 5] },
-                                    { table: { widths: [12, '*'], body: Array(6).fill([{text:''}, {text:'', margin:[0,6]}]) } }
-                                ]
-                            },
-                            {
-                                width: '62%', margin: [15, 0, 0, 0],
-                                stack: [
-                                    { text: 'بطاقات التحضير (Gems)', color: THEME.ruby, bold: true },
-                                    ...Array(5).fill(0).map(() => ({
-                                        margin: [0, 3, 0, 6],
-                                        canvas: [{ type: 'rect', x: 0, y: 0, w: 310, h: 72, r: 8, lineColor: THEME.line, fillColor: '#fdfdfd' }]
-                                    }))
-                                ]
-                            }
-                        ]
-                    }
-                ], pageBreak: 'after'
-            });
-
-            // --- الصفحة اليسار (الحياة والحسابات - زمردي) ---
-            docContent.push({
-                padding: [25, 20, 25, 20],
-                stack: [
-                    {
-                        columns: [
-                            { text: 'الحياة والحسابات', fontSize: 18, color: THEME.emerald, bold: true },
-                            { text: 'العودة للفهرس', linkToDestination: 'main-index', fontSize: 10, color: THEME.ruby, alignment: 'left' }
-                        ]
-                    },
-                    {
-                        margin: [0, 15, 0, 0],
-                        columns: [
-                            {
-                                width: '48%',
-                                stack: [
-                                    { text: 'المهام الشخصية', color: THEME.emerald, bold: true },
-                                    { table: { widths: [15, '*'], body: Array(8).fill([{text:''}, {text:'', margin:[0,9]}]) } },
-                                    { text: 'ملاحظات الياقوت', color: THEME.ruby, bold: true, margin:[0,15,0,5] },
-                                    { canvas: [{ type: 'rect', x: 0, y: 0, w: 235, h: 140, r: 15, lineColor: THEME.line }] }
-                                ]
-                            },
-                            {
-                                width: '48%', margin: [15, 0, 0, 0],
-                                stack: [
-                                    { text: 'حسابات اليوم (زمردي)', color: THEME.emerald, bold: true },
-                                    { canvas: [{ type: 'rect', x: 0, y: 0, w: 235, h: 220, r: 10, lineColor: THEME.emerald, dash: {length: 3} }] },
-                                    { text: 'الملخص الأسبوعي', color: THEME.emerald, bold: true, margin: [0, 15, 0, 5] },
-                                    {
-                                        table: {
-                                            widths: ['*', 'auto', 'auto'],
-                                            body: [
-                                                [{text: 'البند', fillColor: THEME.emerald, color: 'white'}, {text: 'دخل', fillColor: THEME.emerald, color: 'white'}, {text: 'صرف', fillColor: THEME.emerald, color: 'white'}],
-                                                ['', '', ''], ['', '', ''],
-                                                [{text: 'الإجمالي', bold: true}, {colSpan: 2, text: ''}]
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ], pageBreak: 'after'
-            });
-
-            // إضافة ملخص شهري عند نهاية كل شهر
-            let nextDay = new Date(d); nextDay.setDate(d.getDate() + 1);
-            if (nextDay.getMonth() !== d.getMonth()) {
-                docContent.push({
-                    padding: [40, 40],
-                    stack: [
-                        { text: `ملخص حسابات شهر ${d.toLocaleDateString('ar-OM', {month:'long'})}`, fontSize: 24, color: THEME.emerald, bold: true, alignment: 'center', margin: [0, 20] },
+                    getSideTabs(),
+                    { columns: [ {text: 'Mr. Mo. Yasin', fontSize: 20, color: THEME.gold, italics: true}, {text: dateStr, style: 'dateTitle'} ] },
+                    { margin: [0, 20], columns: [
                         {
-                            table: {
-                                widths: ['*', '*', '*', '*'],
-                                body: [
-                                    [{text: 'الأسبوع', style: 'th'}, {text: 'إجمالي الدخل', style: 'th'}, {text: 'إجمالي المصاريف', style: 'th'}, {text: 'الصافي', style: 'th'}],
-                                    ['الأسبوع 1', '', '', ''], ['الأسبوع 2', '', '', ''], ['الأسبوع 3', '', '', ''], ['الأسبوع 4', '', '', ''],
-                                    [{text: 'إجمالي الشهر', bold: true, fillColor: THEME.bg}, '', '', '']
-                                ]
-                            }
+                            width: '35%',
+                            stack: [
+                                { text: '📌 جدول الحصص (12h)', color: THEME.ruby, bold: true, margin: [0,0,0,10] },
+                                { table: { widths: ['*'], body: schedule.map(t => [{text: t, fontSize: 9, margin: [0, 5], color: THEME.ink}]) }, layout: 'noBorders' }
+                            ]
+                        },
+                        {
+                            width: '60%', margin: [20, 0, 0, 0],
+                            stack: [
+                                { text: '📝 بطاقات التحضير الذهني', color: THEME.ruby, bold: true, margin:[0,0,0,10] },
+                                ...Array(5).fill(0).map(() => ({
+                                    margin: [0, 2, 0, 10],
+                                    canvas: [{ type: 'rect', x: 0, y: 0, w: 280, h: 70, r: 5, fillColor: '#ffffff', lineColor: '#e2e8f0' }]
+                                }))
+                            ]
                         }
-                    ], pageBreak: 'after'
-                });
-            }
+                    ]}
+                ], pageBreak: 'after'
+            });
+
+            // --- صفحة اليسار: الحياة والحسابات ---
+            docContent.push({
+                padding: [40, 30, 60, 30],
+                stack: [
+                    getSideTabs(),
+                    { columns: [ {text: 'الحياة والحسابات الزمردية', color: THEME.emerald, fontSize: 18, bold: true}, {text: 'العودة للغلاف', linkToDestination: 'm-0', fontSize: 9, color: THEME.ruby, alignment: 'left'} ] },
+                    { margin: [0, 20], columns: [
+                        {
+                            width: '45%',
+                            stack: [
+                                { text: '✅ مهام اليوم الشخصية', color: THEME.emerald, bold: true },
+                                { table: { widths: [15, '*'], body: Array(10).fill([{text:''}, {text:'', margin:[0,7]}]) }, layout: 'lightHorizontalLines' }
+                            ]
+                        },
+                        {
+                            width: '45%', margin: [20, 0, 0, 0],
+                            stack: [
+                                { text: '💰 حسابات (قصاصة زمردية)', color: THEME.emerald, bold: true },
+                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 200, h: 200, r: 10, fillColor: '#f0fdf4', lineColor: THEME.emerald, dash: {length: 2} }] },
+                                { text: 'ملخص الصرف الأسبوعي', color: THEME.emerald, bold: true, margin: [0, 15] },
+                                { table: { widths: ['*', 'auto'], body: [['البند', 'المبلغ'], ['', ''], ['', ''], [{text:'الصافي', bold:true}, '']] } }
+                            ]
+                        }
+                    ]}
+                ], pageBreak: 'after'
+            });
         }
 
         const docDefinition = {
             pageSize: { width: 842, height: 595 },
             defaultStyle: { font: 'MyFont', alignment: 'right' },
             styles: {
-                idx: { fontSize: 18, color: THEME.ruby, margin: [0, 15], decoration: 'underline' },
-                th: { fillColor: THEME.royal, color: 'white', bold: true, alignment: 'center' }
+                dateTitle: { fontSize: 16, color: THEME.royal, bold: true, alignment: 'left' }
             },
             content: docContent
         };
 
-        pdfMake.createPdf(docDefinition).download('MYH_Elite_2026.pdf');
-        document.getElementById('status').innerText = "✅ تم صياغة البلانر بنجاح! افضله الآن على GoodNotes";
+        pdfMake.createPdf(docDefinition).download('MYH_Scrapbook_12h_2026.pdf');
+        document.getElementById('status').innerText = "✅ اكتملت التحفة الفنية! جاهز للتحميل.";
     };
 </script>
 
