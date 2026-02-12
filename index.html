@@ -1,345 +1,313 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>المخطط الشخصي 2026 - الإصدار الفاخر المطور</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --vintage-paper: #fdfaf3;
-            --royal-navy: #1a2e44;
-            --antique-gold: #9d7e3d;
-            --deep-ruby: #631d1d;
-            --line-tan: #e5dcc5;
-            --salary-green: #2d5a27;
-            --weekend-bg: #f0f2f5;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>البلانر الرقمي 2026 — GoodNotes (عرضي | بداية الأحد)</title>
+  <meta name="description" content="بلانر عربي فاخر 2026 (يناير–يونيو) متوافق مع GoodNotes، اتجاه عرضي، بداية الأسبوع الأحد، روابط داخلية، جدول حصص 8 × 40 دقيقة، فسحة 25 دقيقة بعد الحصة الرابعة." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- يمكنك استبدال الخطوط بما تفضّل -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#6C5CE7;        /* lavender */
+      --mint:#00B894;
+      --ink:#222;
+      --lines:#DADDE6;
+      --aqua:#81ECEC;
+      --pink:#FDCFE8;
+      --yel:#FFEAA7;
+      --tea:#A8E6CF;
 
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; padding: 0 !important; }
-            .spread-container { page-break-after: always !important; display: flex !important; }
-            @page { size: A4 landscape; margin: 0; }
-        }
+      --religious:#F48FB1;
+      --edu:#90CAF9;
+      --assess:#FFCC80;
 
-        body { background: #334155; font-family: 'Amiri', serif; margin: 0; padding: 20px; scroll-behavior: smooth; }
+      --bg:#ffffff;
+      --bg-soft:#f9f9fb;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#111317;
+        --bg-soft:#181b20;
+        --ink:#EDEFF5;
+        --lines:#2b2f37;
+        --shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"Noto Sans Arabic", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background:var(--bg); color:var(--ink); line-height:1.75;
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    header.hero{
+      background:linear-gradient(135deg, var(--pink), var(--aqua));
+      border-radius:calc(var(--radius) + 8px);
+      box-shadow:var(--shadow);
+      padding:28px 24px;
+      margin:24px 0 18px;
+      color:#111;
+      position:relative;
+      overflow:hidden;
+    }
+    header.hero h1{
+      margin:0 0 6px; font-weight:800; letter-spacing:.3px; font-size:clamp(22px,4vw,34px);
+    }
+    header.hero p{margin:6px 0 14px; font-size:clamp(14px,2.4vw,18px)}
+    .badge{
+      display:inline-block; background:#fff; color:#333; padding:6px 10px; border-radius:999px;
+      box-shadow:0 6px 16px rgba(0,0,0,.12); font-size:13px; margin-inline:6px 0
+    }
+    .btn{
+      appearance:none; border:none; border-radius:12px; padding:12px 16px; cursor:pointer; font-weight:700;
+      color:#fff; background:var(--brand); box-shadow:var(--shadow); transition:transform .08s ease;
+    }
+    .btn.secondary{background:var(--mint); color:#073d31}
+    .btn.gray{background:#2d3340}
+    .btn:active{transform:translateY(1px)}
+    .grid{display:grid; gap:16px}
+    @media (min-width:960px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+    @media (min-width:960px){ .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
 
-        .dashboard {
-            position: sticky; top: 10px; z-index: 1000;
-            max-width: 600px; margin: 0 auto 30px;
-            background: rgba(255, 255, 255, 0.98); padding: 15px;
-            border-radius: 15px; text-align: center;
-            border: 3px double var(--antique-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    .card{
+      background:var(--bg-soft); border:1px solid var(--lines); border-radius:var(--radius); padding:18px 18px 16px;
+      box-shadow:var(--shadow)
+    }
+    .card h3{margin:0 0 10px; font-size:20px}
+    .card h4{margin:0 0 8px; font-size:17px}
+    .muted{opacity:.8}
+    .tag{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; margin:4px; border:1px dashed var(--lines)}
+    .tag.relig{background:var(--religious); color:#242429}
+    .tag.edu{background:var(--edu); color:#0b2d53}
+    .tag.ass{background:var(--assess); color:#4a2c00}
 
-        .btn-premium { background: var(--royal-navy); color: #fff; border: 2px solid var(--antique-gold); padding: 10px 25px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; border-radius: 8px; transition: 0.3s; font-size: 16px; }
-        .btn-premium:hover { background: var(--antique-gold); color: var(--royal-navy); }
+    pre{
+      background:#0b1020; color:#d7e3ff; padding:16px; border-radius:12px; overflow:auto;
+      border:1px solid #18213b; box-shadow:var(--shadow)
+    }
+    code.kbd{background:var(--lines); color:#111; border-radius:6px; padding:2px 6px; font-weight:700}
 
-        .spread-container { display: flex; justify-content: center; gap: 0; margin-bottom: 40px; }
-        .page-container {
-            width: 148.5mm; height: 210mm; background: var(--vintage-paper);
-            padding: 8mm; box-sizing: border-box; display: flex; flex-direction: column;
-            position: relative; border: 1px solid #d1c7a7;
-        }
+    table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--lines); border-radius:12px; overflow:hidden; background:var(--bg-soft)}
+    th,td{padding:10px 12px; border-bottom:1px solid var(--lines)}
+    th{background:#eef2ff; color:#1f2661; text-align:right}
+    tr:last-child td{border-bottom:none}
+    .flex{display:flex; gap:12px; flex-wrap:wrap}
+    .hr{height:1px; background:var(--lines); margin:22px 0}
 
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 3px double var(--antique-gold); 
-            padding-bottom: 8px; margin-bottom: 10px; 
-        }
-        
-        .header-text-block {
-            flex: 1;
-            display: flex; flex-direction: column; justify-content: center;
-        }
-        
-        .header-name {
-            font-family: 'Cairo'; font-weight: 900; font-size: 18px; color: var(--royal-navy);
-            margin: 0; line-height: 1.2;
-        }
-        
-        .header-title {
-            font-family: 'Amiri'; font-size: 12px; color: var(--deep-ruby); letter-spacing: 0.5px;
-            font-weight: bold; margin-top: 2px;
-        }
+    footer{opacity:.8; font-size:14px; margin:24px 0 12px}
 
-        .myh-logo {
-            font-family: 'Mrs Saint Delafield', cursive;
-            font-size: 42px; color: var(--antique-gold);
-            line-height: 0.8;
-            padding: 0 20px;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-            border-left: 1px solid var(--line-tan);
-            border-right: 1px solid var(--line-tan);
-            margin: 0 15px;
-        }
+    .pill{display:inline-flex; align-items:center; gap:8px; background:var(--bg-soft); border:1px solid var(--lines); padding:8px 12px; border-radius:999px}
 
-        .date-badge { text-align: center; background: white; border: 2px solid var(--royal-navy); border-radius: 6px; min-width: 60px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
-        .date-month { background: var(--royal-navy); color: var(--antique-gold); font-size: 10px; padding: 2px; font-weight: bold; font-family: 'Cairo'; }
-        .date-day { font-size: 26px; font-weight: 900; color: var(--deep-ruby); line-height: 1; font-family: 'Cairo'; padding: 2px 0; }
-
-        .day-label { background: var(--antique-gold); color: white; font-family: 'Cairo'; font-size: 14px; padding: 2px 15px; border-radius: 15px 15px 0 0; display: inline-block; margin-top: 5px; }
-
-        .horizontal-schedule { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        .horizontal-schedule th { background: var(--royal-navy); color: white; font-size: 9px; border: 1px solid var(--antique-gold); padding: 4px 1px; line-height: 1.2; }
-        .horizontal-schedule td { border: 1px solid var(--antique-gold); height: 35px; background: white; text-align: center; }
-
-        .section-header { background: var(--royal-navy); color: var(--antique-gold); padding: 4px 10px; font-family: 'Cairo'; font-size: 12px; font-weight: bold; border-right: 5px solid var(--antique-gold); margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
-
-        .notes-area { flex: 1; background: white; border: 1px solid #d1c7a7; padding: 5px; position: relative; }
-        .lines { background-image: repeating-linear-gradient(transparent, transparent 27px, var(--line-tan) 28px); line-height: 28px; height: 100%; }
-
-        .mini-cal-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
-        .mini-month { border: 1px solid var(--antique-gold); background: white; font-size: 8px; text-align: center; }
-        .mini-month-title { background: var(--royal-navy); color: var(--antique-gold); padding: 2px; font-size: 9px; cursor: pointer; }
-        .mini-month td { cursor: pointer; transition: 0.2s; }
-        .mini-month td:hover:not(:empty) { background: var(--antique-gold) !important; color: white !important; }
-
-        .day-event { background: var(--deep-ruby) !important; color: white !important; border-radius: 2px; font-weight: bold; }
-        .day-salary { background: var(--salary-green) !important; color: white !important; border-radius: 2px; }
-        .day-weekend { background: var(--weekend-bg); color: #bbb; }
-
-        .signature-fluid { font-family: 'Mrs Saint Delafield', cursive; font-size: 42px; color: var(--royal-navy); opacity: 0.8; transform: rotate(-5deg); }
-
-        .finance-layout { display: flex; gap: 10px; flex: 1; }
-        .finance-main { flex: 3; display: flex; flex-direction: column; }
-        .finance-sidebar { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-
-        .finance-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        .finance-table th { background: var(--royal-navy); color: white; font-size: 11px; border: 1px solid var(--antique-gold); padding: 6px; }
-        .finance-table td { border: 1px solid var(--antique-gold); background: white; height: 32px; font-size: 12px; text-align: center; }
-
-        .weekly-summary { border: 2px solid var(--antique-gold); background: #fff; padding: 10px; border-radius: 8px; margin-top: auto; }
-        .summary-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #ddd; padding: 4px 0; font-size: 11px; font-family: 'Cairo'; font-weight: bold; }
-
-        footer { border-top: 1px solid var(--antique-gold); padding-top: 5px; margin-top: auto; font-size: 11px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--royal-navy); }
-        .event-text { color: var(--deep-ruby); font-weight: bold; }
-    </style>
+    .notice{padding:12px 14px; border:1px dashed var(--lines); border-radius:12px; background:rgba(255,234,167,.25)}
+    .success{background:rgba(168,230,207,.28)}
+    .danger{background:rgba(244,143,177,.20)}
+  </style>
 </head>
 <body>
 
-    <div class="dashboard no-print">
-        <h2 style="font-family:'Cairo'; color:var(--royal-navy); margin:0 0 10px 0;">سجل الفنون التشكيلية 2026 (النسخة الفاخرة)</h2>
-        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-            <button class="btn-premium" onclick="generate()">توليد السجل الكامل</button>
-            <button class="btn-premium" style="background:var(--deep-ruby)" onclick="window.print()">طباعة السجل PDF</button>
+  <div class="wrap">
+    <header class="hero">
+      <div class="pill">
+        <strong>2026 — يناير ⇢ يونيو</strong>
+        <span class="badge">اتجاه عرضي (Landscape)</span>
+        <span class="badge">بداية الأسبوع: الأحد</span>
+        <span class="badge">روابط داخلية لـ GoodNotes</span>
+      </div>
+      <h1>البلانر الرقمي العربي — متوافق مع GoodNotes</h1>
+      <p class="muted">
+        صفحات يومية للعمل والحياة والحسابات، جدول حصص ٨×٤٠ دقيقة مع فواصل ٥ دقائق وفسحة ٢٥ دقيقة بعد الحصة الرابعة، وتقويمات مصغّرة ملوّنة للأحداث الرسمية في عُمان.
+      </p>
+      <div class="flex">
+        <!-- استبدل الروابط كما تشاء -->
+        <a class="btn" href="https://github.com/new" target="_blank" rel="noopener">أنشئ مستودع GitHub</a>
+        <button class="btn secondary" onclick="scrollToId('install')">خطوات التثبيت</button>
+        <button class="btn gray" onclick="scrollToId('events')">تحرير أحداث عُمان (JSON)</button>
+      </div>
+    </header>
+
+    <!-- مميزات -->
+    <section class="grid cols-3">
+      <article class="card">
+        <h3>أقسام الصفحة اليومية</h3>
+        <ul>
+          <li>العمل: <span class="muted">٥ بطاقات فاخرة مسطّرة غير معنونة</span></li>
+          <li>جدول الحصص: <span class="muted">٨ حصص × ٤٠ دقيقة، ٥ دقائق بين الحصص، فسحة ٢٥ دقيقة بعد الرابعة</span></li>
+          <li>الحياة اليومية: <span class="muted">عمود مهام + بطاقة ملاحظات</span></li>
+          <li>الحسابات اليومية: <span class="muted">مساحة مسطرة حرة</span></li>
+          <li>تقويمات مصغّرة يناير–يونيو مع خريطة لونية</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>الحسابات</h3>
+        <ul>
+          <li>أسبوعية: <span class="muted">التاريخ – البند – دخل – صرف – صافي</span></li>
+          <li>شهرية/سنوية بنفس البنية</li>
+          <li>بداية الأسبوع: الأحد</li>
+        </ul>
+        <div class="hr"></div>
+        <h4>خريطة لونية</h4>
+        <div class="flex">
+          <span class="tag relig">ديني</span>
+          <span class="tag edu">تعليمي</span>
+          <span class="tag ass">اختبارات/تقييم</span>
         </div>
-        <p style="font-size:12px; margin-top:10px; color:#555;">تم إضافة ترقيم الحصص مع المواعيد بدقة.</p>
-    </div>
+      </article>
 
-    <div id="print-area"></div>
+      <article class="card">
+        <h3>التوافق</h3>
+        <ul>
+          <li>iPad 10.2 (الجيل التاسع) — نسبة 4:3</li>
+          <li>GoodNotes — روابط PDF داخلية</li>
+          <li>خط عربي موحّد يضمن نصًا غير مُكسّر</li>
+        </ul>
+        <p class="muted">ملاحظة: داخل GoodNotes اضغط الروابط في وضع القراءة.</p>
+      </article>
+    </section>
 
-    <script>
-        const events = {
-            "1-11": "مناسبة: ذكرى تولي جلالة السلطان هيثم بن طارق المعظم",
-            "1-15": "مناسبة: ذكرى الإسراء والمعراج",
-            "2-1": "حدث: بداية الفصل الدراسي الثاني",
-            "2-24": "مناسبة: يوم المعلم العماني",
-            "3-1": "حدث: بداية شهر رمضان المبارك (تقديرياً)",
-            "3-30": "مناسبة: عيد الفطر السعيد (تقديرياً)"
-        };
+    <div class="hr"></div>
 
-        const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
+    <!-- جدول الحصص -->
+    <section class="card">
+      <h3>الجدول اليومي (ثابت في صفحات العمل)</h3>
+      <table>
+        <thead>
+          <tr><th>الحصة</th><th>الوقت</th><th>ملاحظات</th></tr>
+        </thead>
+        <tbody id="periods-body">
+          <!-- يُملأ بالسكربت أدناه -->
+        </tbody>
+      </table>
+      <p class="muted">٨ حصص × ٤٠ دقيقة — ٥ دقائق بين الحصص — فسحة ٢٥ دقيقة بعد الحصة الرابعة.</p>
+    </section>
 
-        // مصفوفة الحصص المحدثة بالترقيم والمواعيد
-        const scheduleTimes = [
-            "الحصة 1<br>7:35 - 8:15", "الحصة 2<br>8:20 - 9:00", "الحصة 3<br>9:05 - 9:45", "الحصة 4<br>9:50 - 10:30",
-            "الفسحة", "الحصة 5<br>10:55 - 11:35", "الحصة 6<br>11:40 - 12:20", "الحصة 7<br>12:25 - 1:05", "الحصة 8<br>1:10 - 1:50"
-        ];
+    <div class="hr"></div>
 
-        function scrollToId(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+    <!-- خطوات التثبيت -->
+    <section id="install" class="card">
+      <h3>التثبيت والتوليد (محليًا)</h3>
+      <ol>
+        <li>انسخ ملفات المشروع (أو حمّلها بترتيب المجلد الموضّح في README).</li>
+        <li>أنشئ بيئة عمل وثبّت المتطلبات:</li>
+      </ol>
+      <pre><code class="lang-bash">python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install reportlab arabic_reshaper python-bidi pillow</code></pre>
+      <ol start="3">
+        <li>ضع الخط <code class="kbd">fonts/NotoSansArabic-Regular.ttf</code></li>
+        <li>شغّل:</li>
+      </ol>
+      <pre><code class="lang-bash">python generate_planner.py</code></pre>
+      <p class="muted">سيتولّد ملف: <code class="kbd">output/Planner_OM_AR_2026_JanJun_GoodNotes.pdf</code></p>
+      <div class="notice">**تلميح:** يمكنك إضافة GitHub Actions لاحقًا لتوليد PDF تلقائيًا عند كل Push.</div>
+    </section>
 
-        function getSalaryDay(m) {
-            let d = new Date(2026, m, 23);
-            return (d.getDay() === 5 || d.getDay() === 6) ? 21 : 23;
-        }
+    <div class="hr"></div>
 
-        function buildMiniCal(m, isSidebar = false) {
-            let style = isSidebar ? "border:2px solid var(--royal-navy); box-shadow: 3px 3px 0 var(--antique-gold);" : "";
-            let html = `<div class="mini-month" style="${style}">
-                <div class="mini-month-title" onclick="scrollToId('month-fin-${m}-1')">${monthNames[m]}</div>
-                <table style="width:100%; border-collapse:collapse;"><tr>`;
-            ['ح','ن','ث','ر','خ','ج','س'].forEach(d => html += `<td style="font-weight:bold; font-size:7px;">${d}</td>`);
-            html += `</tr>`;
+    <!-- JSON أحداث عُمان -->
+    <section id="events" class="card">
+      <h3>أحداث سلطنة عُمان (يناير ⇢ يونيو 2026) — JSON</h3>
+      <p class="muted">يمكنك تعديل التواريخ أو أنواع الأحداث ثم تحميل الملف للاستخدام داخل المشروع في <code class="kbd">data/oman_events_2026_jan_jun.json</code>.</p>
+      <textarea id="jsonArea" style="width:100%;min-height:260px;direction:ltr;font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#d7e3ff;border:1px solid #18213b;border-radius:12px;padding:12px">
+{
+  "2026-01-15": { "name": "نهاية الفصل الدراسي الأول", "type": "education" },
+  "2026-01-18": { "name": "الإسراء والمعراج (عطلة)", "type": "religious" },
+  "2026-01-18_to_2026-01-22": { "name": "إجازة منتصف العام", "type": "education" },
+  "2026-02-19": { "name": "بداية رمضان 1447هـ (حسب إعلان سلطنة عمان)", "type": "religious" },
+  "2026-03-20_to_2026-03-23": { "name": "عطلة عيد الفطر", "type": "religious" },
+  "2026-05-27": { "name": "يوم عرفة", "type": "religious" },
+  "2026-05-28_to_2026-05-30": { "name": "عطلة عيد الأضحى", "type": "religious" },
+  "2026-06-01_to_2026-06-30": { "name": "فترة اختبارات نهاية الفصل الدراسي الثاني", "type": "assessment" },
+  "2026-06-17": { "name": "رأس السنة الهجرية 1448هـ", "type": "religious" }
+}
+      </textarea>
+      <div class="flex" style="margin-top:10px">
+        <button class="btn" onclick="downloadJSON()">تحميل JSON</button>
+        <button class="btn secondary" onclick="validateJSON()">تحقّق من الصيغة</button>
+      </div>
+      <p id="jsonStatus" class="muted" style="margin-top:8px"></p>
+      <div class="danger" style="margin-top:10px">
+        تنبيه: الأعياد (رمضان/الفطر/الأضحى) نهائيًا تُحدَّد بالرؤية الشرعية وقد تتقدّم/تتأخّر يومًا. حدّث الملف بعد الإعلانات الرسمية.
+      </div>
+    </section>
 
-            let days = new Date(2026, m + 1, 0).getDate();
-            let first = new Date(2026, m, 1).getDay();
-            let day = 1;
+    <div class="hr"></div>
 
-            for(let i=0; i<6; i++) {
-                html += `<tr>`;
-                for(let j=0; j<7; j++) {
-                    if((i===0 && j < first) || day > days) html += `<td></td>`;
-                    else {
-                        let dateKey = `${m+1}-${day}`;
-                        let cls = "";
-                        if (j >= 5) cls = "day-weekend";
-                        if (day === getSalaryDay(m)) cls = "day-salary";
-                        if (events[dateKey]) cls = "day-event";
+    <!-- مراجع وروابط مفيدة -->
+    <section class="grid cols-2">
+      <article class="card">
+        <h3>روابط مفيدة</h3>
+        <ul>
+          <li><a href="https://support.apple.com/en-us/111898" target="_blank" rel="noopener">iPad 10.2 (الجيل التاسع) — Apple Support</a></li>
+          <li><a href="https://support.goodnotes.com/hc/en-us/articles/13623343439631-Navigate-PDF-Hyperlinks" target="_blank" rel="noopener">GoodNotes — دعم روابط PDF الداخلية</a></li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>ملاحظات</h3>
+        <p class="muted">
+          البلانر مُولّد ببايثون عبر ReportLab، مع تشكيل/اتجاه عربي (arabic_reshaper + python-bidi) وخط NotoSansArabic.
+          يمكنك تخصيص الألوان من <code class="kbd">assets/palette.json</code>.
+        </p>
+      </article>
+    </section>
 
-                        html += `<td class="${cls}" onclick="scrollToId('day-${m+1}-${day}')">${day}</td>`;
-                        day++;
-                    }
-                }
-                html += `</tr>`; if(day > days) break;
-            }
-            return html + `</table></div>`;
-        }
+    <footer>
+      © 2026 — بلانر 2026 (يناير–يونيو) — متوافق مع GoodNotes — اتجاه عرضي — بداية الأسبوع الأحد.
+    </footer>
+  </div>
 
-        function headerHTML(m, day = null) {
-            let dateBadgeHTML = "";
-            if (day) {
-                dateBadgeHTML = `
-                <div class="date-badge" onclick="scrollToId('month-fin-${m}-1')">
-                    <div class="date-month">${monthNames[m]}</div>
-                    <div class="date-day">${day}</div>
-                </div>`;
-            } else {
-                 dateBadgeHTML = `
-                <div class="date-badge" style="background:var(--royal-navy); border-color:var(--antique-gold)">
-                    <div class="date-month" style="color:white">شهر</div>
-                    <div class="date-day" style="font-size:18px; color:var(--antique-gold); padding:6px 0;">${monthNames[m]}</div>
-                </div>`;
-            }
+  <script>
+    function scrollToId(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}) }
 
-            return `
-            <header>
-                <div class="header-text-block">
-                    <h1 class="header-name">أ: محمد ياسين حلمي</h1>
-                    <div class="header-title">المخطط الشخصي للفصل الدراسي الثاني ٢٠٢٦ م</div>
-                </div>
-                
-                <div class="myh-logo">MYH</div>
+    // توليد الجدول وفق المطلوب: ٨ حصص × ٤٠ دقيقة، ٥ دقائق بين الحصص، فسحة ٢٥ دقيقة بعد الرابعة
+    (function buildPeriods(){
+      const tbody = document.getElementById('periods-body');
+      const start = {h:7, m:35};
+      const addMin = (h,m,dm)=>{ const t=new Date(2000,0,1,h,m+dm); return {h:t.getHours(), m:t.getMinutes()} };
+      const fmt = t => `${String(t.h).padStart(2,'0')}:${String(t.m).padStart(2,'0')}`;
+      let cur = {...start};
+      for(let i=1;i<=8;i++){
+        const end = addMin(cur.h, cur.m, 40);
+        const tr = document.createElement('tr');
+        const td1 = document.createElement('td'); td1.textContent = `الحصة ${i}`;
+        const td2 = document.createElement('td'); td2.textContent = `${fmt(cur)} – ${fmt(end)}`;
+        const td3 = document.createElement('td'); td3.innerHTML = (i===4) ? '<strong>فسحة 25 دقيقة بعد هذه الحصة</strong>' : '—';
+        tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tbody.appendChild(tr);
+        // فاصل
+        if(i===4) { cur = addMin(end.h, end.m, 25) }
+        else if(i<8) { cur = addMin(end.h, end.m, 5) }
+      }
+    })();
 
-                <div style="display:flex; align-items:center;">
-                    ${dateBadgeHTML}
-                </div>
-            </header>`;
-        }
-
-        function generate() {
-            const area = document.getElementById('print-area');
-            let output = '';
-
-            for (let m = 0; m < monthNames.length; m++) {
-                let daysInMonth = new Date(2026, m + 1, 0).getDate();
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    let d = new Date(2026, m, day);
-                    let weekDay = d.getDay();
-
-                    if (weekDay !== 5 && weekDay !== 6) {
-                        const dateKey = `${m+1}-${day}`;
-                        const dayNameAr = ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس"][weekDay];
-
-                        output += `
-                        <div class="spread-container" id="day-${m+1}-${day}">
-                            <div class="page-container">
-                                ${headerHTML(m, day)}
-                                <div class="day-label">${dayNameAr}</div>
-                                <table class="horizontal-schedule">
-                                    <thead><tr>${scheduleTimes.map(t => `<th>${t}</th>`).join('')}</tr></thead>
-                                    <tbody><tr>${Array(9).fill('<td></td>').join('')}</tr></tbody>
-                                </table>
-                                <div class="section-header">التحضير الذهني والوسائل</div>
-                                <div class="notes-area"><div class="lines"></div></div>
-                                <div class="mini-cal-container">${[0,1,2].map(mm => buildMiniCal(mm)).join('')}</div>
-                                <footer>
-                                    <span class="event-text">${events[dateKey] || "يوم عمل اعتيادي"}</span>
-                                    <div class="signature-fluid">Mo.Yasin</div>
-                                </footer>
-                            </div>
-
-                            <div class="page-container">
-                                <div class="section-header" style="background:var(--deep-ruby)">المهام والملاحظات</div>
-                                
-                                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px; flex: 1; margin-bottom:10px;">
-                                    
-                                    <div style="background:white; border:1px solid #d1c7a7; padding:5px; display:flex; flex-direction:column;">
-                                        <div style="text-align:center; font-size:10px; font-weight:bold; color:var(--royal-navy); border-bottom:1px solid var(--antique-gold); margin-bottom:5px;">قائمة المهام</div>
-                                        ${Array(14).fill(`
-                                            <div style="height:28px; border-bottom:1px dashed #ccc; display:flex; align-items:center; margin-bottom:2px;">
-                                                <div style="width:12px; height:12px; border:1px solid var(--royal-navy); margin-left:5px; flex-shrink:0;"></div>
-                                                <div style="flex:1;"></div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-
-                                    <div class="notes-area" style="margin:0;">
-                                        <div class="lines"></div>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="section-header">توجيهات فنية</div>
-                                <div style="height:80px; background:white; border:1px solid #ddd; margin-bottom:10px"></div>
-                                <div class="mini-cal-container">${[3,4,5].map(mm => buildMiniCal(mm)).join('')}</div>
-                                <footer><span>سجل 2026 المطور</span><div style="text-align:left">نهاية الدوام 13:50</div></footer>
-                            </div>
-                        </div>`;
-                    }
-                }
-
-                for (let week = 1; week <= 4; week += 2) { 
-                    output += `<div class="spread-container" id="month-fin-${m}-${week}">`;
-                    output += generateFinancialPage(m, week);
-                    output += generateFinancialPage(m, week + 1);
-                    output += `</div>`;
-                }
-            }
-            area.innerHTML = output;
-        }
-
-        function generateFinancialPage(m, week) {
-            return `
-            <div class="page-container">
-                ${headerHTML(m)}
-                
-                <div class="section-header" style="background:var(--salary-green); justify-content:center;">
-                    التقرير المالي - الأسبوع ${week}
-                </div>
-
-                <div class="finance-layout">
-                    <div class="finance-main">
-                        <table class="finance-table">
-                            <thead><tr><th style="width:20%">اليوم</th><th>البند / البيان</th><th>المبلغ</th></tr></thead>
-                            <tbody>
-                                ${Array(10).fill('<tr><td></td><td></td><td></td></tr>').join('')}
-                            </tbody>
-                        </table>
-                        
-                        <div class="notes-area" style="flex:1; max-height:150px;">
-                            <span style="font-size:10px; color:var(--royal-navy); font-weight:bold;">ملاحظات مالية إضافية:</span>
-                            <div class="lines"></div>
-                        </div>
-                    </div>
-
-                    <div class="finance-sidebar">
-                        <div style="text-align:center;">
-                            <span style="font-family:'Cairo'; font-size:10px; font-weight:bold; color:var(--royal-navy)">خريطة الشهر</span>
-                            ${buildMiniCal(m, true)}
-                        </div>
-
-                        <div class="weekly-summary">
-                            <div style="background:var(--royal-navy); color:var(--antique-gold); text-align:center; padding:3px; font-size:12px; margin-bottom:5px; font-weight:bold;">ملخص الأسبوع</div>
-                            <div class="summary-row"><span>إجمالي الدخل</span><span>.........</span></div>
-                            <div class="summary-row"><span>المصروفات</span><span>.........</span></div>
-                            <div class="summary-row"><span>الادخار</span><span>.........</span></div>
-                            <div class="summary-row" style="border:none; margin-top:5px; background:#eee;"><span>الصافي</span><span>.........</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <footer>
-                    <span>الفنون التشكيلية</span>
-                    <div class="signature-fluid">Mo.Yasin</div>
-                </footer>
-            </div>`;
-        }
-    </script>
+    function validateJSON(){
+      const el = document.getElementById('jsonArea');
+      try{
+        const obj = JSON.parse(el.value);
+        document.getElementById('jsonStatus').textContent = '✅ الصيغة صحيحة (JSON Valid).';
+        document.getElementById('jsonStatus').className = 'success';
+        return obj;
+      }catch(e){
+        document.getElementById('jsonStatus').textContent = '❌ صيغة JSON غير صحيحة: ' + e.message;
+        document.getElementById('jsonStatus').className = 'danger';
+      }
+    }
+    function downloadJSON(){
+      const v = validateJSON();
+      if(!v) return;
+      const blob = new Blob([JSON.stringify(v, null, 2)], {type:'application/json;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'oman_events_2026_jan_jun.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
 </body>
 </html>
