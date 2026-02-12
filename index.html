@@ -2,26 +2,26 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <title>MYH Paper-Scrap Elite Planner 2026</title>
+    <title>MYH Master Planner 2026 - Spread Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
     <style>
-        :root { --royal: #0f172a; --ruby: #9f1239; --emerald: #064e3b; --gold: #b8860b; --paper: #fdfbf7; }
-        body { font-family: system-ui, sans-serif; background: #e2e8f0; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .setup-box { background: white; padding: 50px; border-radius: 30px; text-align: center; border-bottom: 8px solid var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .btn-gen { background: var(--royal); color: var(--gold); border: 2px solid var(--gold); padding: 18px 50px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 20px; transition: 0.4s; }
-        .btn-gen:hover { background: var(--gold); color: white; transform: scale(1.05); }
-        .status { margin-top: 20px; color: var(--emerald); font-weight: bold; }
+        :root { --royal: #0f172a; --ruby: #9f1239; --emerald: #064e3b; --gold: #b8860b; }
+        body { font-family: system-ui, sans-serif; background: #f1f5f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .setup-box { background: white; padding: 40px; border-radius: 25px; text-align: center; border-bottom: 8px solid var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .btn-gen { background: var(--royal); color: var(--gold); border: 2px solid var(--gold); padding: 15px 40px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 18px; transition: 0.3s; }
+        .btn-gen:hover { background: var(--gold); color: white; transform: translateY(-3px); }
+        .status { margin-top: 15px; color: var(--emerald); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="setup-box">
-    <h1 style="color: var(--royal);">MYH Master Scrapbook 2026</h1>
-    <p>تصميم قصاصات الورق الفاخرة - آيباد 10.2</p>
-    <input type="file" id="fontFile" accept=".ttf" style="margin: 25px 0;" />
+    <h1 style="color: var(--royal);">MYH Master Planner 2026</h1>
+    <p style="color: #64748b;">نظام الأجندة المتقابلة مع الفهرس الذكي</p>
+    <input type="file" id="fontFile" accept=".ttf" style="margin: 20px 0;" />
     <br>
-    <button class="btn-gen" id="genBtn">توليد البلانر الورقي 🎨</button>
+    <button class="btn-gen" id="genBtn">توليد الأجندة الملكية 📒</button>
     <div id="status" class="status"></div>
 </div>
 
@@ -29,52 +29,56 @@
     let fontB64 = "";
     document.getElementById('fontFile').onchange = (e) => {
         const reader = new FileReader();
-        reader.onload = () => { fontB64 = reader.result.split(',')[1]; document.getElementById('status').innerText = "✅ الخط جاهز"; };
+        reader.onload = () => { 
+            fontB64 = reader.result.split(',')[1]; 
+            document.getElementById('status').innerText = "✅ الخط مدمج الآن";
+        };
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    const THEME = { royal: "#0f172a", ruby: "#9f1239", emerald: "#064e3b", gold: "#b8860b", paper: "#fdfbf7", ink: "#334155" };
+    const THEME = { royal: "#0f172a", ruby: "#9f1239", emerald: "#064e3b", gold: "#b8860b", bg: "#fdfbf7", line: "#e2e8f0" };
     const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
-
-    function format12h(h, m) {
-        const ampm = h >= 12 ? 'م' : 'ص';
-        h = h % 12 || 12;
-        return `${h}:${m.toString().padStart(2, '0')} ${ampm}`;
-    }
 
     function getSchedule12h() {
         let times = [];
         let start = new Date(); start.setHours(7, 35, 0);
         for(let i=1; i<=8; i++) {
-            let sStr = format12h(start.getHours(), start.getMinutes());
+            let h = start.getHours();
+            let m = start.getMinutes().toString().padStart(2,'0');
+            let ampm = h >= 12 ? 'م' : 'ص';
+            let displayH = h % 12 || 12;
+            let startStr = `${displayH}:${m} ${ampm}`;
+            
             let end = new Date(start.getTime() + 40 * 60000);
-            let eStr = format12h(end.getHours(), end.getMinutes());
-            times.push(`${sStr} - ${eStr}`);
+            let eh = end.getHours();
+            let em = end.getMinutes().toString().padStart(2,'0');
+            let eampm = eh >= 12 ? 'م' : 'ص';
+            let edisplayH = eh % 12 || 12;
+            let endStr = `${edisplayH}:${em} ${eampm}`;
+
+            times.push(`${startStr} - ${endStr}`);
             if(i === 4) start = new Date(end.getTime() + 25 * 60000); 
             else start = new Date(end.getTime() + 5 * 60000);
         }
         return times;
     }
 
-    // وظيفة لرسم التبويبات الجانبية (Side Tabs)
-    function getSideTabs() {
-        return {
-            stack: months.map((m, i) => ({
-                text: m, 
-                linkToDestination: 'm-' + i, 
-                fontSize: 9, 
-                margin: [0, 5], 
-                color: 'white', 
-                fillColor: (i % 2 === 0 ? THEME.ruby : THEME.emerald),
-                alignment: 'center'
-            })),
-            absolutePosition: { x: 805, y: 100 } // وضعها في أقصى يمين الصفحة
-        };
+    // بناء الفهرس الجانبي (Tabs)
+    function drawSideTabs(currentMonthIdx) {
+        return months.map((m, idx) => ({
+            text: m,
+            linkToDestination: 'm-' + idx,
+            fontSize: 10,
+            color: 'white',
+            alignment: 'center',
+            margin: [0, 4, 0, 4],
+            fillColor: (idx === currentMonthIdx) ? THEME.gold : THEME.royal
+        }));
     }
 
     document.getElementById('genBtn').onclick = () => {
-        if(!fontB64) return alert("يرجى اختيار الخط أولاً");
-        document.getElementById('status').innerText = "⏳ جاري تنسيق القصاصات والروابط...";
+        if(!fontB64) return alert("يرجى رفع الخط أولاً");
+        document.getElementById('status').innerText = "⏳ يتم الآن خياطة الصفحات رقمياً...";
 
         pdfMake.vfs = { 'F.ttf': fontB64 };
         pdfMake.fonts = { MyFont: { normal: 'F.ttf', bold: 'F.ttf', italics: 'F.ttf' } };
@@ -85,9 +89,10 @@
         // 1. الغلاف
         docContent.push({
             stack: [
-                { text: '2026', fontSize: 100, color: THEME.gold, bold: true, margin: [0, 150, 0, 0] },
-                { text: 'Mr. Mo. Yasin', fontSize: 40, color: 'white', margin: [0, 10] },
-                { text: 'PERSONAL SCRAPBOOK PLANNER', fontSize: 12, color: THEME.gold, letterSpacing: 5 }
+                { text: '2026', fontSize: 110, color: THEME.gold, bold: true, margin: [0, 150, 0, 0] },
+                { text: 'Mr. Mo. Yasin', fontSize: 50, color: 'white', italics: true, margin: [0, 15] },
+                { canvas: [{ type: 'line', x1: 250, y1: 0, x2: 450, y2: 0, lineWidth: 2, lineColor: THEME.gold }] },
+                { text: 'PROFESSIONAL INTERACTIVE PLANNER', fontSize: 14, color: THEME.gold, margin: [0, 40], letterSpacing: 6 }
             ],
             fillColor: THEME.royal, alignment: 'center', pageBreak: 'after'
         });
@@ -100,75 +105,110 @@
             let dateStr = d.toLocaleDateString('ar-OM', { weekday: 'long', day: 'numeric', month: 'long' });
             let pageId = d.getDate() === 1 ? { id: 'm-' + monthIdx } : {};
 
-            // --- صفحة اليمين: العمل (ستايل القصاصات) ---
+            // --- صفحة اليمين (العمل) ---
             docContent.push({
                 ...pageId,
-                background: [ { canvas: [{ type: 'rect', x: 20, y: 20, w: 780, h: 555, r: 10, fillColor: THEME.paper, lineColor: THEME.gold, lineWidth: 0.5 }] } ],
-                padding: [40, 30, 60, 30],
+                background: function(page) {
+                    return { canvas: [{ type: 'rect', x: 800, y: 100, w: 40, h: 300, r: 5, fillColor: THEME.royal }] };
+                },
+                padding: [30, 20, 50, 20],
                 stack: [
-                    getSideTabs(),
-                    { columns: [ {text: 'Mr. Mo. Yasin', fontSize: 20, color: THEME.gold, italics: true}, {text: dateStr, style: 'dateTitle'} ] },
-                    { margin: [0, 20], columns: [
-                        {
-                            width: '35%',
-                            stack: [
-                                { text: '📌 جدول الحصص (12h)', color: THEME.ruby, bold: true, margin: [0,0,0,10] },
-                                { table: { widths: ['*'], body: schedule.map(t => [{text: t, fontSize: 9, margin: [0, 5], color: THEME.ink}]) }, layout: 'noBorders' }
-                            ]
-                        },
-                        {
-                            width: '60%', margin: [20, 0, 0, 0],
-                            stack: [
-                                { text: '📝 بطاقات التحضير الذهني', color: THEME.ruby, bold: true, margin:[0,0,0,10] },
-                                ...Array(5).fill(0).map(() => ({
-                                    margin: [0, 2, 0, 10],
-                                    canvas: [{ type: 'rect', x: 0, y: 0, w: 280, h: 70, r: 5, fillColor: '#ffffff', lineColor: '#e2e8f0' }]
-                                }))
-                            ]
-                        }
-                    ]}
+                    // الفهرس الجانبي
+                    {
+                        absolutePosition: { x: 810, y: 110 },
+                        stack: drawSideTabs(monthIdx)
+                    },
+                    {
+                        columns: [
+                            { text: 'Mr. Mo. Yasin', fontSize: 24, color: THEME.gold, italics: true },
+                            { text: dateStr, fontSize: 18, color: THEME.royal, bold: true, alignment: 'left' }
+                        ]
+                    },
+                    { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 750, y2: 5, lineWidth: 1, lineColor: THEME.ruby }] },
+                    {
+                        margin: [0, 20, 0, 0],
+                        columns: [
+                            {
+                                width: '30%',
+                                stack: [
+                                    { text: 'الجدول (12h)', color: THEME.ruby, bold: true, margin: [0, 5] },
+                                    { table: { widths: ['*'], body: schedule.map(t => [{text: t, fontSize: 10, margin: [0, 6]}]) }, layout: 'lightHorizontalLines' }
+                                ]
+                            },
+                            {
+                                width: '65%', margin: [20, 0, 0, 0],
+                                stack: [
+                                    { text: 'بطاقات التحضير والجواهر', color: THEME.ruby, bold: true },
+                                    ...Array(5).fill(0).map(() => ({
+                                        margin: [0, 5],
+                                        canvas: [{ type: 'rect', x: 0, y: 0, w: 450, h: 75, r: 8, lineColor: THEME.line, fillColor: '#ffffff' }]
+                                    }))
+                                ]
+                            }
+                        ]
+                    }
                 ], pageBreak: 'after'
             });
 
-            // --- صفحة اليسار: الحياة والحسابات ---
+            // --- صفحة اليسار (الحياة) ---
             docContent.push({
-                padding: [40, 30, 60, 30],
+                background: function(page) {
+                    return { canvas: [{ type: 'rect', x: 800, y: 100, w: 40, h: 300, r: 5, fillColor: THEME.royal }] };
+                },
+                padding: [30, 20, 50, 20],
                 stack: [
-                    getSideTabs(),
-                    { columns: [ {text: 'الحياة والحسابات الزمردية', color: THEME.emerald, fontSize: 18, bold: true}, {text: 'العودة للغلاف', linkToDestination: 'm-0', fontSize: 9, color: THEME.ruby, alignment: 'left'} ] },
-                    { margin: [0, 20], columns: [
-                        {
-                            width: '45%',
-                            stack: [
-                                { text: '✅ مهام اليوم الشخصية', color: THEME.emerald, bold: true },
-                                { table: { widths: [15, '*'], body: Array(10).fill([{text:''}, {text:'', margin:[0,7]}]) }, layout: 'lightHorizontalLines' }
-                            ]
-                        },
-                        {
-                            width: '45%', margin: [20, 0, 0, 0],
-                            stack: [
-                                { text: '💰 حسابات (قصاصة زمردية)', color: THEME.emerald, bold: true },
-                                { canvas: [{ type: 'rect', x: 0, y: 0, w: 200, h: 200, r: 10, fillColor: '#f0fdf4', lineColor: THEME.emerald, dash: {length: 2} }] },
-                                { text: 'ملخص الصرف الأسبوعي', color: THEME.emerald, bold: true, margin: [0, 15] },
-                                { table: { widths: ['*', 'auto'], body: [['البند', 'المبلغ'], ['', ''], ['', ''], [{text:'الصافي', bold:true}, '']] } }
-                            ]
-                        }
-                    ]}
+                    {
+                        absolutePosition: { x: 810, y: 110 },
+                        stack: drawSideTabs(monthIdx)
+                    },
+                    {
+                        columns: [
+                            { text: 'الحياة الشخصية والحسابات', fontSize: 20, color: THEME.emerald, bold: true },
+                            { text: 'العودة للفهرس الرئيسي', linkToDestination: 'm-0', fontSize: 10, color: THEME.ruby, alignment: 'left' }
+                        ]
+                    },
+                    {
+                        margin: [0, 20, 0, 0],
+                        columns: [
+                            {
+                                width: '45%',
+                                stack: [
+                                    { text: 'قائمة المهام اليومية', color: THEME.emerald, bold: true, margin: [0, 5] },
+                                    { table: { widths: [15, '*'], body: Array(12).fill([{text:''}, {text:'', margin:[0,8]}]) } }
+                                ]
+                            },
+                            {
+                                width: '45%', margin: [25, 0, 0, 0],
+                                stack: [
+                                    { text: 'المصروفات (نظام الزمرد)', color: THEME.emerald, bold: true },
+                                    {
+                                        table: {
+                                            widths: ['*', 'auto', 'auto'],
+                                            body: [
+                                                [{text: 'البيان', fillColor: THEME.emerald, color: 'white'}, {text: 'دخل', fillColor: THEME.emerald, color: 'white'}, {text: 'صرف', fillColor: THEME.emerald, color: 'white'}],
+                                                ...Array(6).fill([{text:''}, '', '']),
+                                                [{text: 'الإجمالي', bold: true}, {colSpan: 2, text: ''}]
+                                            ]
+                                        }
+                                    },
+                                    { text: 'ملاحظات الياقوت', color: THEME.ruby, bold: true, margin: [0, 20, 0, 5] },
+                                    { canvas: [{ type: 'rect', x: 0, y: 0, w: 320, h: 120, r: 10, lineColor: THEME.line }] }
+                                ]
+                            }
+                        ]
+                    }
                 ], pageBreak: 'after'
             });
         }
 
         const docDefinition = {
-            pageSize: { width: 842, height: 595 },
+            pageSize: { width: 842, height: 595 }, // iPad Landscape
             defaultStyle: { font: 'MyFont', alignment: 'right' },
-            styles: {
-                dateTitle: { fontSize: 16, color: THEME.royal, bold: true, alignment: 'left' }
-            },
             content: docContent
         };
 
-        pdfMake.createPdf(docDefinition).download('MYH_Scrapbook_12h_2026.pdf');
-        document.getElementById('status').innerText = "✅ اكتملت التحفة الفنية! جاهز للتحميل.";
+        pdfMake.createPdf(docDefinition).download('MYH_Master_2026.pdf');
+        document.getElementById('status').innerText = "✅ تم التوليد بنجاح! جرب التبويبات الجانبية الآن.";
     };
 </script>
 
