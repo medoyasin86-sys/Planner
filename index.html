@@ -1,191 +1,170 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <title>MYH Luxury Planner 2026 - Master Edition</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/pdfmake.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/vfs_fonts.js"></script>
-  <style>
-    :root { --royal: #192a56; --gold: #b8860b; --bg: #f8f9fa; }
-    body { font-family: system-ui, sans-serif; background: var(--bg); color: #2d3436; text-align: center; padding: 50px; }
-    .main-card { background: white; max-width: 800px; margin: auto; padding: 40px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-top: 8px solid var(--gold); }
-    header h1 { color: var(--royal); margin-bottom: 10px; }
-    .btn { background: var(--royal); color: gold; border: 2px solid var(--gold); padding: 15px 40px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 18px; transition: 0.3s; margin: 10px; }
-    .btn:hover { background: var(--gold); color: var(--royal); transform: scale(1.05); }
-    input[type="file"] { margin: 20px 0; padding: 10px; border: 1px dashed var(--gold); border-radius: 10px; }
-    .instruction { font-size: 14px; color: #636e72; margin-bottom: 20px; }
-  </style>
+    <meta charset="utf-8" />
+    <title>MYH Master Planner 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+    
+    <style>
+        :root { --royal: #192a56; --gold: #b8860b; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); text-align: center; border-top: 6px solid var(--gold); max-width: 500px; }
+        h1 { color: var(--royal); font-size: 24px; }
+        .btn { background: var(--royal); color: white; border: 1px solid var(--gold); padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 20px; transition: 0.3s; width: 100%; }
+        .btn:hover { background: var(--gold); color: var(--royal); }
+        .note { font-size: 12px; color: #666; margin-top: 15px; line-height: 1.6; }
+        input[type="file"] { margin: 15px 0; font-size: 13px; }
+    </style>
 </head>
 <body>
 
-<div class="main-card">
-  <header>
-    <h1>MYH Master Planner 2026</h1>
-    <p>الإصدار التفاعلي الشامل (يناير - يوليو)</p>
-  </header>
-
-  <p class="instruction">خطوة 1: ارفع خط TTF (مثل Tajawal) لضمان جمالية التوقيع والعربية.</p>
-  <input type="file" id="fontFile" accept=".ttf" />
-  
-  <div style="margin-top: 20px;">
-    <button class="btn" id="btnProcess">توليد البلانر الكامل (يناير - يوليو) 📥</button>
-  </div>
-  <p id="status" style="margin-top:15px; font-weight:bold;"></p>
+<div class="card">
+    <h1>مخطط Mr. Mo. Yasin 2026</h1>
+    <p>الإصدار التفاعلي (يناير - يوليو)</p>
+    
+    <div class="note">1. اختر ملف خط عربي (TTF) من جهازك أولاً:</div>
+    <input type="file" id="fontFile" accept=".ttf" />
+    
+    <button class="btn" id="generateBtn">توليد وتحميل البلانر الآن ✨</button>
+    
+    <div class="note">
+        * إذا ضغطت ولم يبدأ التحميل، تأكد من اختيار ملف الخط.<br>
+        * البلانر مصمم ليعمل بامتياز على تطبيقات GoodNotes و Notability.
+    </div>
+    <p id="status" style="color: green; font-weight: bold; margin-top: 10px;"></p>
 </div>
 
 <script>
-    const COLORS = { royal: "#192a56", gold: "#b8860b", silk: "#f4f4f4", lines: "#d1d1d1" };
-    let fontBase64 = "";
+    let fontData = "";
 
-    document.getElementById('fontFile').onchange = function(e) {
+    // تحويل الخط إلى Base64 عند اختياره
+    document.getElementById('fontFile').addEventListener('change', function(e) {
         const reader = new FileReader();
         reader.onload = function() {
-            fontBase64 = reader.result.split(',')[1];
-            document.getElementById('status').innerText = "✅ تم تجهيز الخط بنجاح";
+            fontData = reader.result.split(',')[1];
+            document.getElementById('status').innerText = "✅ الخط جاهز، اضغط للتوليد";
         };
         reader.readAsDataURL(e.target.files[0]);
-    };
+    });
 
-    function createDailyPage(dateObj) {
-        const dateStr = dateObj.toLocaleDateString('ar-OM', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        const idStr = dateObj.toISOString().split('T')[0];
-        
-        return {
-            id: `day-${idStr}`,
-            padding: [30, 30, 30, 30],
+    document.getElementById('generateBtn').onclick = function() {
+        if (!fontData) {
+            alert("من فضلك اختر ملف خط (TTF) لضمان ظهور اللغة العربية بشكل صحيح.");
+            return;
+        }
+
+        document.getElementById('status').innerText = "⏳ جاري التوليد... يرجى الانتظار ثوانٍ";
+
+        // إعدادات الخطوط في pdfmake
+        pdfMake.vfs = { 'MyFont.ttf': fontData };
+        pdfMake.fonts = {
+            MyFont: {
+                normal: 'MyFont.ttf',
+                bold: 'MyFont.ttf',
+                italics: 'MyFont.ttf'
+            }
+        };
+
+        const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
+        let content = [];
+
+        // 1. الغلاف
+        content.push({
             stack: [
+                { text: '2026', fontSize: 60, color: '#b8860b', bold: true, margin: [0, 150, 0, 10] },
+                { text: 'البلانر الرقمي الملكي', fontSize: 25, color: 'white' },
+                { text: 'Mr. Mo. Yasin', fontSize: 30, color: '#b8860b', margin: [0, 50], font: 'MyFont' }
+            ],
+            fillColor: '#192a56', alignment: 'center', pageBreak: 'after'
+        });
+
+        // 2. الفهرس
+        content.push({
+            id: 'index_page',
+            stack: [
+                { text: 'الفهرس التفاعلي', fontSize: 30, color: '#192a56', margin: [0, 0, 0, 20] },
                 {
-                    columns: [
-                        { text: "Mr. Mo. Yasin", style: 'signature', color: COLORS.gold, width: '*' },
-                        { text: dateStr, style: 'dateStyle', width: '*' },
-                        { text: "العودة للفهرس", linkToDestination: 'main-index', style: 'backLink', width: 80 }
-                    ]
-                },
-                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 500, y2: 5, lineWidth: 1, lineColor: COLORS.gold }] },
-                {
-                    margin: [0, 20, 0, 0],
-                    columns: [
-                        // الجانب الأيمن: جدول الحصص (بدون أرقام)
-                        {
-                            width: '35%',
-                            stack: [
-                                { text: "الجدول الدراسي", style: 'secTitle' },
-                                {
-                                    table: {
-                                        widths: ['*'],
-                                        body: [
-                                            [{text: '07:35 - 08:15', style: 'timeSlot'}],
-                                            [{text: '08:20 - 09:00', style: 'timeSlot'}],
-                                            [{text: '09:05 - 09:45', style: 'timeSlot'}],
-                                            [{text: '09:50 - 10:30', style: 'timeSlot'}],
-                                            [{text: 'الفسحة (10:30 - 10:55)', fillColor: COLORS.silk, alignment: 'center', fontSize: 9}],
-                                            [{text: '10:55 - 11:35', style: 'timeSlot'}],
-                                            [{text: '11:40 - 12:20', style: 'timeSlot'}],
-                                            [{text: '12:25 - 01:05', style: 'timeSlot'}],
-                                            [{text: '01:10 - 01:50', style: 'timeSlot'}]
-                                        ]
-                                    },
-                                    layout: 'lightHorizontalLines'
-                                },
-                                { text: "الحسابات اليومية", style: 'secTitle', margin: [0, 20, 0, 5] },
-                                { table: { widths: ['*', '30%'], body: [['البند', 'المبلغ'], [' ', ' '], [' ', ' ']] } }
-                            ]
-                        },
-                        // الجانب الأيسر: المهام والتحضير
-                        {
-                            width: '65%',
-                            margin: [20, 0, 0, 0],
-                            stack: [
-                                { text: "بطاقات العمل والتحضير", style: 'secTitle' },
-                                ...Array(5).fill(0).map(() => ({
-                                    margin: [0, 0, 0, 8],
-                                    canvas: [{ type: 'rect', x: 0, y: 0, w: 320, h: 50, r: 4, lineColor: COLORS.lines }]
-                                })),
-                                { text: "قائمة المهام الشخصية", style: 'secTitle', margin: [0, 10, 0, 5] },
-                                {
-                                    table: {
-                                        widths: [15, '*'],
-                                        body: Array(6).fill(0).map(() => [{text: ' ', border: [true,true,true,true]}, {text: ' ', border: [false,false,false,true]}])
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+                    table: {
+                        widths: ['*'],
+                        body: months.map(m => [{ text: m, linkToDestination: 'month_' + m, margin: [0, 10], fontSize: 18, color: 'blue' }])
+                    },
+                    layout: 'noBorders'
                 }
             ],
-            pageBreak: 'after'
-        };
-    }
+            alignment: 'center', pageBreak: 'after'
+        });
 
-    document.getElementById('btnProcess').onclick = function() {
-        if (!fontBase64) return alert("من فضلك ارفع ملف الخط أولاً لضمان جودة الملف");
-        
-        pdfMake.vfs = { 'MyFont.ttf': fontBase64 };
-        pdfMake.fonts = { MyFont: { normal: 'MyFont.ttf', bold: 'MyFont.ttf' } };
+        // 3. توليد الصفحات اليومية (بدون ترقيم حصص)
+        const startDate = new Date(2026, 0, 1);
+        const endDate = new Date(2026, 6, 31);
 
-        let content = [
-            // الغلاف الملكي
-            {
-                id: 'cover',
+        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+            const currentMonthName = months[d.getMonth()];
+            const dateStr = d.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long' });
+            
+            // وسم بداية كل شهر للربط التفاعلي
+            let pageId = d.getDate() === 1 ? { id: 'month_' + currentMonthName } : {};
+
+            content.push({
+                ...pageId,
+                padding: [30, 20, 30, 20],
                 stack: [
-                    { text: "MYH", fontSize: 80, color: COLORS.gold, bold: true, margin: [0, 100, 0, 10] },
-                    { text: "البلانر الرقمي التفاعلي", fontSize: 25, color: 'white' },
-                    { text: "2026", fontSize: 40, color: COLORS.gold, bold: true },
-                    { text: "Mr. Mo. Yasin", fontSize: 22, color: 'white', italics: true, margin: [0, 60] }
-                ],
-                alignment: 'center', fillColor: COLORS.royal, pageBreak: 'after'
-            },
-            // الفهرس التفاعلي
-            {
-                id: 'main-index',
-                stack: [
-                    { text: "الفهرس الرئيسي", style: 'headerStyle' },
                     {
                         columns: [
-                            { stack: [
-                                { text: "يناير", linkToDestination: 'day-2026-01-01', style: 'monthBtn' },
-                                { text: "فبراير", linkToDestination: 'day-2026-02-01', style: 'monthBtn' },
-                                { text: "مارس", linkToDestination: 'day-2026-03-01', style: 'monthBtn' }
-                            ]},
-                            { stack: [
-                                { text: "أبريل", linkToDestination: 'day-2026-04-01', style: 'monthBtn' },
-                                { text: "مايو", linkToDestination: 'day-2026-05-01', style: 'monthBtn' },
-                                { text: "يونيو", linkToDestination: 'day-2026-06-01', style: 'monthBtn' },
-                                { text: "يوليو", linkToDestination: 'day-2026-07-01', style: 'monthBtn' }
-                            ]}
-                        ],
-                        columnGap: 20, margin: [0, 40]
+                            { text: 'Mr. Mo. Yasin', fontSize: 20, color: '#b8860b', width: '*' }, // توقيع انسيابي
+                            { text: dateStr, fontSize: 16, color: '#192a56', bold: true, alignment: 'left' }
+                        ]
+                    },
+                    { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 1, lineColor: '#b8860b' }] },
+                    {
+                        margin: [0, 20, 0, 0],
+                        columns: [
+                            {
+                                width: '35%',
+                                stack: [
+                                    { text: 'جدول الحصص', color: '#192a56', bold: true, margin: [0, 0, 0, 10] },
+                                    {
+                                        table: {
+                                            widths: ['*'],
+                                            body: [
+                                                ['07:35 - 08:15'], ['08:20 - 09:00'], ['09:05 - 09:45'], ['09:50 - 10:30'],
+                                                [{ text: 'الفسحة', fillColor: '#eee' }],
+                                                ['10:55 - 11:35'], ['11:40 - 12:20'], ['12:25 - 01:05'], ['01:10 - 01:50']
+                                            ]
+                                        }
+                                    },
+                                    { text: 'العودة للفهرس', linkToDestination: 'index_page', color: 'blue', fontSize: 10, margin: [0, 20] }
+                                ]
+                            },
+                            {
+                                width: '60%',
+                                margin: [15, 0, 0, 0],
+                                stack: [
+                                    { text: 'التحضير والمهام (البطاقات الـ 5)', color: '#192a56', bold: true },
+                                    ...Array(5).fill(0).map(() => ({
+                                        margin: [0, 5, 0, 5],
+                                        canvas: [{ type: 'rect', x: 0, y: 0, w: 300, h: 60, r: 5, lineColor: '#ccc' }]
+                                    }))
+                                ]
+                            }
+                        ]
                     }
                 ],
                 pageBreak: 'after'
-            }
-        ];
-
-        // توليد الأيام من 1 يناير إلى 31 يوليو
-        let startDate = new Date(2026, 0, 1);
-        let endDate = new Date(2026, 6, 31);
-        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-            content.push(createDailyPage(new Date(d)));
+            });
         }
 
         const docDefinition = {
-            pageSize: { width: 595, height: 842 }, // Standard A4 for iPad scaling
+            pageSize: 'A4',
             defaultStyle: { font: 'MyFont', alignment: 'right' },
-            styles: {
-                signature: { fontSize: 22, italics: true, alignment: 'right' },
-                dateStyle: { fontSize: 14, bold: true, color: COLORS.royal, alignment: 'center' },
-                headerStyle: { fontSize: 30, bold: true, color: COLORS.royal, alignment: 'center', margin: [0, 20] },
-                secTitle: { fontSize: 12, bold: true, color: COLORS.royal, margin: [0, 10] },
-                timeSlot: { fontSize: 11, padding: 5 },
-                monthBtn: { fontSize: 18, color: COLORS.royal, margin: [0, 10], decoration: 'underline' },
-                backLink: { fontSize: 9, color: 'blue', alignment: 'left' }
-            },
             content: content
         };
 
-        pdfMake.createPdf(docDefinition).download('MYH_Full_Planner_2026.pdf');
+        pdfMake.createPdf(docDefinition).download('MYH_Planner_2026_Jan_July.pdf');
+        document.getElementById('status').innerText = "✅ تم التحميل بنجاح!";
     };
 </script>
+
 </body>
 </html>
