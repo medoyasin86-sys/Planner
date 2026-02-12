@@ -2,221 +2,89 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
+  <title>البلانر الرقمي 2026 — GoodNotes (عرضي | بداية الأحد) — توليد PDF</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>البلانر الرقمي 2026 — GoodNotes (عرضي | بداية الأحد)</title>
-  <meta name="description" content="بلانر عربي فاخر 2026 (يناير–يونيو) متوافق مع GoodNotes، اتجاه عرضي، بداية الأسبوع الأحد، روابط داخلية، جدول حصص 8 × 40 دقيقة، فسحة 25 دقيقة بعد الحصة الرابعة." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- يمكنك استبدال الخطوط بما تفضّل -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="توليد PDF لبلانر عربي 2026 (يناير–يونيو) متوافق مع GoodNotes — اتجاه عرضي، بداية الأسبوع الأحد، روابط داخلية، جدول حصص 8 × 40 دقيقة." />
+  <!-- pdfmake (يدعم RTL عند استخدام خط يدعم العربية) -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/pdfmake.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/vfs_fonts.js"></script>
+
   <style>
     :root{
-      --brand:#6C5CE7;        /* lavender */
-      --mint:#00B894;
-      --ink:#222;
-      --lines:#DADDE6;
-      --aqua:#81ECEC;
-      --pink:#FDCFE8;
-      --yel:#FFEAA7;
-      --tea:#A8E6CF;
-
-      --religious:#F48FB1;
-      --edu:#90CAF9;
-      --assess:#FFCC80;
-
-      --bg:#ffffff;
-      --bg-soft:#f9f9fb;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --radius: 16px;
+      --brand:#6C5CE7; --mint:#00B894; --ink:#222; --lines:#DADDE6;
+      --aqua:#81ECEC; --pink:#FDCFE8; --yel:#FFEAA7; --tea:#A8E6CF;
+      --relig:#F48FB1; --edu:#90CAF9; --ass:#FFCC80;
+      --bg:#ffffff; --soft:#f7f8fb; --shadow:0 8px 30px rgba(0,0,0,.1); --r:14px;
     }
     @media (prefers-color-scheme: dark){
-      :root{
-        --bg:#111317;
-        --bg-soft:#181b20;
-        --ink:#EDEFF5;
-        --lines:#2b2f37;
-        --shadow: 0 10px 30px rgba(0,0,0,.35);
-      }
+      :root{ --bg:#111317; --soft:#181b20; --ink:#EDEFF5; --lines:#282D36; --shadow:0 10px 30px rgba(0,0,0,.35);}
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:"Noto Sans Arabic", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background:var(--bg); color:var(--ink); line-height:1.75;
-    }
-    a{color:var(--brand); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:1100px; margin:0 auto; padding:24px}
-    header.hero{
-      background:linear-gradient(135deg, var(--pink), var(--aqua));
-      border-radius:calc(var(--radius) + 8px);
-      box-shadow:var(--shadow);
-      padding:28px 24px;
-      margin:24px 0 18px;
-      color:#111;
-      position:relative;
-      overflow:hidden;
-    }
-    header.hero h1{
-      margin:0 0 6px; font-weight:800; letter-spacing:.3px; font-size:clamp(22px,4vw,34px);
-    }
-    header.hero p{margin:6px 0 14px; font-size:clamp(14px,2.4vw,18px)}
-    .badge{
-      display:inline-block; background:#fff; color:#333; padding:6px 10px; border-radius:999px;
-      box-shadow:0 6px 16px rgba(0,0,0,.12); font-size:13px; margin-inline:6px 0
-    }
-    .btn{
-      appearance:none; border:none; border-radius:12px; padding:12px 16px; cursor:pointer; font-weight:700;
-      color:#fff; background:var(--brand); box-shadow:var(--shadow); transition:transform .08s ease;
-    }
-    .btn.secondary{background:var(--mint); color:#073d31}
-    .btn.gray{background:#2d3340}
-    .btn:active{transform:translateY(1px)}
-    .grid{display:grid; gap:16px}
-    @media (min-width:960px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
-    @media (min-width:960px){ .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
-
-    .card{
-      background:var(--bg-soft); border:1px solid var(--lines); border-radius:var(--radius); padding:18px 18px 16px;
-      box-shadow:var(--shadow)
-    }
-    .card h3{margin:0 0 10px; font-size:20px}
-    .card h4{margin:0 0 8px; font-size:17px}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui, -apple-system, Segoe UI, Roboto, 'Noto Sans Arabic', sans-serif}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    header{background:linear-gradient(135deg,var(--pink),var(--aqua));border-radius:calc(var(--r)+6px);box-shadow:var(--shadow);padding:22px;margin:18px 0;color:#111}
+    header h1{margin:0 0 6px;font-size:clamp(22px,4vw,30px)}
+    header p{margin:4px 0 10px}
+    .grid{display:grid;gap:16px} @media(min-width:900px){.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
+    .card{background:var(--soft);border:1px solid var(--lines);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+    .btn{appearance:none;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:800;color:#fff;background:var(--brand);box-shadow:var(--shadow)}
+    .btn.secondary{background:var(--mint);color:#073d31} .btn.gray{background:#2F3443}
+    label.k{display:inline-block;margin:6px 0;font-weight:700}
+    textarea, pre{width:100%;border-radius:12px;border:1px solid var(--lines);background:#0b1020;color:#cfe1ff;padding:12px}
+    pre{overflow:auto}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;border:1px dashed var(--lines);font-size:12px;margin:2px}
+    .tag.relig{background:var(--relig);color:#2a1720}.tag.edu{background:var(--edu);color:#0b2d53}.tag.ass{background:var(--ass);color:#4a2c00}
     .muted{opacity:.8}
-    .tag{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; margin:4px; border:1px dashed var(--lines)}
-    .tag.relig{background:var(--religious); color:#242429}
-    .tag.edu{background:var(--edu); color:#0b2d53}
-    .tag.ass{background:var(--assess); color:#4a2c00}
-
-    pre{
-      background:#0b1020; color:#d7e3ff; padding:16px; border-radius:12px; overflow:auto;
-      border:1px solid #18213b; box-shadow:var(--shadow)
-    }
-    code.kbd{background:var(--lines); color:#111; border-radius:6px; padding:2px 6px; font-weight:700}
-
-    table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--lines); border-radius:12px; overflow:hidden; background:var(--bg-soft)}
-    th,td{padding:10px 12px; border-bottom:1px solid var(--lines)}
-    th{background:#eef2ff; color:#1f2661; text-align:right}
-    tr:last-child td{border-bottom:none}
-    .flex{display:flex; gap:12px; flex-wrap:wrap}
-    .hr{height:1px; background:var(--lines); margin:22px 0}
-
-    footer{opacity:.8; font-size:14px; margin:24px 0 12px}
-
-    .pill{display:inline-flex; align-items:center; gap:8px; background:var(--bg-soft); border:1px solid var(--lines); padding:8px 12px; border-radius:999px}
-
-    .notice{padding:12px 14px; border:1px dashed var(--lines); border-radius:12px; background:rgba(255,234,167,.25)}
-    .success{background:rgba(168,230,207,.28)}
-    .danger{background:rgba(244,143,177,.20)}
   </style>
 </head>
 <body>
-
   <div class="wrap">
-    <header class="hero">
-      <div class="pill">
-        <strong>2026 — يناير ⇢ يونيو</strong>
-        <span class="badge">اتجاه عرضي (Landscape)</span>
-        <span class="badge">بداية الأسبوع: الأحد</span>
-        <span class="badge">روابط داخلية لـ GoodNotes</span>
-      </div>
-      <h1>البلانر الرقمي العربي — متوافق مع GoodNotes</h1>
+    <header>
+      <h1>البلانر الرقمي العربي 2026 — توليد PDF (Landscape | الأحد)</h1>
       <p class="muted">
-        صفحات يومية للعمل والحياة والحسابات، جدول حصص ٨×٤٠ دقيقة مع فواصل ٥ دقائق وفسحة ٢٥ دقيقة بعد الحصة الرابعة، وتقويمات مصغّرة ملوّنة للأحداث الرسمية في عُمان.
+        صفحات يومية/أسبوعية/شهرية/سنوية — روابط تنقّل داخلية — تقاويم مصغّرة (يناير–يونيو) — جدول حصص: ٨ × ٤٠ دقيقة + ٥ دقائق بين الحصص + فسحة ٢٥ دقيقة بعد الرابعة.
       </p>
-      <div class="flex">
-        <!-- استبدل الروابط كما تشاء -->
-        <a class="btn" href="https://github.com/new" target="_blank" rel="noopener">أنشئ مستودع GitHub</a>
-        <button class="btn secondary" onclick="scrollToId('install')">خطوات التثبيت</button>
-        <button class="btn gray" onclick="scrollToId('events')">تحرير أحداث عُمان (JSON)</button>
+      <div class="row">
+        <label class="k">خط عربي (TTF):</label>
+        <input id="fontFile" type="file" accept=".ttf" />
+        <button class="btn" id="btnLoadFont">تحميل الخط</button>
+        <span id="fontStatus" class="muted"></span>
       </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn secondary" id="btnMake">توليد و<span style="white-space:nowrap">تنزيل PDF</span></button>
+        <button class="btn gray" id="btnOpen">توليد و<span style="white-space:nowrap">فتح في نافذة</span></button>
+      </div>
+      <p class="muted" style="margin-top:6px">
+        ملاحظة: **GoodNotes** يدعم التنقّل داخل روابط PDF الداخلية — اضغط الروابط في وضع القراءة. [2](blob:https://m365.cloud.microsoft/c75b0321-bde2-402e-991d-be9d58152f95)  
+        حجم الصفحة 2160×1620 بنسبة 4:3 (مناسب لـ iPad 10.2 الجيل التاسع). [1](https://www.youtube.com/watch?v=Zs8YLtrZ4r4)
+      </p>
     </header>
 
-    <!-- مميزات -->
-    <section class="grid cols-3">
+    <section class="grid cols-2">
       <article class="card">
-        <h3>أقسام الصفحة اليومية</h3>
-        <ul>
-          <li>العمل: <span class="muted">٥ بطاقات فاخرة مسطّرة غير معنونة</span></li>
-          <li>جدول الحصص: <span class="muted">٨ حصص × ٤٠ دقيقة، ٥ دقائق بين الحصص، فسحة ٢٥ دقيقة بعد الرابعة</span></li>
-          <li>الحياة اليومية: <span class="muted">عمود مهام + بطاقة ملاحظات</span></li>
-          <li>الحسابات اليومية: <span class="muted">مساحة مسطرة حرة</span></li>
-          <li>تقويمات مصغّرة يناير–يونيو مع خريطة لونية</li>
-        </ul>
-      </article>
-
-      <article class="card">
-        <h3>الحسابات</h3>
-        <ul>
-          <li>أسبوعية: <span class="muted">التاريخ – البند – دخل – صرف – صافي</span></li>
-          <li>شهرية/سنوية بنفس البنية</li>
-          <li>بداية الأسبوع: الأحد</li>
-        </ul>
-        <div class="hr"></div>
-        <h4>خريطة لونية</h4>
-        <div class="flex">
+        <h3>إعدادات عامة</h3>
+        <div class="row">
+          <span class="tag">حجم الصفحة: 2160 × 1620</span>
+          <span class="tag">اتجاه: Landscape</span>
+          <span class="tag">الأسبوع يبدأ: الأحد</span>
           <span class="tag relig">ديني</span>
           <span class="tag edu">تعليمي</span>
-          <span class="tag ass">اختبارات/تقييم</span>
+          <span class="tag ass">اختبارات</span>
         </div>
+        <label class="k" for="titleInput">عنوان المستند:</label>
+        <input id="titleInput" type="text" style="width:100%;padding:10px;border:1px solid var(--lines);border-radius:10px" value="Arabic Planner 2026 (Jan–Jun) — Landscape, Sunday Start" />
+        <div style="height:10px"></div>
+        <label class="k">لوحة ألوان (ثابتة داخل الكود — يمكن تعديلها من هنا):</label>
+        <pre id="palettePreview" dir="ltr">{
+  "brand": "#6C5CE7", "ink": "#222222", "lines": "#DADDE6",
+  "religious":"#F48FB1", "education":"#90CAF9", "assessment":"#FFCC80"
+}</pre>
       </article>
 
       <article class="card">
-        <h3>التوافق</h3>
-        <ul>
-          <li>iPad 10.2 (الجيل التاسع) — نسبة 4:3</li>
-          <li>GoodNotes — روابط PDF داخلية</li>
-          <li>خط عربي موحّد يضمن نصًا غير مُكسّر</li>
-        </ul>
-        <p class="muted">ملاحظة: داخل GoodNotes اضغط الروابط في وضع القراءة.</p>
-      </article>
-    </section>
-
-    <div class="hr"></div>
-
-    <!-- جدول الحصص -->
-    <section class="card">
-      <h3>الجدول اليومي (ثابت في صفحات العمل)</h3>
-      <table>
-        <thead>
-          <tr><th>الحصة</th><th>الوقت</th><th>ملاحظات</th></tr>
-        </thead>
-        <tbody id="periods-body">
-          <!-- يُملأ بالسكربت أدناه -->
-        </tbody>
-      </table>
-      <p class="muted">٨ حصص × ٤٠ دقيقة — ٥ دقائق بين الحصص — فسحة ٢٥ دقيقة بعد الحصة الرابعة.</p>
-    </section>
-
-    <div class="hr"></div>
-
-    <!-- خطوات التثبيت -->
-    <section id="install" class="card">
-      <h3>التثبيت والتوليد (محليًا)</h3>
-      <ol>
-        <li>انسخ ملفات المشروع (أو حمّلها بترتيب المجلد الموضّح في README).</li>
-        <li>أنشئ بيئة عمل وثبّت المتطلبات:</li>
-      </ol>
-      <pre><code class="lang-bash">python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install reportlab arabic_reshaper python-bidi pillow</code></pre>
-      <ol start="3">
-        <li>ضع الخط <code class="kbd">fonts/NotoSansArabic-Regular.ttf</code></li>
-        <li>شغّل:</li>
-      </ol>
-      <pre><code class="lang-bash">python generate_planner.py</code></pre>
-      <p class="muted">سيتولّد ملف: <code class="kbd">output/Planner_OM_AR_2026_JanJun_GoodNotes.pdf</code></p>
-      <div class="notice">**تلميح:** يمكنك إضافة GitHub Actions لاحقًا لتوليد PDF تلقائيًا عند كل Push.</div>
-    </section>
-
-    <div class="hr"></div>
-
-    <!-- JSON أحداث عُمان -->
-    <section id="events" class="card">
-      <h3>أحداث سلطنة عُمان (يناير ⇢ يونيو 2026) — JSON</h3>
-      <p class="muted">يمكنك تعديل التواريخ أو أنواع الأحداث ثم تحميل الملف للاستخدام داخل المشروع في <code class="kbd">data/oman_events_2026_jan_jun.json</code>.</p>
-      <textarea id="jsonArea" style="width:100%;min-height:260px;direction:ltr;font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#d7e3ff;border:1px solid #18213b;border-radius:12px;padding:12px">
-{
+        <h3>أحداث سلطنة عُمان (يناير ⇢ يونيو 2026) — JSON</h3>
+        <p class="muted">يمكنك تعديل ثم التوليد مباشرة — تُستخدم لتلوين التقويمات المصغّرة داخل كل صفحة يومية.</p>
+        <textarea id="jsonArea" rows="14" dir="ltr">{
   "2026-01-15": { "name": "نهاية الفصل الدراسي الأول", "type": "education" },
   "2026-01-18": { "name": "الإسراء والمعراج (عطلة)", "type": "religious" },
   "2026-01-18_to_2026-01-22": { "name": "إجازة منتصف العام", "type": "education" },
@@ -226,88 +94,394 @@ pip install reportlab arabic_reshaper python-bidi pillow</code></pre>
   "2026-05-28_to_2026-05-30": { "name": "عطلة عيد الأضحى", "type": "religious" },
   "2026-06-01_to_2026-06-30": { "name": "فترة اختبارات نهاية الفصل الدراسي الثاني", "type": "assessment" },
   "2026-06-17": { "name": "رأس السنة الهجرية 1448هـ", "type": "religious" }
-}
-      </textarea>
-      <div class="flex" style="margin-top:10px">
-        <button class="btn" onclick="downloadJSON()">تحميل JSON</button>
-        <button class="btn secondary" onclick="validateJSON()">تحقّق من الصيغة</button>
-      </div>
-      <p id="jsonStatus" class="muted" style="margin-top:8px"></p>
-      <div class="danger" style="margin-top:10px">
-        تنبيه: الأعياد (رمضان/الفطر/الأضحى) نهائيًا تُحدَّد بالرؤية الشرعية وقد تتقدّم/تتأخّر يومًا. حدّث الملف بعد الإعلانات الرسمية.
-      </div>
-    </section>
-
-    <div class="hr"></div>
-
-    <!-- مراجع وروابط مفيدة -->
-    <section class="grid cols-2">
-      <article class="card">
-        <h3>روابط مفيدة</h3>
-        <ul>
-          <li><a href="https://support.apple.com/en-us/111898" target="_blank" rel="noopener">iPad 10.2 (الجيل التاسع) — Apple Support</a></li>
-          <li><a href="https://support.goodnotes.com/hc/en-us/articles/13623343439631-Navigate-PDF-Hyperlinks" target="_blank" rel="noopener">GoodNotes — دعم روابط PDF الداخلية</a></li>
-        </ul>
-      </article>
-      <article class="card">
-        <h3>ملاحظات</h3>
-        <p class="muted">
-          البلانر مُولّد ببايثون عبر ReportLab، مع تشكيل/اتجاه عربي (arabic_reshaper + python-bidi) وخط NotoSansArabic.
-          يمكنك تخصيص الألوان من <code class="kbd">assets/palette.json</code>.
-        </p>
+}</textarea>
+        <div class="row" style="margin-top:8px">
+          <button class="btn" id="btnValidate">تحقّق من الصيغة</button>
+          <span id="jsonStatus" class="muted"></span>
+        </div>
+        <p class="muted" style="margin-top:8px">الأعياد قد تتغيّر بالرؤية الشرعية — حدّث الملف بعد الإعلان الرسمي.</p>
       </article>
     </section>
 
-    <footer>
-      © 2026 — بلانر 2026 (يناير–يونيو) — متوافق مع GoodNotes — اتجاه عرضي — بداية الأسبوع الأحد.
-    </footer>
+    <section class="card" style="margin-top:16px">
+      <h3>ماذا يضمّ البلانر؟</h3>
+      <ul>
+        <li>صفحات يومية: ٥ بطاقات عمل مسطّرة غير معنونة، جدول حصص (٨ × ٤٠ دقيقة + ٥ دقائق بين الحصص + فسحة ٢٥ دقيقة بعد الرابعة)، قائمة مهام، ملاحظات، حسابات يومية، وتقويمات مصغّرة يناير–يونيو مع نقاط لونية للأحداث.</li>
+        <li>الحسابات: أسبوعية (التاريخ – البند – دخل – صرف – صافي)، شهرية، سنوية.</li>
+        <li>روابط تنقّل داخلية: فهرس ⇢ شهور ⇢ أسابيع ⇢ أيام — مفيدة جدًا في GoodNotes. [2](blob:https://m365.cloud.microsoft/c75b0321-bde2-402e-991d-be9d58152f95)</li>
+      </ul>
+    </section>
   </div>
 
   <script>
-    function scrollToId(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}) }
+    /* ------------------------ إعدادات أساسية ------------------------ */
+    const PAGE = { w: 2160, h: 1620, orientation: 'landscape' }; // 4:3 Landscape
+    const COLORS = {
+      brand: "#6C5CE7", ink:"#222222", lines:"#DADDE6",
+      religious:"#F48FB1", education:"#90CAF9", assessment:"#FFCC80"
+    };
+    const START_DATE = new Date(2026, 0, 1); // Jan 1, 2026
+    const END_DATE   = new Date(2026, 5, 30); // Jun 30, 2026
 
-    // توليد الجدول وفق المطلوب: ٨ حصص × ٤٠ دقيقة، ٥ دقائق بين الحصص، فسحة ٢٥ دقيقة بعد الرابعة
-    (function buildPeriods(){
-      const tbody = document.getElementById('periods-body');
-      const start = {h:7, m:35};
-      const addMin = (h,m,dm)=>{ const t=new Date(2000,0,1,h,m+dm); return {h:t.getHours(), m:t.getMinutes()} };
-      const fmt = t => `${String(t.h).padStart(2,'0')}:${String(t.m).padStart(2,'0')}`;
-      let cur = {...start};
+    // اليوم يبدأ الأحد في الفهارس/الأسابيع
+    const AR_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+    const MINI_HEADS = ['ح','ن','ث','ر','خ','ج','س']; // Sun..Sat
+
+    // جدول الحصص (٨ × ٤٠ دقيقة + ٥ دقائق بين الحصص + فسحة ٢٥ بعد الرابعة)
+    function buildPeriods(){
+      const out = [];
+      let cur = new Date(2000,0,1,7,35);
+      const add = (m)=> new Date(cur.getTime() + m*60000);
       for(let i=1;i<=8;i++){
-        const end = addMin(cur.h, cur.m, 40);
-        const tr = document.createElement('tr');
-        const td1 = document.createElement('td'); td1.textContent = `الحصة ${i}`;
-        const td2 = document.createElement('td'); td2.textContent = `${fmt(cur)} – ${fmt(end)}`;
-        const td3 = document.createElement('td'); td3.innerHTML = (i===4) ? '<strong>فسحة 25 دقيقة بعد هذه الحصة</strong>' : '—';
-        tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tbody.appendChild(tr);
-        // فاصل
-        if(i===4) { cur = addMin(end.h, end.m, 25) }
-        else if(i<8) { cur = addMin(end.h, end.m, 5) }
+        const end = add(40);
+        out.push({ no:i, start:cur, end });
+        if(i===4) cur = new Date(end.getTime()+25*60000);
+        else if(i<8) cur = new Date(end.getTime()+5*60000);
       }
-    })();
+      return out;
+    }
+    const PERIODS = buildPeriods();
 
-    function validateJSON(){
-      const el = document.getElementById('jsonArea');
+    // أدوات مساعدة للتواريخ
+    function fmtHM(d){ return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0') }
+    function ymd(d){ return d.toISOString().slice(0,10) }
+
+    function* eachDate(from, to){
+      const d = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+      while(d <= to){
+        yield new Date(d);
+        d.setDate(d.getDate()+1);
+      }
+    }
+
+    function sundayBeforeOrSame(d){
+      const t = new Date(d);
+      // Sun=0 in JS; نريد الأحد=0: نلف للخلف حتى نصل للأحد
+      while(t.getDay() !== 0){ t.setDate(t.getDate()-1) }
+      return t;
+    }
+
+    /* ------------------------ تحميل الخط وتسجيله في pdfmake ------------------------ */
+    const fontInput = document.getElementById('fontFile');
+    const btnLoadFont = document.getElementById('btnLoadFont');
+    const fontStatus = document.getElementById('fontStatus');
+    let FONT_OK = false;
+
+    btnLoadFont.addEventListener('click', async ()=>{
+      const f = fontInput.files?.[0];
+      if(!f){ alert('الرجاء اختيار ملف خط TTF أولًا.'); return }
+      const base64 = await fileToBase64(f);
+      // إضافة الخط إلى vfs باسم معياري:
+      pdfMake.vfs = pdfMake.vfs || {};
+      pdfMake.vfs['NotoSansArabic-Regular.ttf'] = base64.split(',')[1]; // بيانات بدون "data:..."
+      pdfMake.fonts = {
+        Noto: { normal: 'NotoSansArabic-Regular.ttf', bold: 'NotoSansArabic-Regular.ttf' }
+      };
+      FONT_OK = true;
+      fontStatus.textContent = `تم تحميل الخط: ${f.name}`;
+    });
+
+    function fileToBase64(file){
+      return new Promise((res, rej)=>{
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+    }
+
+    /* ------------------------ قراءة أحداث JSON ------------------------ */
+    const txt = document.getElementById('jsonArea');
+    const btnValidate = document.getElementById('btnValidate');
+    const jsonStatus = document.getElementById('jsonStatus');
+    function parseEvents(){
       try{
-        const obj = JSON.parse(el.value);
-        document.getElementById('jsonStatus').textContent = '✅ الصيغة صحيحة (JSON Valid).';
-        document.getElementById('jsonStatus').className = 'success';
+        const obj = JSON.parse(txt.value);
+        jsonStatus.textContent = '✅ صيغة JSON سليمة'; jsonStatus.style.color = '#0aa';
         return obj;
       }catch(e){
-        document.getElementById('jsonStatus').textContent = '❌ صيغة JSON غير صحيحة: ' + e.message;
-        document.getElementById('jsonStatus').className = 'danger';
+        jsonStatus.textContent = '❌ خطأ في JSON: '+e.message; jsonStatus.style.color = '#c33';
+        throw e;
       }
     }
-    function downloadJSON(){
-      const v = validateJSON();
-      if(!v) return;
-      const blob = new Blob([JSON.stringify(v, null, 2)], {type:'application/json;charset=utf-8'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'oman_events_2026_jan_jun.json';
-      a.click();
-      URL.revokeObjectURL(a.href);
+    btnValidate.addEventListener('click', ()=>{ try{ parseEvents() }catch(_){} });
+
+    // تحقّق إن كان للتاريخ حدث (مفرد أو واقع داخل نطاق)
+    function eventsOnDate(dateObj, evMap){
+      const dkey = ymd(dateObj);
+      const list = [];
+      if(evMap[dkey]) list.push(evMap[dkey]);
+      for(const [k,v] of Object.entries(evMap)){
+        if(k.includes('_to_')){
+          const [s,e] = k.split('_to_');
+          const sd = new Date(s), ed = new Date(e);
+          if(sd <= dateObj && dateObj <= ed) list.push(v);
+        }
+      }
+      return list;
     }
+
+    /* ------------------------ عناصر بناء الصفحات (pdfmake) ------------------------ */
+
+    // مستطيل بعناوين/حدود باستخدام canvas
+    function canvasBox(w, h, options={}){
+      const { stroke=COLORS.lines, fill=null, r=8, x=0, y=0, lineWidth=1 } = options;
+      const ops = [];
+      if(fill){
+        ops.push({ type: 'rect', x, y, w, h, r, color: fill });
+      }
+      ops.push({ type: 'rect', x, y, w, h, r, lineColor: stroke, lineWidth });
+      return { canvas: ops };
+    }
+
+    // صندوق "بطاقة مسطرة" بسيط (نمذجة خطوط أفقية)
+    function ruledCard(width, height, rows=10){
+      const lines = [];
+      const margin = 14;
+      const top = height - margin;
+      const bottom = margin;
+      const step = (top - bottom) / Math.max(1, rows);
+      for(let i=0;i<=rows;i++){
+        lines.push({ type:'line', x1:margin, y1:top - i*step, x2:width-margin, y2:top - i*step, lineColor: COLORS.lines });
+      }
+      return { canvas: [
+        { type:'rect', x:0, y:0, w:width, h:height, r:8, lineColor: COLORS.lines, color:'#fff' },
+        ...lines
+      ]};
+    }
+
+    // جدول الحصص
+    function periodsTable(){
+      const body = [[{text:'جدول الحصص', colSpan:3, alignment:'right', bold:true, color:'#111'},'','']];
+      for(const p of PERIODS){
+        body.push([
+          { text:`الحصة ${p.no}`, alignment:'right' },
+          { text:`${fmtHM(p.start)} – ${fmtHM(p.end)}`, alignment:'left' },
+          { text:'', border:[false,false,false,true] }
+        ]);
+      }
+      return {
+        table:{
+          widths:['*','*','*'],
+          body
+        },
+        layout:{
+          fillColor:(row)=> row===0 ? '#eef2ff' : null,
+          hLineColor: COLORS.lines, vLineColor: COLORS.lines
+        }
+      };
+    }
+
+    // تقويم مصغّر (7×6) مع نقاط لونية للأحداث
+    function miniCalendar(month, year, evMap){
+      // رأس الشهر
+      const NAMES = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      const head = { text: `${NAMES[month-1]} ${year}`, style:'miniHead', margin:[0,0,0,4], color: COLORS.brand, alignment:'right' };
+
+      // بناء الشبكة
+      const first = new Date(year, month-1, 1);
+      const start = sundayBeforeOrSame(first);
+      const cells = [];
+      // رأس الأيام
+      cells.push(MINI_HEADS.map(d=> ({text:d, alignment:'center', bold:true, fillColor:'#f0f3ff'})));
+      // 6 أسابيع
+      let cur = new Date(start);
+      for(let r=0;r<6;r++){
+        const row = [];
+        for(let c=0;c<7;c++){
+          const inMonth = (cur.getMonth()===month-1);
+          const evs = inMonth ? eventsOnDate(cur, evMap) : [];
+          const dots = evs.slice(0,3).map(e=>{
+            const col = e.type==='education'?COLORS.education:(e.type==='assessment'?COLORS.assessment:COLORS.religious);
+            // دائرة صغيرة
+            return { canvas:[{ type:'ellipse', x:6, y:18, color:col, r1:2.5, r2:2.5 }] };
+          });
+          row.push({
+            stack: [
+              { text: inMonth ? String(cur.getDate()) : ' ', alignment:'right', color: inMonth? '#111':'#aaa' },
+              { columns: dots.map(d=>({ stack:[d], width:10 })), columnGap:2, margin:[0,2,0,0] }
+            ],
+            border: [true,true,true,true],
+            borderColor: COLORS.lines,
+            fillColor: inMonth ? null : '#fafafa'
+          });
+          cur.setDate(cur.getDate()+1);
+        }
+        cells.push(row);
+      }
+
+      return [
+        head,
+        {
+          table:{ widths:['*','*','*','*','*','*','*'], body: cells },
+          layout:{
+            hLineColor: COLORS.lines, vLineColor: COLORS.lines
+          },
+          margin:[0,0,0,8]
+        }
+      ];
+    }
+
+    // صفحة يومية
+    function dailyPage(dateObj, evMap){
+      const dn = AR_DAYS[ (dateObj.getDay()+6)%7 === 6 ? 0 : dateObj.getDay() ]; // ضمان تسمية صحيحة مع الأحد بداية الأسبوع
+      const title = { text: `${dn} ${ymd(dateObj)}`, style:'h1', color: COLORS.brand, margin:[0,0,0,8] };
+
+      const leftCol = [
+        // خمس بطاقات عمل مسطرة
+        ruledCard(1160, 140, 6), { text:' ', margin:[0,6,0,0] },
+        ruledCard(1160, 140, 6), { text:' ', margin:[0,6,0,0] },
+        ruledCard(1160, 140, 6), { text:' ', margin:[0,6,0,0] },
+        ruledCard(1160, 140, 6), { text:' ', margin:[0,6,0,0] },
+        ruledCard(1160, 140, 6), { text:' ', margin:[0,10,0,0] },
+        periodsTable()
+      ];
+
+      const rightCol = [
+        // قائمة مهام
+        { text:'قائمة مهام', bold:true, margin:[0,0,0,6] },
+        { table:{ widths:[20,'*'], body: Array.from({length:10},()=>[
+            [{ canvas:[{type:'rect',x:0,y:0,w:16,h:16,r:3,lineColor:COLORS.lines}] }, { text:'', border:[false,false,false,true]}]
+          ]) },
+          layout:{ hLineColor: COLORS.lines, vLineColor: 'transparent' }
+        },
+        { text:' ', margin:[0,10,0,0] },
+        // ملاحظات
+        { text:'ملاحظات اليوم', bold:true, margin:[0,0,0,6] },
+        ruledCard(840, 300, 10),
+        { text:' ', margin:[0,10,0,0] },
+        // الحسابات اليومية
+        { text:'الحسابات اليومية', bold:true, margin:[0,0,0,6] },
+        ruledCard(840, 220, 8),
+        { text:' ', margin:[0,10,0,6] },
+        // تقاويم مصغرة ليناير–يونيو
+        { text:'التقاويم المصغّرة (يناير–يونيو):', bold:true, margin:[0,0,0,6] },
+        ...[1,2,3,4,5,6].flatMap(m => miniCalendar(m, 2026, evMap))
+      ];
+
+      return {
+        id: `day-${ymd(dateObj)}`,
+        stack: [
+          title,
+          { columns: [ { stack:leftCol, width:1160 }, { stack:rightCol, width:840 } ], columnGap:16 }
+        ],
+        pageBreak: 'after'
+      };
+    }
+
+    // صفحة الحسابات الأسبوعية
+    function weeklyAccounts(weekStart){
+      return {
+        id: `week-${ymd(weekStart)}`,
+        stack:[
+          { text:`الحسابات الأسبوعية — أسبوع ${ymd(weekStart)}`, style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
+          {
+            table:{
+              widths:['20%','40%','13%','13%','14%'],
+              body:[
+                [{text:'التاريخ',bold:true,fillColor:'#eef2ff'},{text:'البند',bold:true,fillColor:'#eef2ff'},
+                 {text:'دخل',bold:true,fillColor:'#eef2ff'},{text:'صرف',bold:true,fillColor:'#eef2ff'},{text:'صافي',bold:true,fillColor:'#eef2ff'}],
+                ...Array.from({length:20},()=>['','','','',''])
+              ]
+            },
+            layout:{ hLineColor:COLORS.lines, vLineColor:COLORS.lines }
+          }
+        ],
+        pageBreak:'after'
+      };
+    }
+
+    // صفحة الحسابات الشهرية
+    function monthlyAccounts(month){
+      const NAMES = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      return {
+        id: `month-2026-${String(month).padStart(2,'0')}-accounts`,
+        stack:[
+          { text:`الحسابات الشهرية — ${NAMES[month-1]} 2026`, style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
+          weeklyAccounts(new Date(2026, month-1, 1)).stack[1] // نفس الجدول
+        ],
+        pageBreak:'after'
+      };
+    }
+
+    // صفحة الحسابات السنوية
+    function yearlyAccounts(){
+      return {
+        id:'year-2026',
+        stack:[
+          { text:'الحسابات السنوية — 2026', style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
+          weeklyAccounts(new Date(2026,0,1)).stack[1]
+        ],
+        pageBreak:'after'
+      };
+    }
+
+    // صفحة الفهرس وروابط التنقّل الداخلية
+    function indexPage(allWeeks, allDays){
+      const monthLinks = [1,2,3,4,5,6].map(m => ({ text:`شهر ${String(m).padStart(2,'0')}`, linkToDestination:`month-2026-${String(m).padStart(2,'0')}-accounts', margin:[8,0,8,0] }));
+      const weekLinks  = allWeeks.map(d => ({ text:`أسبوع ${ymd(d)}`, linkToDestination:`week-${ymd(d)}`, margin:[8,0,8,0] }));
+      const dayLinks   = allDays.slice(0,90).map(d => ({ text: ymd(d), linkToDestination:`day-${ymd(d)}`, margin:[8,0,8,0] })); // (لتخفيف العرض في الفهرس—نضع عينة)
+      return {
+        id: 'index',
+        stack: [
+          { text:'فهرس الربط الداخلي', style:'h1', color:COLORS.brand, margin:[0,0,0,8] },
+          { text:'انتقل سريعًا إلى الحسابات أو الأيام:', margin:[0,0,0,8] },
+          { columns:[
+              { width:'33%', stack:[{ text:'الشهور', bold:true, margin:[0,0,0,6] }, ...monthLinks] },
+              { width:'33%', stack:[{ text:'الأسابيع (الأحد بداية)', bold:true, margin:[0,0,0,6] }, ...weekLinks] },
+              { width:'34%', stack:[{ text:'عينة من الأيام', bold:true, margin:[0,0,0,6] }, ...dayLinks] }
+            ], columnGap:16 }
+        ],
+        pageBreak:'after'
+      };
+    }
+
+    /* ------------------------ توليد الـPDF ------------------------ */
+    const btnMake = document.getElementById('btnMake');
+    const btnOpen = document.getElementById('btnOpen');
+    const titleInput = document.getElementById('titleInput');
+
+    function buildDocDefinition(evMap){
+      // حصر الأسابيع (تبدأ من الأحد)
+      const weeks = [];
+      let ws = sundayBeforeOrSame(START_DATE);
+      while(ws <= END_DATE){ weeks.push(new Date(ws)); ws.setDate(ws.getDate()+7) }
+
+      // كل الأيام
+      const days = Array.from(eachDate(START_DATE, END_DATE));
+
+      const content = [];
+      content.push( indexPage(weeks, days) );
+      content.push( yearlyAccounts() );
+      for(let m=1;m<=6;m++) content.push( monthlyAccounts(m) );
+      for(const w of weeks) content.push( weeklyAccounts(w) );
+      for(const d of days)  content.push( dailyPage(d, evMap) );
+
+      return {
+        pageSize:{ width: PAGE.w, height: PAGE.h },
+        pageOrientation: PAGE.orientation,
+        info: { title: titleInput.value || 'Arabic Planner 2026 (Jan–Jun) — Landscape, Sunday Start' },
+        defaultStyle:{ font: 'Noto', alignment:'right', fontSize: 22, color:'#111' },
+        styles:{
+          h1:{ fontSize: 40, bold:true },
+          miniHead:{ fontSize: 26, bold:true }
+        },
+        content
+      };
+    }
+
+    async function makePdf(openInstead=false){
+      if(!FONT_OK){ alert('حمّل خطًا عربيًا (TTF) أولًا — زر "تحميل الخط".'); return }
+      let evMap;
+      try{ evMap = parseEvents() }catch{ return }
+      const dd = buildDocDefinition(evMap);
+      if(openInstead) pdfMake.createPdf(dd).open();
+      else pdfMake.createPdf(dd).download('Planner_OM_AR_2026_JanJun_GoodNotes.pdf');
+    }
+
+    btnMake.addEventListener('click', ()=>makePdf(false));
+    btnOpen.addEventListener('click', ()=>makePdf(true));
   </script>
 </body>
 </html>
+``
