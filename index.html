@@ -1,404 +1,119 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <title>MYH Master Planner 2026 - Spread Edition</title>
-
-  <!-- pdfmake من CDN (روابط صحيحة) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
-
-  <style>
-    :root{
-      --royal:#0f172a; --ruby:#9f1239; --emerald:#064e3b; --gold:#b8860b;
-      --bg:#f1f5f9; --card:#ffffff; --line:#e2e8f0;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family: system-ui, -apple-system, "Noto Sans Arabic", Segoe UI, Roboto, sans-serif;
-      background:var(--bg); min-height:100vh; margin:0;
-      display:flex; align-items:center; justify-content:center; padding:24px
-    }
-    .setup-box{
-      width:min(780px, 96vw); background:var(--card); padding:32px 28px; border-radius:24px;
-      border-bottom:8px solid var(--gold); box-shadow:0 20px 50px rgba(0,0,0,.08); text-align:center
-    }
-    h1{color:var(--royal); margin:0 0 6px}
-    p{color:#64748b; margin:0 0 14px}
-    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; margin-top:10px}
-    input[type="file"]{padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#fff}
-    .btn{
-      background:var(--royal); color:var(--gold); border:2px solid var(--gold);
-      padding:12px 22px; border-radius:12px; cursor:pointer; font-weight:800; font-size:16px; transition:.2s
-    }
-    .btn:hover{ background:var(--gold); color:#fff; transform:translateY(-2px) }
-    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none }
-    .btn.alt{ background:#2F3443; color:#fff; border-color:#2F3443 }
-    .status{ margin-top:12px; font-weight:700 }
-    .ok{ color:#0a8 } .err{ color:#c33 }
-    .hint{ font-size:13px; color:#475569; margin-top:8px }
-  </style>
+    <meta charset="utf-8" />
+    <title>MYH Elite Custom Planner 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+    <style>
+        :root { --gold: #b8860b; --royal: #0f172a; }
+        body { font-family: system-ui, sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .setup-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; border-top: 5px solid var(--gold); }
+        .upload-area { border: 2px dashed #cbd5e1; padding: 20px; border-radius: 10px; margin: 20px 0; background: #f8fafc; }
+        .btn-gen { background: var(--royal); color: var(--gold); border: 2px solid var(--gold); padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .status { margin-top: 15px; color: #065f46; font-size: 14px; }
+    </style>
 </head>
 <body>
 
-  <div class="setup-box">
-    <h1>MYH Master Planner 2026</h1>
-    <p>نظام الأجندة المتقابلة مع الفهرس الذكي (Landscape 4:3) — بداية الأسبوع الأحد</p>
-
-    <div class="row">
-      <input type="file" id="fontFile" accept=".ttf" />
-      <button class="btn" id="btnLoadFont">تحميل الخط</button>
-      <span id="fontStatus" class="status"></span>
+<div class="setup-box">
+    <h2 style="color: var(--royal);">برمجة تصميمك الخاص (MYH 2026)</h2>
+    <p>قم برفع صورة التصميم (الصفحة اليومية) والخط لتحويلها لأجندة تفاعلية</p>
+    
+    <div class="upload-area">
+        <label>1. ارفع صورة تصميمك (JPG/PNG):</label><br>
+        <input type="file" id="bgImg" accept="image/*" style="margin-top:10px" />
+        <br><br>
+        <label>2. ارفع الخط (TTF):</label><br>
+        <input type="file" id="fontFile" accept=".ttf" style="margin-top:10px" />
     </div>
 
-    <div class="row">
-      <button class="btn" id="btnDownload" disabled>توليد وتنزيل PDF</button>
-      <button class="btn alt" id="btnOpen" disabled>توليد وفتح في نافذة</button>
-    </div>
-
+    <button class="btn-gen" id="genBtn">توليد الأجندة التفاعلية 🚀</button>
     <div id="status" class="status"></div>
-    <div class="hint">لتظهر العربية سليمة داخل PDF: يجب رفع خط عربي (TTF) قبل التوليد. قد يمنع المتصفّح النوافذ المنبثقة؛ استخدم «تنزيل» كخيار مضمون.</div>
-  </div>
+</div>
 
-  <script>
-    // ===================== الإعداد العام =====================
-    const THEME = {
-      royal:"#0f172a", ruby:"#9f1239", emerald:"#064e3b", gold:"#b8860b",
-      bg:"#fdfbf7", line:"#e2e8f0"
+<script>
+    let fontB64 = "";
+    let bgB64 = "";
+
+    // معالجة صورة الخلفية
+    document.getElementById('bgImg').onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => { bgB64 = reader.result; document.getElementById('status').innerText = "✅ تم استلام التصميم"; };
+        reader.readAsDataURL(e.target.files[0]);
     };
 
-    // ملاحظة: pdfmake يعمل بالنقاط (pt). نبقي النسبة 4:3 مع حجم كبير يناسب GoodNotes.
-    // 2160×1620 (Landscape)
-    const PAGE = { width:2160, height:1620, orientation:'landscape' };
+    // معالجة الخط
+    document.getElementById('fontFile').onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => { fontB64 = reader.result.split(',')[1]; };
+        reader.readAsDataURL(e.target.files[0]);
+    };
 
-    // نطاق الشهور: يناير → يونيو 2026
-    const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو"];
-    // اسم المالك (يمكن تعديله)
-    const OWNER = "محمد ياسين";
+    document.getElementById('genBtn').onclick = () => {
+        if(!bgB64 || !fontB64) return alert("يرجى رفع الصورة والخط أولاً");
+        
+        document.getElementById('status').innerText = "⏳ جاري بناء الصفحات وربط الروابط...";
 
-    // تفعيل/تعطيل الأزرار بحسب جاهزية الخط
-    const fontFileEl = document.getElementById('fontFile');
-    const btnLoadFont = document.getElementById('btnLoadFont');
-    const btnOpen = document.getElementById('btnOpen');
-    const btnDownload = document.getElementById('btnDownload');
-    const statusEl = document.getElementById('status');
-    const fontStatusEl = document.getElementById('fontStatus');
+        pdfMake.vfs = { 'F.ttf': fontB64 };
+        pdfMake.fonts = { MyFont: { normal: 'F.ttf', bold: 'F.ttf', italics: 'F.ttf' } };
 
-    let FONT_READY = false;
+        let docContent = [];
+        const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو"];
 
-    // ===================== تحميل الخط العربي =====================
-    btnLoadFont.addEventListener('click', async () => {
-      if (!fontFileEl.files || !fontFileEl.files[0]) {
-        alert("يرجى اختيار ملف خط TTF أولًا");
-        return;
-      }
-      try {
-        const base64 = await fileToBase64(fontFileEl.files[0]);
-        // نضيفه إلى vfs تحت اسم ثابت
-        pdfMake.vfs = pdfMake.vfs || {};
-        pdfMake.vfs['NotoSansArabic-Regular.ttf'] = base64.split(',')[1];
-        pdfMake.fonts = { MyFont: { normal: 'NotoSansArabic-Regular.ttf', bold: 'NotoSansArabic-Regular.ttf', italics: 'NotoSansArabic-Regular.ttf' } };
-        FONT_READY = true;
-        fontStatusEl.textContent = "✅ تم تحميل الخط";
-        fontStatusEl.className = "status ok";
-        btnOpen.disabled = false;
-        btnDownload.disabled = false;
-      } catch (e) {
-        fontStatusEl.textContent = "❌ فشل تحميل الخط: " + e.message;
-        fontStatusEl.className = "status err";
-      }
-    });
+        // حلقة بناء الشهور (من يناير إلى يوليو)
+        for(let m=0; m<7; m++) {
+            let daysInMonth = new Date(2026, m+1, 0).getDate();
+            
+            for(let d=1; d<=daysInMonth; d++) {
+                let dateObj = new Date(2026, m, d);
+                let dateStr = dateObj.toLocaleDateString('ar-OM', { weekday: 'long', day: 'numeric', month: 'long' });
 
-    function fileToBase64(file){
-      return new Promise((res, rej)=>{
-        const r = new FileReader();
-        r.onload = ()=>res(r.result);
-        r.onerror = rej;
-        r.readAsDataURL(file);
-      });
-    }
-
-    // ===================== الجدول اليومي (بدءًا من 8:00 ص) =====================
-    // تفضيلك: بداية اليوم 8 صباحًا (٨:٠٠ ص) — 8 حصص × 40 دقيقة، 5 دقائق بين الحصص، و25 دقيقة بعد الرابعة
-    function getSchedule12h() {
-      const times = [];
-      let cur = new Date(); cur.setHours(8, 0, 0, 0); // 08:00
-      for(let i=1; i<=8; i++) {
-        const startStr = fmt12(cur.getHours(), cur.getMinutes());
-        const end = new Date(cur.getTime() + 40*60000);
-        const endStr = fmt12(end.getHours(), end.getMinutes());
-        times.push(`${startStr} - ${endStr}`);
-        if(i === 4) { // فسحة 25 دقيقة بعد الرابعة
-          cur = new Date(end.getTime() + 25*60000);
-        } else if(i < 8) {
-          cur = new Date(end.getTime() + 5*60000);
-        }
-      }
-      return times;
-    }
-
-    function fmt12(h, m){
-      const ampm = h >= 12 ? 'م' : 'ص';
-      const displayH = (h % 12) || 12;
-      return `${displayH}:${String(m).padStart(2,'0')} ${ampm}`;
-    }
-
-    // تبويبات جانبية للشهور (روابط داخلية)
-    function drawSideTabs(activeIdx){
-      return MONTHS.map((m, idx) => ({
-        text: m,
-        linkToDestination: 'm-' + String(idx+1).padStart(2,'0'),
-        fontSize: 12,
-        color: '#ffffff',
-        alignment: 'center',
-        margin: [0, 6, 0, 6],
-        fillColor: (idx === activeIdx) ? THEME.gold : THEME.royal
-      }));
-    }
-
-    // ===================== توليد المستند =====================
-    btnOpen.addEventListener('click', () => generate(true));
-    btnDownload.addEventListener('click', () => generate(false));
-
-    async function generate(openInstead=false){
-      statusEl.textContent = "";
-      if (typeof pdfMake === 'undefined') {
-        statusEl.textContent = "❌ pdfmake غير محمّلة. تحقّق من اتصال الإنترنت.";
-        statusEl.className = "status err";
-        return;
-      }
-      if (!FONT_READY) {
-        statusEl.textContent = "❌ حمّل خط TTF عربي أولًا.";
-        statusEl.className = "status err";
-        return;
-      }
-
-      try{
-        statusEl.textContent = "⏳ يتم الآن خياطة الصفحات رقميًا...";
-        statusEl.className = "status";
-
-        const content = [];
-        const schedule = getSchedule12h();
-
-        // 0) غلاف
-        content.push(coverPage());
-        // 1) فهرس رئيسي بالشهور (روابط داخلية)
-        content.push(indexPage());
-
-        // 2) صفحات الشهور + الأيام (يناير → يونيو)
-        const start = new Date(2026, 0, 1);
-        const end   = new Date(2026, 5, 30); // حتى 30 يونيو
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-          const y = d.getFullYear();
-          const m = d.getMonth(); // 0..11
-          const day = d.getDate();
-
-          // معرّف الشهر (يُسند في اليوم الأول فقط)
-          const monthId = (day === 1) ? { id: 'm-' + String(m+1).padStart(2,'0') } : {};
-
-          // وصف التاريخ بالعربية (اسم اليوم/اليوم/الشهر)
-          const dateStr = d.toLocaleDateString('ar', { weekday:'long', day:'numeric', month:'long' });
-
-          // --- صفحة اليمين (العمل) ---
-          content.push({
-            ...monthId,
-            background: function(){
-              // شريط التبويب الجانبي
-              return { canvas: [{ type:'rect', x: 2000, y: 140, w: 56, h: 360, r: 8, color: THEME.royal }] };
-            },
-            // هوامش الصفحة (يمين/أعلى/يسار/أسفل) — pdfmake يستخدم [left, top, right, bottom]
-            // هنا نستخدم padding مثل stack عبر margin
-            margin: [60, 40, 60, 40],
-            stack: [
-              // التبويبات الجانبية ثابتة مكانياً
-              {
-                absolutePosition: { x: 2008, y: 150 },
-                stack: drawSideTabs(m)
-              },
-              {
-                columns: [
-                  { text: OWNER, fontSize: 36, color: THEME.gold, italics: true, alignment:'right' },
-                  { text: dateStr, fontSize: 28, color: THEME.royal, bold: true, alignment:'left' }
-                ], margin:[0,0,0,8]
-              },
-              { canvas: [{ type:'line', x1:0, y1:0, x2: 1920, y2:0, lineWidth:1.2, lineColor: THEME.ruby }] , margin:[0,6,0,16]},
-
-              {
-                columns: [
-                  // عمود الجدول اليومي
-                  {
-                    width: '32%',
+                docContent.push({
+                    // وضع تصميمك كخلفية للصفحة بالكامل
+                    background: [
+                        { image: bgB64, width: 595, height: 842 } // مقاس A4 Portrait
+                    ],
+                    padding: [40, 40, 40, 40],
                     stack: [
-                      { text: 'الجدول (12h)', color: THEME.ruby, bold:true, margin:[0,0,0,8], fontSize:22 },
-                      {
-                        table: {
-                          widths: ['*'],
-                          body: schedule.map(t => [{ text: t, fontSize: 22, margin:[4,8,4,8] }])
+                        // طبقة الروابط الجانبية (فوق التصميم)
+                        {
+                            absolutePosition: { x: 550, y: 150 },
+                            stack: months.map((monthName, idx) => ({
+                                text: ' ', // مساحة شفافة للنقر
+                                margin: [0, 5],
+                                canvas: [{ type: 'rect', x: 0, y: 0, w: 30, h: 40, color: 'white', fillOpacity: 0 }],
+                                linkToDestination: 'month-' + idx
+                            }))
                         },
-                        layout: {
-                          hLineColor: THEME.line, vLineColor: THEME.line
+                        // كتابة التاريخ واليوم في مكان مخصص (تعدل الإحداثيات حسب تصميمك)
+                        { 
+                            text: dateStr, 
+                            absolutePosition: { x: 100, y: 55 }, 
+                            fontSize: 18, color: '#0f172a', bold: true 
+                        },
+                        // اسمك بشكل انسيابي
+                        {
+                            text: 'Mr. Mo. Yasin',
+                            absolutePosition: { x: 420, y: 35 },
+                            fontSize: 16, italics: true, color: '#b8860b'
                         }
-                      }
-                    ]
-                  },
-                  // عمود بطاقات العمل (5 بطاقات مسطرة)
-                  {
-                    width: '65%',
-                    margin:[24,0,0,0],
-                    stack: [
-                      { text: 'بطاقات التحضير والعمل', color: THEME.ruby, bold:true, margin:[0,0,0,8], fontSize:22 },
-                      ...Array.from({length:5}).map(() => ruledCard(1200, 170, 8, THEME.line))
-                    ]
-                  }
-                ],
-              }
-            ],
-            pageBreak: 'after'
-          });
-
-          // --- صفحة اليسار (الحياة) ---
-          content.push({
-            background: function(){
-              return { canvas: [{ type:'rect', x: 2000, y: 140, w: 56, h: 360, r: 8, color: THEME.royal }] };
-            },
-            margin: [60, 40, 60, 40],
-            stack: [
-              {
-                absolutePosition: { x: 2008, y: 150 },
-                stack: drawSideTabs(m)
-              },
-              {
-                columns: [
-                  { text: 'الحياة اليومية والحسابات', fontSize: 28, color: THEME.emerald, bold: true, alignment:'right' },
-                  { text: 'العودة إلى الفهرس', linkToDestination:'index', fontSize: 16, color: THEME.ruby, alignment:'left' }
-                ], margin:[0,0,0,10]
-              },
-
-              {
-                columns: [
-                  // قائمة مهام يومية
-                  {
-                    width:'48%',
-                    stack: [
-                      { text:'قائمة المهام اليومية', color: THEME.emerald, bold:true, fontSize:22, margin:[0,0,0,8] },
-                      {
-                        table: {
-                          widths:[24,'*'],
-                          body: Array.from({length:12}).map(()=>[
-                            [{ canvas:[{ type:'rect', x:0,y:0,w:18,h:18,r:4, lineColor:THEME.line }] }],
-                            [{ text:'', margin:[0,8,0,8], border:[false,false,false,true], fillColor:'#fff' }]
-                          ])
-                        },
-                        layout:{ hLineColor: THEME.line, vLineColor: 'transparent' }
-                      }
-                    ]
-                  },
-                  // مصروفات + ملاحظات
-                  {
-                    width:'48%',
-                    margin:[24,0,0,0],
-                    stack: [
-                      { text: 'المصروفات (نظام الزمرد)', color: THEME.emerald, bold:true, fontSize:22, margin:[0,0,0,8] },
-                      {
-                        table:{
-                          widths:['*','auto','auto'],
-                          body: [
-                            [
-                              { text:'البيان', fillColor:THEME.emerald, color:'#fff', bold:true },
-                              { text:'دخل', fillColor:THEME.emerald, color:'#fff', bold:true },
-                              { text:'صرف', fillColor:THEME.emerald, color:'#fff', bold:true }
-                            ],
-                            ...Array.from({length:8}).map(()=>['','','']),
-                            [{ text:'الإجمالي', bold:true }, { colSpan:2, text:'' }, {}]
-                          ]
-                        },
-                        layout:{ hLineColor: THEME.line, vLineColor: THEME.line }
-                      },
-                      { text: 'ملاحظات الياقوت', color: THEME.ruby, bold:true, fontSize:22, margin:[0,16,0,6] },
-                      { canvas:[{ type:'rect', x:0, y:0, w: 900, h: 240, r: 10, lineColor: THEME.line, color:'#fff' }] }
-                    ]
-                  }
-                ]
-              }
-            ],
-            pageBreak: 'after'
-          });
+                    ],
+                    id: d === 1 ? 'month-' + m : null,
+                    pageBreak: 'after'
+                });
+            }
         }
 
-        // إعداد المستند
         const docDefinition = {
-          pageSize: { width: PAGE.width, height: PAGE.height },
-          pageOrientation: PAGE.orientation, // landscape
-          info: { title: 'MYH Master Planner 2026 — Spread Edition' },
-          defaultStyle: { font: 'MyFont', alignment:'right', fontSize: 24, color:'#111' },
-          styles: {
-            h1:{ fontSize: 64, bold:true },
-            h2:{ fontSize: 36, bold:true },
-            small:{ fontSize: 18 }
-          },
-          content
+            pageSize: 'A4',
+            defaultStyle: { font: 'MyFont' },
+            content: docContent
         };
 
-        const pdf = pdfMake.createPdf(docDefinition);
-        if (openInstead) pdf.open();
-        else pdf.download('MYH_Master_2026.pdf');
-
-        statusEl.textContent = "✅ تم التوليد بنجاح!";
-        statusEl.className = "status ok";
-      }catch(e){
-        statusEl.textContent = "❌ خطأ أثناء التوليد: " + e.message;
-        statusEl.className = "status err";
-        console.error(e);
-      }
-    }
-
-    // ===================== لبنات الرسم المساعدة =====================
-    function coverPage(){
-      return {
-        stack: [
-          { text: '2026', style:'h1', color: THEME.gold, margin:[0, 260, 0, 0], alignment:'center' },
-          { text: OWNER, fontSize: 56, color:'#fff', italics:true, alignment:'center', margin:[0,18,0,0] },
-          { canvas: [{ type:'line', x1: 880, y1: 0, x2: 1280, y2: 0, lineWidth: 3, lineColor: THEME.gold }], alignment:'center', margin:[0,26,0,0] },
-          { text: 'PROFESSIONAL INTERACTIVE PLANNER', fontSize: 22, color: THEME.gold, margin:[0,40,0,0], alignment:'center', characterSpacing: 2 }
-        ],
-        fillColor: THEME.royal,
-        pageBreak: 'after',
-        margin:[0,0,0,0]
-      };
-    }
-
-    function indexPage(){
-      const linksMonths = MONTHS.map((m, idx) => ({
-        text: m, linkToDestination: 'm-' + String(idx+1).padStart(2,'0'),
-        fontSize: 30, color: THEME.royal, margin:[8,10,8,10]
-      }));
-      return {
-        id: 'index',
-        stack: [
-          { text:'فهرس الشهور', style:'h2', color: THEME.royal, alignment:'center', margin:[0,0,0,16] },
-          { text:'اضغط للانتقال مباشرة إلى صفحات الشهر:', alignment:'center', margin:[0,0,0,16], style:'small', color:'#475569' },
-          {
-            columns: [
-              { stack: linksMonths.slice(0,3), alignment:'center' },
-              { stack: linksMonths.slice(3,6), alignment:'center' }
-            ], columnGap: 80
-          }
-        ],
-        pageBreak: 'after',
-        margin:[0,120,0,0]
-      };
-    }
-
-    // بطاقة مسطرة (عرض/ارتفاع/عدد سطور/لون خطوط)
-    function ruledCard(w, h, rows, lineColor){
-      const margin = 16, top = h - margin, bottom = margin;
-      const step = (top - bottom) / Math.max(1, rows);
-      const lines = [];
-      for(let i=0;i<=rows;i++){
-        lines.push({ type:'line', x1:margin, y1: top - i*step, x2: w - margin, y2: top - i*step, lineColor });
-      }
-      return { margin:[0,8,0,8], canvas: [ { type:'rect', x:0, y:0, w, h, r:10, lineColor, color:'#fff' }, ...lines ] };
-    }
-  </script>
+        pdfMake.createPdf(docDefinition).download('MYH_Custom_Interactive_2026.pdf');
+        document.getElementById('status').innerText = "✅ جاهز للتحميل!";
+    };
+</script>
 </body>
 </html>
