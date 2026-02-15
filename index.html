@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>هيدر البلانر الفاخر — زخرفة هندسية + هوامش آمنة</title>
+  <title>هيدر البلانر الفاخر — زخرفة هندسية + هوامش آمنة + أيقونات منفصلة</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Google Fonts (Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet"/>
 
   <style>
     :root{
-      /* المقاس (يمكن ضبط الارتفاع إلى 280|320 حسب رغبتك) */
+      /* المقاس (يمكن تعديل الارتفاع بسهولة: 280 | 320) */
       --W: 2732px;
       --H: 300px;
 
       /* مساحة آمنة لمنع أي قصّ */
-      --SAFE: 16px;
+      --SAFE: 18px;
 
       /* لوحات فاخرة بطابع إسلامي */
-      /* 1) Emerald / Gold (الزمردي) */
+      /* Emerald / Gold (الزمردي) */
       --bg-emerald:#f7f6f2; --ink-emerald:#103a2b; --line-emerald:#cbb37e; --gold-emerald:#c5a059; --chip-emerald:#efe7d6;
-      /* 2) Navy / Gold (الكحلي) */
+      /* Navy / Gold (الكحلي) */
       --bg-navy:#f6f8fc; --ink-navy:#0f2448; --line-navy:#ccbe98; --gold-navy:#caa354; --chip-navy:#efe7d8;
-      /* 3) Ruby / Gold (الياقوتي) */
+      /* Ruby / Gold (الياقوتي) */
       --bg-ruby:#fff8f7; --ink-ruby:#4a0f1f; --line-ruby:#d7bf92; --gold-ruby:#c89b4f; --chip-ruby:#f6ecde;
-      /* 4) Marble / Gold (المرمري) */
+      /* Marble / Gold (المرمري) */
       --bg-marble:#fcfbf9; --ink-marble:#2f2f2f; --line-marble:#d4c7a6; --gold-marble:#c9a65a; --chip-marble:#f3ecde;
 
       /* الافتراضي: الزمردي */
@@ -37,9 +37,11 @@
       --chip: var(--chip-emerald);
 
       --muted:#666;
+      --icon-w: 22px;   /* عرض ثابت للأيقونة داخل كل عنصر */
+      --gap: 8px;       /* تباعد داخلي عام */
     }
 
-    /* خلفية الصفحة فقط للمعاينة */
+    /* خلفية الصفحة للمعاينة فقط */
     body{ margin:0; background:#7c7c7c; font-family:'Amiri',serif; }
 
     /* أدوات */
@@ -58,7 +60,10 @@
     /* اللوحة/الملصق */
     .sticker{
       width:var(--W); height:var(--H);
-      background: var(--bg);
+      background:
+        radial-gradient(1000px 60% at 85% 0%, rgba(0,0,0,0.035), transparent 60%),
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
+        var(--bg);
       color:var(--ink);
       border-radius:24px; border:8px double var(--gold);
       box-shadow:0 10px 30px rgba(0,0,0,.35);
@@ -66,16 +71,16 @@
       padding: var(--SAFE);
     }
 
-    /* زخرفة هندسية خفيفة (Arabesque) باستخدام تراكبات جيو مترية */
+    /* زخرفة هندسية (Arabesque) بطبقات، أسفل المحتوى */
     .pattern{
       position:absolute; inset: var(--SAFE);
-      border-radius: 12px; pointer-events:none; mix-blend-mode: multiply;
-      /* طبقة زخرفة رخام + شبكية هندسية + نجوم مائلة */
+      border-radius: 12px; pointer-events:none; z-index:0;
       background-image:
-        radial-gradient(1200px 600px at 80% 0%, rgba(0,0,0,0.035), transparent 60%),
-        /* شبكة دوائر */
-        radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1.5px),
-        /* نجمات هندسية */
+        /* رخام لطيف */
+        linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.35) 100%),
+        /* شبكة هندسية */
+        radial-gradient(circle at 0 0, rgba(0,0,0,0.05) 1px, transparent 1.5px),
+        /* نجوم هندسية */
         conic-gradient(from 45deg, rgba(0,0,0,0.035) 0 90deg, transparent 90deg);
       background-size:
         cover,
@@ -85,16 +90,28 @@
         center,
         0 0,
         14px 14px;
-      /* تلون وفق لون الخط */
-      filter: hue-rotate(0deg) saturate(0.8) brightness(1);
-      opacity: .23;
+      mix-blend-mode:multiply;
+      opacity:.22;
     }
 
+    /* زخارف ذهبية رقيقة في الزوايا */
+    .sticker::before,
+    .sticker::after{
+      content:"";
+      position:absolute; width:180px; height:180px; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), transparent 60%),
+        conic-gradient(from 0deg, rgba(201,166,90,0.25), transparent 80%);
+      filter:saturate(1.1);
+    }
+    .sticker::before{ top:0; right:0; border-bottom-left-radius:80px; opacity:.35; }
+    .sticker::after{ bottom:0; left:0; border-top-right-radius:80px; opacity:.35; }
+
     .inner{
-      position:relative; z-index:1;
+      position:relative; z-index:1; /* أعلى من الزخرفة */
       display:flex; flex-direction:column; gap:6px;
       height:100%; box-sizing:border-box;
-      padding: 6px 8px;
+      padding: 6px 8px calc(10px + var(--SAFE)); /* حشو سفلي إضافي لإبراز آخر صف */
       border-radius: 12px;
     }
 
@@ -107,7 +124,7 @@
       font-family:'Reem Kufi',sans-serif; margin:0; font-size:22px; letter-spacing:.2px; color:var(--ink);
       display:flex; align-items:center; gap:8px; line-height:1.2;
     }
-    .title .icon{ font-size:20px; display:inline-block; transform: translateY(1px); }
+    .title .top-icon{ font-size:20px; }
     .chip{
       display:inline-flex; align-items:center; gap:6px;
       background:var(--chip); border:1.5px solid var(--line); color:var(--ink);
@@ -127,51 +144,65 @@
       background:#fff7e6; border:1.5px solid var(--line); border-radius:999px; padding:3px 9px;
       display:inline-flex; align-items:center; gap:6px;
     }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:4px 8px; border-radius:10px; font-size:15px; line-height:1.25;
-      background:#fff; border:1.5px solid var(--line); color:var(--ink);
-    }
-    .icon{ font-size:16px; display:inline-block; transform: translateY(1px); }
-    .pts{ color:var(--muted); font-size:14px; }
-    .sep{ opacity:.45; }
 
-    /* خيارات الأداء (مسجد/جماعة/فرد/قضاء) */
-    .opts{ display:inline-flex; align-items:center; gap:6px; }
+    /* كل عنصر (pill) الآن Grid حتى لا تتداخل الأيقونة مع النص أبداً */
+    .pill{
+      display:grid;
+      grid-template-columns: var(--icon-w) auto 1fr auto;
+      align-items:center;
+      column-gap: var(--gap);
+      padding:6px 10px;
+      border-radius:10px;
+      font-size:15px; line-height:1.25;
+      background:#fff; border:1.5px solid var(--line); color:var(--ink);
+      max-width: 100%;
+    }
+    .i{ width: var(--icon-w); text-align:center; font-size:16px; }
+    .t{ white-space:nowrap; }
+    .pts{ justify-self:start; color:var(--muted); font-size:13.5px; }
+    .sep{ opacity:.45; margin:0 2px; }
+
+    /* خيارات الأداء (مسجد/جماعة/فرد/قضاء) — لا تتكسر بسبب grid */
+    .opts{
+      display:inline-flex; align-items:center; gap:6px;
+    }
     .opt{
       display:inline-flex; align-items:center; gap:4px;
       background:#faf7ee; border:1.2px solid var(--line); border-radius:8px; padding:2px 6px; font-size:13px; line-height:1.2;
     }
-    .opt input{ width:14px; height:14px; vertical-align:middle; }
+    .opt input{ width:14px; height:14px; vertical-align:middle; accent-color: var(--gold); }
 
     /* الختمة (رقم الجزء) */
     .juz{
       display:inline-flex; align-items:center; gap:6px;
-      background:#fff; border:1.5px solid var(--line); padding:4px 8px; border-radius:10px;
+      background:#fff; border:1.5px solid var(--line); padding:5px 8px; border-radius:10px;
       font-size:15px; line-height:1.2;
     }
     .juz input{
       width:48px; text-align:center; border:1.2px solid var(--line); border-radius:8px; padding:2px 4px; font-size:14px;
     }
 
-    /* شريط أيقونات سفلي (لضمان ظهور الأيقونات كاملة داخل الهوامش الآمنة) */
+    /* شريط أيقونات سفلي داخل المساحة الآمنة */
     .icons-rail{
-      display:flex; align-items:center; justify-content:center; gap:14px;
       position:absolute; left:var(--SAFE); right:var(--SAFE);
-      bottom: calc(var(--SAFE) + 10px);
-      font-size:20px; opacity:.8; color:var(--ink);
+      bottom: calc(var(--SAFE) + 8px);
+      display:flex; align-items:center; justify-content:center; gap:14px;
+      font-size:20px; opacity:.9; color:var(--ink);
       z-index:1;
+      pointer-events:none;
+      text-shadow: 0 1px 0 rgba(255,255,255,.35);
     }
 
-    /* زخرفة سفلية رقيقة داخل المساحة الآمنة */
+    /* زخرفة سفلية */
     .bottom-line{
       position:absolute; left:var(--SAFE); right:var(--SAFE); bottom:var(--SAFE); height:8px;
       background:repeating-linear-gradient(90deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 48px);
       border-top:2px solid var(--line);
       border-radius: 6px;
+      z-index:0;
     }
 
-    /* معاينة متكيّفة للشاشة */
+    /* معاينة متكيّفة */
     @media (max-width: 1500px){ .sticker{ transform: scale(0.60); } }
     @media (max-width: 1100px){ .sticker{ transform: scale(0.44); } }
 
@@ -192,13 +223,13 @@
 
   <div class="wrap">
     <div id="sticker" class="sticker">
-      <!-- زخرفة هندسية خفيفة -->
+      <!-- زخرفة هندسية متعددة الطبقات -->
       <div class="pattern" aria-hidden="true"></div>
 
       <div class="inner">
         <!-- الصف العلوي -->
         <div class="top">
-          <h1 class="title"><span class="icon">🕌</span> هيدر العبادات اليومي — طابع إسلامي فاخر</h1>
+          <h1 class="title"><span class="top-icon">🕌</span> هيدر العبادات اليومي — طابع إسلامي فاخر</h1>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
             <span class="chip">📅 اليوم:</span>
             <input class="input" type="text" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18" />
@@ -213,7 +244,7 @@
             <span class="label">🕋 الفرائض</span>
 
             <span class="pill">
-              <span class="icon">🌄</span>الفجر
+              <span class="i">🌄</span><span class="t">الفجر</span>
               <span class="pts"><span class="sep">|</span> م:100 ج:30 ف:15 ق:5</span>
               <span class="opts">
                 <label class="opt"><input type="checkbox" /> م</label>
@@ -224,7 +255,7 @@
             </span>
 
             <span class="pill">
-              <span class="icon">☀️</span>الظهر
+              <span class="i">☀️</span><span class="t">الظهر</span>
               <span class="pts"><span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
               <span class="opts">
                 <label class="opt"><input type="checkbox" /> م</label>
@@ -235,7 +266,7 @@
             </span>
 
             <span class="pill">
-              <span class="icon">🌤️</span>العصر
+              <span class="i">🌤️</span><span class="t">العصر</span>
               <span class="pts"><span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
               <span class="opts">
                 <label class="opt"><input type="checkbox" /> م</label>
@@ -246,7 +277,7 @@
             </span>
 
             <span class="pill">
-              <span class="icon">🌅</span>المغرب
+              <span class="i">🌅</span><span class="t">المغرب</span>
               <span class="pts"><span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
               <span class="opts">
                 <label class="opt"><input type="checkbox" /> م</label>
@@ -257,7 +288,7 @@
             </span>
 
             <span class="pill">
-              <span class="icon">🌃</span>العشاء
+              <span class="i">🌃</span><span class="t">العشاء</span>
               <span class="pts"><span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
               <span class="opts">
                 <label class="opt"><input type="checkbox" /> م</label>
@@ -271,47 +302,81 @@
           <!-- رمضان -->
           <div class="row">
             <span class="label">🌙 رمضان</span>
-            <span class="pill"><input type="checkbox" /> <span class="icon">🕯️</span>التراويح <span class="pts"><span class="sep">|</span> +40</span></span>
-            <span class="pill"><input type="checkbox" /> <span class="icon">🌟</span>الوتر <span class="pts"><span class="sep">|</span> +20</span></span>
-            <span class="pill"><input type="checkbox" /> <span class="icon">🌙</span>صيام اليوم <span class="pts"><span class="sep">|</span> +100</span></span>
-            <span class="pill"><input type="checkbox" /> <span class="icon">🕌</span>سورة الكهف (للجمعة) <span class="pts"><span class="sep">|</span> +40</span></span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🕯️</span><span class="t">التراويح</span><span class="pts"><span class="sep">|</span> +40</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🌟</span><span class="t">الوتر</span><span class="pts"><span class="sep">|</span> +20</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🌙</span><span class="t">صيام اليوم</span><span class="pts"><span class="sep">|</span> +100</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🕌</span><span class="t">سورة الكهف (للجمعة)</span><span class="pts"><span class="sep">|</span> +40</span>
+            </span>
             <span class="juz">📖 جزء اليوم: <input type="text" placeholder="1–30" /></span>
           </div>
 
           <!-- السنن -->
           <div class="row">
             <span class="label">🌱 السنن</span>
-            <span class="pill"><input type="checkbox" /> ✨ سنة الفجر <span class="pts"><span class="sep">|</span> +20</span></span>
-            <span class="pill"><input type="checkbox" /> ☀️ الضحى <span class="pts"><span class="sep">|</span> +25</span></span>
-            <span class="pill"><input type="checkbox" /> ✨ الظهر قبل <span class="pts"><span class="sep">|</span> +20</span></span>
-            <span class="pill"><input type="checkbox" /> ✨ الظهر بعد <span class="pts"><span class="sep">|</span> +15</span></span>
-            <span class="pill"><input type="checkbox" /> ✨ سنة المغرب <span class="pts"><span class="sep">|</span> +15</span></span>
-            <span class="pill"><input type="checkbox" /> ✨ سنة العشاء <span class="pts"><span class="sep">|</span> +15</span></span>
-            <span class="pill"><input type="checkbox" /> 🕯️ الشفع <span class="pts"><span class="sep">|</span> +15</span></span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">✨</span><span class="t">سنة الفجر</span><span class="pts"><span class="sep">|</span> +20</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">☀️</span><span class="t">الضحى</span><span class="pts"><span class="sep">|</span> +25</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">✨</span><span class="t">الظهر قبل</span><span class="pts"><span class="sep">|</span> +20</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">✨</span><span class="t">الظهر بعد</span><span class="pts"><span class="sep">|</span> +15</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">✨</span><span class="t">سنة المغرب</span><span class="pts"><span class="sep">|</span> +15</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">✨</span><span class="t">سنة العشاء</span><span class="pts"><span class="sep">|</span> +15</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🕯️</span><span class="t">الشفع</span><span class="pts"><span class="sep">|</span> +15</span>
+            </span>
           </div>
 
-          <!-- الأذكار والورد -->
+          <!-- الأذكار والورد (الصف كان يختفي — الآن يظهر كاملة داخل الهوامش الآمنة) -->
           <div class="row">
             <span class="label">📿 الأذكار والورد</span>
-            <span class="pill"><input type="checkbox" /> ☀️ أذكار الصباح <span class="pts"><span class="sep">|</span> +30</span></span>
-            <span class="pill"><input type="checkbox" /> 🌙 أذكار المساء <span class="pts"><span class="sep">|</span> +30</span></span>
-            <span class="pill"><input type="checkbox" /> 😴 أذكار النوم <span class="pts"><span class="sep">|</span> +30</span></span>
-            <span class="pill"><input type="checkbox" /> 📖 سورة الملك <span class="pts"><span class="sep">|</span> +30</span></span>
-            <span class="pill"><input type="checkbox" /> 📖 خواتيم البقرة <span class="pts"><span class="sep">|</span> +20</span></span>
-            <span class="pill"><input type="checkbox" /> 📖 الورد القرآني <span class="pts"><span class="sep">|</span> +50</span></span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">☀️</span><span class="t">أذكار الصباح</span><span class="pts"><span class="sep">|</span> +30</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">🌙</span><span class="t">أذكار المساء</span><span class="pts"><span class="sep">|</span> +30</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">😴</span><span class="t">أذكار النوم</span><span class="pts"><span class="sep">|</span> +30</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">📖</span><span class="t">سورة الملك</span><span class="pts"><span class="sep">|</span> +30</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">📖</span><span class="t">خواتيم البقرة</span><span class="pts"><span class="sep">|</span> +20</span>
+            </span>
+            <span class="pill" style="grid-template-columns: var(--icon-w) auto auto;">
+              <span class="i">📖</span><span class="t">الورد القرآني</span><span class="pts"><span class="sep">|</span> +50</span>
+            </span>
           </div>
         </div>
 
-        <!-- شريط الأيقونات السفلي — داخل المساحة الآمنة لضمان عدم القص -->
+        <!-- شريط الأيقونات السفلي — داخل المساحة الآمنة -->
         <div class="icons-rail" aria-hidden="true">🕋 🌙 ⭐ 📖 🕌 🕯️ 🧭</div>
 
-        <!-- زخرفة سفلية رقيقة -->
+        <!-- زخرفة سفلية -->
         <div class="bottom-line" aria-hidden="true"></div>
       </div>
     </div>
   </div>
 
-  <!-- html2canvas للتصدير PNG -->
+  <!-- html2canvas للتصدير كصورة PNG -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     // تدوير لوحات الألوان: زمردي -> كحلي -> ياقوتي -> مرمري
@@ -329,10 +394,10 @@
       themeIndex = (themeIndex + 1) % names.length;
       applyTheme(names[themeIndex]);
     }
-    // الافتراضي
+    // افتراضي: الزمردي
     applyTheme('emerald');
 
-    // حفظ كصورة PNG بالحجم الأصلي مع إزالة أي تحجيم أثناء الالتقاط
+    // حفظ كصورة PNG بالحجم الأصلي (مع إزالة أي تحجيم معاينة مؤقتاً)
     async function savePNG(){
       const node = document.getElementById('sticker');
       const prev = node.style.transform;
@@ -341,7 +406,7 @@
       node.style.transform = prev;
       const a = document.createElement('a');
       a.href = canvas.toDataURL('image/png');
-      a.download = `planner_header_banner_luxe_geo_safe_${getComputedStyle(document.documentElement).getPropertyValue('--W').trim()}x${getComputedStyle(document.documentElement).getPropertyValue('--H').trim()}.png`;
+      a.download = `planner_header_banner_luxe_geo_fix_${getComputedStyle(document.documentElement).getPropertyValue('--W').trim()}x${getComputedStyle(document.documentElement).getPropertyValue('--H').trim()}.png`;
       a.click();
     }
   </script>
