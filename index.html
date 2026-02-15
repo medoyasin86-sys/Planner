@@ -1,64 +1,289 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>توقيت شهر رمضان لمدارس الفترة الواحدة</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f9f9f9;
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-      color: #004d40;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      direction: rtl;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #00695c;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f1f1f1;
-    }
-    tr:nth-child(odd) {
-      background-color: #ffffff;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>توقيت شهر رمضان لمدارس الفترة الواحدة</title>
+<style>
+  :root{
+    /* ألوان مقتبسة من التصميم */
+    --title-teal: #5aa5a7;        /* شريط العنوان */
+    --header-red: #a54548;        /* ترويسة "التوقيت الثاني" */
+    --header-maroon: #8c2f36;     /* ترويسة "الحصة" */
+    --header-amber: #c4823a;      /* ترويسة "الزمن بالدقيقة" */
+    --col-pale-pink: #f4e7e8;     /* خلفية عمود الحصة */
+    --col-pale-amber: #fbf1e4;    /* خلفية عمود الزمن */
+    --col-pale-blue: #e3f0f4;     /* خلفية عمود التوقيت */
+    --row-divider: #e5e5e5;       /* حدود داخلية */
+    --text-dark: #333;
+    --white: #fff;
+  }
+
+  body {
+    font-family: "Tajawal", "Cairo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    color: var(--text-dark);
+    background: #fafafa;
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 980px;
+    margin: 24px auto;
+    padding: 0 12px 32px;
+  }
+
+  /* شريط العنوان */
+  .title-bar{
+    background: var(--title-teal);
+    color: var(--white);
+    text-align: center;
+    padding: 14px 10px;
+    border-radius: 10px 10px 0 0;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    font-size: clamp(18px, 2.2vw, 22px);
+  }
+
+  /* الجدول */
+  .table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+  }
+
+  .table thead th{
+    padding: 12px 10px;
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: 2px solid var(--row-divider);
+    color: var(--white);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .th-lesson{ background: var(--header-maroon); }
+  .th-duration{ background: var(--header-amber); }
+  .th-t2, .th-t2 span{ background: var(--header-red); }
+
+  .table tbody td{
+    padding: 10px 10px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--row-divider);
+    text-align: center;
+  }
+
+  /* خلفيات الأعمدة مثل التصميم */
+  .col-lesson{ background: var(--col-pale-pink); font-weight: 600; }
+  .col-duration{ background: var(--col-pale-amber); }
+  .col-t2{ background: var(--col-pale-blue); }
+
+  /* صفوف متناوبة خفيفة */
+  .table tbody tr:nth-child(even) .col-t2{ filter: brightness(0.98); }
+  .table tbody tr:nth-child(even) .col-duration{ filter: brightness(0.98); }
+  .table tbody tr:nth-child(even) .col-lesson{ filter: brightness(0.98); }
+
+  /* خلايا "من/إلى" */
+  .time-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    align-items: center;
+  }
+  .time-cell{
+    background: rgba(255,255,255,.6);
+    border: 1px dashed #cbd5da;
+    border-radius: 8px;
+    padding: 8px 6px;
+    min-height: 38px;
+    font-variant-numeric: tabular-nums;
+  }
+  .time-label{
+    display: block;
+    font-size: 12px;
+    color: #6d7b80;
+    margin-bottom: 2px;
+  }
+
+  /* استجابة الشاشة الصغيرة */
+  @media (max-width: 640px){
+    .table thead th{ font-size: 14px; padding: 10px 8px; }
+    .table tbody td{ font-size: 14px; padding: 8px; }
+    .time-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* زر طباعة لطيف */
+  .actions{
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin: 10px 2px 0;
+  }
+  .btn{
+    background: var(--title-teal);
+    color: var(--white);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn:hover{ filter: brightness(0.95); }
+
+  @media print{
+    body{ background: #fff; }
+    .wrap{ margin: 0; max-width: none; padding: 0; }
+    .actions{ display: none; }
+    .table{ box-shadow: none; }
+  }
+</style>
 </head>
 <body>
-  <h2>توقيت شهر رمضان لمدارس الفترة الواحدة</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>الحصة</th>
-        <th>الزمن بالدقيقة</th>
-        <th>من</th>
-        <th>إلى</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>الطابور</td><td>10</td><td>7:30</td><td>7:40</td></tr>
-      <tr><td>الأولى</td><td>35</td><td>7:40</td><td>8:15</td></tr>
-      <tr><td>الثانية</td><td>35</td><td>8:15</td><td>8:50</td></tr>
-      <tr><td>الثالثة</td><td>35</td><td>8:50</td><td>9:25</td></tr>
-      <tr><td>الرابعة</td><td>35</td><td>9:25</td><td>10:00</td></tr>
-      <tr><td>الفسحة</td><td>10</td><td>10:00</td><td>10:10</td></tr>
-      <tr><td>الخامسة</td><td>35</td><td>10:10</td><td>10:45</td></tr>
-      <tr><td>السادسة</td><td>35</td><td>10:45</td><td>11:20</td></tr>
-      <tr><td>السابعة</td><td>35</td><td>11:20</td><td>11:55</td></tr>
-      <tr><td>الثامنة</td><td>35</td><td>11:55</td><td>12:30</td></tr>
-    </tbody>
-  </table>
+  <div class="wrap">
+
+    <div class="title-bar">
+      توقيت شهر رمضان لمدارس الفترة الواحدة
+    </div>
+
+    <table class="table" aria-label="توقيت شهر رمضان لمدارس الفترة الواحدة - التوقيت الثاني">
+      <thead>
+        <tr>
+          <th class="th-lesson">الحصة</th>
+          <th class="th-duration">الزمن بالدقيقة</th>
+          <th class="th-t2">التوقيت الثاني <span style="display:block;font-weight:400;font-size:12px;opacity:.9">من / إلى</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- الطابور -->
+        <tr>
+          <td class="col-lesson">الطابور</td>
+          <td class="col-duration">10</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span> <!-- 07:20 --> </div>
+              <div class="time-cell"><span class="time-label">إلى</span> <!-- 07:30 --> </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الأولى -->
+        <tr>
+          <td class="col-lesson">الأولى</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الثانية -->
+        <tr>
+          <td class="col-lesson">الثانية</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الثالثة -->
+        <tr>
+          <td class="col-lesson">الثالثة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الرابعة -->
+        <tr>
+          <td class="col-lesson">الرابعة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الفسحة -->
+        <tr>
+          <td class="col-lesson">الفسحة</td>
+          <td class="col-duration">10</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الخامسة -->
+        <tr>
+          <td class="col-lesson">الخامسة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- السادسة -->
+        <tr>
+          <td class="col-lesson">السادسة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- السابعة -->
+        <tr>
+          <td class="col-lesson">السابعة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- الثامنة -->
+        <tr>
+          <td class="col-lesson">الثامنة</td>
+          <td class="col-duration">35</td>
+          <td class="col-t2">
+            <div class="time-grid">
+              <div class="time-cell"><span class="time-label">من</span></div>
+              <div class="time-cell"><span class="time-label">إلى</span></div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="actions">
+      <button class="btn" onclick="window.print()">طباعة</button>
+    </div>
+
+  </div>
 </body>
 </html>
