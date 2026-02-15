@@ -3,537 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>دفتر إنجازات رمضان 1447هـ / 2026</title>
+  <title>جدول إنجازات يوم واحد - رمضان</title>
 
-  <!-- Fonts -->
+  <!-- الخطوط -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --primary:#1a4d2e; --gold:#c5a059; --gold-light:#e6cc92; --bg:#f9f6f0;
-      --card-bg:#ffffff; --text:#1a4d2e; --accent:#d35400; --crimson:#900c3f;
+      --card-bg:#ffffff; --text:#1a4d2e; --accent:#d35400;
     }
     body.dark{ --bg:#121212; --card-bg:#1e1e1e; --text:#e0e0e0; --primary:#2d6a4f; }
-    body{ font-family:'Amiri',serif; background:var(--bg); color:var(--text); margin:0; padding:12px; transition:.25s background; }
-    .container{ max-width:980px; margin:auto; background:var(--card-bg); border:3px double var(--gold); border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.2); padding:14px; position:relative; }
-    .dark-toggle{ position:fixed; top:14px; left:14px; width:40px; height:40px; border-radius:50%; border:none; background:var(--gold); cursor:pointer; font-size:1.2rem; box-shadow:0 2px 10px rgba(0,0,0,.2); z-index:1000; }
-    .header{ background:linear-gradient(135deg,#1a4d2e,#0a2b1a); color:#fff; padding:16px; border-radius:16px; border:2px solid var(--gold); text-align:center; }
-    .header h2{ margin:0; font-family:'Reem Kufi'; color:var(--gold-light); letter-spacing:.5px; }
-    .dates{ margin-top:10px; display:grid; grid-template-columns: 1fr; gap:10px; }
-    .date-box{ background:rgba(255,255,255,.1); border:1px solid rgba(197,160,89,.3); padding:10px; border-radius:12px; }
-    .date-row{ display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; }
-    .date-row input[type="date"]{ border:none; border-radius:6px; padding:6px 8px; font-weight:bold; text-align:center; }
-    #hijri{ display:block; color:var(--gold-light); font-weight:bold; margin-top:6px; }
 
-    .table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:.9rem; background:rgba(0,0,0,.08); border-radius:10px; overflow:hidden; }
-    .table th,.table td{ padding:8px; border:1px solid rgba(255,255,255,.15); text-align:center; color:#fff; }
-    .table thead{ background:rgba(0,0,0,.25); }
-    .city-row{ background:rgba(0,0,0,.15); }
+    body{ font-family:'Amiri',serif; background:var(--bg); color:var(--text); margin:0; padding:12px; }
+    .wrap{ max-width:900px; margin:auto; background:var(--card-bg); border:3px double var(--gold); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.2); padding:14px; }
+    .toggle{ position:fixed; top:14px; left:14px; width:40px; height:40px; border-radius:50%; border:none; background:var(--gold); cursor:pointer; font-size:1.2rem; box-shadow:0 2px 10px rgba(0,0,0,.2); }
 
-    .banner{ background:rgba(255,255,255,.1); border:1px solid var(--gold-light); color:#fff; border-radius:10px; padding:10px; margin-top:10px; line-height:1.7; }
-    .timer{ color:var(--gold-light); background:var(--primary); padding:4px 10px; border-radius:20px; font-family:sans-serif; direction:ltr; }
-    .alert{ display:none; background:linear-gradient(135deg,#fff9e6,#fffde7); border:2px solid var(--gold); color:#856404; padding:10px; border-radius:12px; text-align:center; margin-top:10px; font-weight:bold; box-shadow:0 0 15px rgba(197,160,89,.4); animation:lightPulse 2s infinite; }
-    @keyframes lightPulse{ 0%{box-shadow:0 0 5px rgba(197,160,89,.4)} 50%{box-shadow:0 0 20px rgba(197,160,89,.8)} 100%{box-shadow:0 0 5px rgba(197,160,89,.4)} }
+    .head{ background:linear-gradient(135deg,#1a4d2e,#0a2b1a); color:#fff; border:2px solid var(--gold); border-radius:14px; padding:14px; text-align:center; }
+    .head h2{ margin:0; font-family:'Reem Kufi'; color:var(--gold-light); }
+    .meta{ display:grid; grid-template-columns: 1fr; gap:10px; margin-top:10px; }
+    .meta-item{ background:rgba(255,255,255,.1); border:1px solid rgba(197,160,89,.35); border-radius:12px; padding:10px; }
+    .meta-row{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; }
+    .meta-row input[type="text"]{ border:none; border-radius:8px; padding:8px 10px; min-width:220px; font-weight:bold; text-align:center; }
 
-    .marquee{ background:var(--accent); color:#fff; border:2px solid var(--gold); border-radius:14px; padding:12px 15px; margin:15px 0; text-align:center; font-size:1.05rem; box-shadow:0 4px 10px rgba(0,0,0,.1); }
     .section{ background:#fff; border:1px solid var(--gold); border-radius:14px; margin-top:12px; overflow:hidden; }
     body.dark .section{ background:#1e1e1e; }
-    .section .title{ background:var(--primary); color:#fff; margin:0; padding:10px; font-size:1rem; }
-    .row{ display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px dashed var(--gold-light); gap:8px; }
-    .pts{ font-size:.75rem; color:#666; display:block; }
-    .opts{ display:flex; gap:4px; flex-wrap:wrap; }
-    .btn{ font-size:.8rem; padding:6px 8px; border-radius:6px; border:1px solid var(--gold); background:transparent; color:inherit; cursor:pointer; }
-    .btn.sel{ background:var(--gold); color:#fff; }
-    .check{ transform:scale(1.3); cursor:pointer; }
-    .link{ color:var(--primary); text-decoration:none; border-bottom:1px solid var(--gold); }
+    .title{ background:var(--primary); color:#fff; margin:0; padding:10px 12px; font-size:1rem; }
+    .note{ color:#856404; background:#fff9e6; border-top:1px dashed var(--gold-light); padding:8px 12px; }
 
-    .grid-2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; }
-    .progress-wrap{ padding:10px; }
-    .progress-bar{ width:100%; height:12px; background:#eee; border-radius:10px; overflow:hidden; }
-    .progress-bar > span{ display:block; height:100%; background:linear-gradient(90deg,#c5a059,#1a4d2e); width:0%; transition:.4s width; }
-
-    .stats{ display:flex; justify-content:space-between; align-items:center; padding:6px 10px; color:#333; background:#faf6ea; border:1px dashed var(--gold); border-radius:10px; margin-top:10px; }
-    body.dark .stats{ background:#2a2a2a; color:#fff; }
-
-    .actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:8px; }
-    .pill{ background:#f1f1f1; border:1px solid #ddd; color:#333; border-radius:20px; padding:6px 10px; cursor:pointer; }
+    /* جدول موحّد لليوم */
+    table{ width:100%; border-collapse:separate; border-spacing:0; margin:0; }
+    thead th{ background:rgba(0,0,0,.08); color:#fff; text-align:center; padding:10px; border-right:1px solid rgba(255,255,255,.25); }
+    thead tr{ background:rgba(0,0,0,.22); }
+    tbody td{ background:rgba(0,0,0,.04); padding:10px; border-bottom:1px dashed var(--gold-light); }
+    tbody tr:nth-child(even) td{ background:rgba(0,0,0,.02); }
+    .c{ text-align:center; }
+    .w{ white-space:nowrap; }
+    .pill{ display:inline-block; padding:4px 8px; border:1px solid var(--gold); border-radius:999px; background:#faf6ea; color:#333; font-size:.85rem; }
     body.dark .pill{ background:#2a2a2a; color:#fff; border-color:#444; }
+    .checkbox{ width:18px; height:18px; }
 
-    /* helpers */
-    .muted{ opacity:.85; font-size:.9rem; }
-    .note{ color:#856404; }
+    /* للطباعة */
+    @media print{
+      .toggle{ display:none; }
+      body{ background:#fff; }
+      .wrap{ box-shadow:none; border-color:#c5a059; }
+      .note{ background:#fff; }
+    }
   </style>
 </head>
 <body>
-  <button class="dark-toggle" title="الوضع الليلي" onclick="toggleDark()">🌓</button>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">🌓</button>
 
-  <div class="container">
-    <div class="header">
-      <h2>🕌 دفتر إنجازات رمضان 1447هـ / 2026</h2>
-      <div class="dates">
-        <div class="date-box">
-          <div class="date-row">
-            <span>التاريخ الميلادي:</span>
-            <input type="date" id="datePicker">
+  <div class="wrap">
+    <div class="head">
+      <h2>🕌 جدول إنجازات يوم واحد - رمضان</h2>
+      <div class="meta">
+        <div class="meta-item">
+          <div class="meta-row">
+            <span class="pill">اليوم (هجري/ميلادي):</span>
+            <!-- خانة اليوم فارغة لتعبئتها يدويًا -->
+            <input type="text" id="dayText" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18">
           </div>
-          <span id="hijri">جاري تحديد التاريخ الهجري…</span>
         </div>
-
-        <div class="date-box">
-          <div class="date-row">
-            <label>المدينة:</label>
-            <input id="city" placeholder="مثال: Salalah" style="padding:6px;border-radius:6px;border:none;">
-            <label>الدولة:</label>
-            <input id="country" placeholder="مثال: Oman" style="padding:6px;border-radius:6px;border:none;">
-            <button class="pill" onclick="saveLocation()">حفظ الموقع</button>
-          </div>
-
-          <table class="table">
-            <thead><tr><th>الفجر</th><th>الظهر</th><th>العصر</th><th>المغرب</th><th>العشاء</th></tr></thead>
-            <tbody id="times"><tr class="city-row"><td colspan="5">أدخل المدينة والدولة ثم اضغط حفظ</td></tr></tbody>
-          </table>
-
-          <div id="nextBanner" class="banner">جاري حساب العدّادات…</div>
-          <div id="wuduAlert" class="alert">🌊 حان الاستعداد للوضوء…</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="marquee" id="hadith">جاري تحميل حديث اليوم…</div>
-
-    <!-- صيام رمضان -->
-    <div class="section">
-      <h3 class="title" style="background:var(--accent)">🌙 قسم الصيام (رمضان)</h3>
-      <div class="row">
-        <span>صمتُ اليوم <small class="pts">(+100 نقطة)</small></span>
-        <input id="fasting" type="checkbox" class="check" onchange="save('fasting',{done:this.checked,p:this.checked?100:0})">
-      </div>
-      <div class="row">
-        <div>
-          <b>الوقت المتبقّي للسَّحور/الإمساك (الفجر):</b>
-          <div><span id="suhoorTimer" class="timer">--</span></div>
-        </div>
-        <div>
-          <b>الوقت المتبقّي للإفطار (المغرب):</b>
-          <div><span id="iftarTimer" class="timer">--</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- الفرائض -->
-    <div class="section">
-      <h3 class="title">🕋 الفرائض (مسجد | جماعة | فردي | قضاء)</h3>
-      <div id="fardList"></div>
-    </div>
-
-    <!-- التراويح والوتر -->
-    <div class="section">
-      <h3 class="title">🌌 التراويح والوتر</h3>
-      <div class="row">
-        <span>🕯️ صلاة التراويح <small class="pts">(+40 نقطة)</small></span>
-        <input id="taraweeh" type="checkbox" class="check" onchange="save('taraweeh',{done:this.checked,p:this.checked?40:0})">
-      </div>
-      <div class="row">
-        <span>🌟 الوتر <small class="pts">(+20 نقطة)</small></span>
-        <input id="s_witr" type="checkbox" class="check" onchange="save('s_witr',{done:this.checked,p:this.checked?20:0})">
-      </div>
-    </div>
-
-    <!-- السنن والرواتب -->
-    <div class="section">
-      <h3 class="title">🌱 السنن والرواتب</h3>
-      <div id="sunanList"></div>
-    </div>
-
-    <!-- الأذكار والورد + ختمة -->
-    <div class="section">
-      <h3 class="title">📿 الأذكار والورد</h3>
-      <div id="extraList"></div>
-
-      <div class="grid-2">
-        <div class="progress-wrap">
-          <div class="row" style="border-bottom:none">
-            <div>
-              <b>📖 ختمة رمضان</b>
-              <div class="muted">اختر آخر جزء أنهيته اليوم (1–30)</div>
-            </div>
-            <select id="juzSelect" style="padding:6px;border-radius:6px;border:1px solid var(--gold);" onchange="save('khatmah',{juz:+this.value||0})">
-              <option value="0">— لم أحدد —</option>
-              ${Array.from({length:30}).map((_,i)=>`<option value="${i+1}">الجزء ${i+1}</option>`).join('')}
-            </select>
-          </div>
-          <div class="progress-bar"><span id="juzBar"></span></div>
-          <div class="muted" id="juzText">تقدّم الختمة: 0%</div>
-        </div>
-
-        <div class="progress-wrap">
-          <div class="row" style="border-bottom:none">
-            <div>
-              <b>✨ ملحوظة</b>
-              <div class="muted">البيانات محفوظة محليًا لكل يوم، ويمكن تصديرها.</div>
-            </div>
-            <div class="actions">
-              <button class="pill" onclick="exportDay()">تصدير اليوم</button>
-              <label class="pill" style="cursor:pointer">
-                استيراد
-                <input type="file" accept="application/json" style="display:none" onchange="importDay(this)">
-              </label>
-            </div>
+        <div class="meta-item">
+          <div class="meta-row">
+            <span class="pill">الاسم (اختياري):</span>
+            <input type="text" id="nameText" placeholder="اكتب اسمك هنا">
           </div>
         </div>
       </div>
     </div>
 
-    <!-- الإحصاءات -->
-    <div class="stats">
-      <div>إجمالي نقاط اليوم: <b id="totalPts">0</b> نقطة</div>
-      <div class="note">💡 تذكير: فضّل المسجد/الجماعة في الفرائض، وأحسن ختمتك.</div>
+    <!-- جدول موحّد لليوم: العبادات + حالة الإنجاز (فارغة) + ملاحظات -->
+    <div class="section" style="margin-top:14px">
+      <h3 class="title">📋 خطة اليوم</h3>
+      <table>
+        <thead>
+          <tr>
+            <th class="w">#</th>
+            <th>العبادة</th>
+            <th class="w">التوضيح</th>
+            <th class="w">حالة الإنجاز</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- الصيام (ثابت في رمضان) -->
+          <tr>
+            <td class="c">1</td>
+            <td>🌙 صيام اليوم</td>
+            <td class="c">+100 نقطة</td>
+            <!-- حالة الإنجاز فارغة -->
+            <td class="c"><input type="checkbox" class="checkbox"></td>
+            <td></td>
+          </tr>
+
+          <!-- الفرائض (م/ج/ف/ق) تُترك حالتها فارغة للاختيار -->
+          <tr><td class="c">2</td><td>🌄 الفجر</td><td class="c">م:100 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">3</td><td>☀️ الظهر</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">4</td><td>🌤️ العصر</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">5</td><td>🌅 المغرب</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">6</td><td>🌃 العشاء</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+
+          <!-- التراويح والوتر -->
+          <tr><td class="c">7</td><td>🕯️ التراويح</td><td class="c">+40 نقطة</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">8</td><td>🌟 الوتر</td><td class="c">+20 نقطة</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+
+          <!-- السنن -->
+          <tr><td class="c">9</td><td>✨ سنة الفجر</td><td class="c">+20</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">10</td><td>☀️ صلاة الضحى</td><td class="c">+25</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">11</td><td>✨ الظهر قبل</td><td class="c">+20</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">12</td><td>✨ الظهر بعد</td><td class="c">+15</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">13</td><td>✨ سنة المغرب</td><td class="c">+15</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">14</td><td>✨ سنة العشاء</td><td class="c">+15</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">15</td><td>🕯️ الشفع</td><td class="c">+15</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+
+          <!-- الأذكار والورد -->
+          <tr><td class="c">16</td><td>☀️ أذكار الصباح</td><td class="c">+30</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">17</td><td>🌙 أذكار المساء</td><td class="c">+30</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">18</td><td>😴 أذكار النوم</td><td class="c">+30</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">19</td><td>📖 سورة الملك</td><td class="c">+30</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">20</td><td>📖 خواتيم البقرة</td><td class="c">+20</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+          <tr><td class="c">21</td><td>📖 الورد القرآني</td><td class="c">+50</td><td class="c"><input type="checkbox" class="checkbox"></td><td></td></tr>
+
+          <!-- الكهف (للجمعة) - اختياري -->
+          <tr>
+            <td class="c">22</td>
+            <td>🕌 سورة الكهف (للجمعة)</td>
+            <td class="c">+40</td>
+            <td class="c"><input type="checkbox" class="checkbox"></td>
+            <td></td>
+          </tr>
+
+          <!-- ختمة اليوم (اختياري) -->
+          <tr>
+            <td class="c">23</td>
+            <td>📖 تقدم الختمة اليوم</td>
+            <td class="c">آخر جزء مُنجز (1–30)</td>
+            <!-- خانة حالة الإنجاز: اتركها فارغة (حقل نصي لتدوين رقم الجزء إن رغبت) -->
+            <td class="c"><input type="text" style="width:70px; text-align:center;" placeholder="جزء"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        ✅ ملاحظة: كل خانات الإنجاز **فارغة** عمدًا لتعبئتها بمعرفتك (تحديد/كتابة). لا توجد حسابات آلية.
+      </div>
+    </div>
+
+    <!-- مساحة ملاحظات عامة -->
+    <div class="section">
+      <h3 class="title">📝 ملاحظات عامة</h3>
+      <table>
+        <tbody>
+          <tr><td style="height:44px;"></td></tr>
+          <tr><td style="height:44px;"></td></tr>
+          <tr><td style="height:44px;"></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <!-- APIs -->
-  <script>
-    // Hadiths
-    const AHADITH = [
-      "قال ﷺ: (من صام رمضان إيمانًا واحتسابًا غُفِر له ما تقدم من ذنبه).",
-      "قال ﷺ: (تسحّروا فإن في السَّحور بركة).",
-      "قال ﷺ: (من قام رمضان إيمانًا واحتسابًا غُفِر له ما تقدم من ذنبه).",
-      "قال ﷺ: (الدعاء هو العبادة).",
-      "قال ﷺ: (أحب الأعمال إلى الله أدومها وإن قل).",
-      "قال ﷺ: (من قام مع الإمام حتى ينصرف كُتب له قيام ليلة)."
-    ];
-
-    const model = {
-      fard: [
-        {id:'fajr', n:'🌄 الفجر', pts:{m:100,g:30,f:15,q:5}, d:'م:100|ج:30|ف:15|ق:5'},
-        {id:'dhuhr', n:'☀️ الظهر', pts:{m:50,g:30,f:15,q:5}, d:'م:50|ج:30|ف:15|ق:5'},
-        {id:'asr', n:'🌤️ العصر', pts:{m:50,g:30,f:15,q:5}, d:'م:50|ج:30|ف:15|ق:5'},
-        {id:'maghrib', n:'🌅 المغرب', pts:{m:50,g:30,f:15,q:5}, d:'م:50|ج:30|ف:15|ق:5'},
-        {id:'isha', n:'🌃 العشاء', pts:{m:50,g:30,f:15,q:5}, d:'م:50|ج:30|ف:15|ق:5'}
-      ],
-      sunan: [
-        {id:'s_fajr', n:'✨ سنة الفجر', p:20},
-        {id:'s_duha', n:'☀️ صلاة الضحى', p:25},
-        {id:'s_dhuhr_b', n:'✨ الظهر قبل', p:20},
-        {id:'s_dhuhr_a', n:'✨ الظهر بعد', p:15},
-        {id:'s_maghrib', n:'✨ سنة المغرب', p:15},
-        {id:'s_isha', n:'✨ سنة العشاء', p:15},
-        {id:'s_shaf', n:'🕯️ الشفع', p:15}
-        // الوتر أُضيف في قسم التراويح
-      ],
-      extra: [
-        {id:'azkar_s', n:'☀️ أذكار الصباح', p:30, l:'https://alazkar.today/'},
-        {id:'azkar_e', n:'🌙 أذكار المساء', p:30, l:'https://alazkar.today/'},
-        {id:'azkar_n', n:'😴 أذكار النوم', p:30, l:'https://alazkar.today/'},
-        {id:'mulk', n:'📖 سورة الملك', p:30, l:'https://quran.com/67'},
-        {id:'baqarah_end', n:'📖 خواتيم البقرة', p:20, l:'https://quran.com/2/285-286'},
-        {id:'quran', n:'📖 الورد القرآني', p:50, l:'https://quran.com'}
-      ]
-    };
-
-    const $ = sel => document.querySelector(sel);
-    const byId = id => document.getElementById(id);
-
-    // Dark mode
-    function toggleDark(){
-      document.body.classList.toggle('dark');
-      localStorage.setItem('ramadan_dark', document.body.classList.contains('dark'));
-    }
-
-    // Helpers
-    function fmt12(timeStr){
-      if(!timeStr) return "";
-      let [h,m] = timeStr.split(':'); h = parseInt(h,10);
-      const suf = h>=12 ? "م" : "ص";
-      h = (h%12)||12;
-      return `${h}:${m} ${suf}`;
-    }
-
-    async function getHijri(date){
-      try{
-        const res = await fetch(`https://api.aladhan.com/v1/gToH/${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`);
-        const data = await res.json();
-        return data.data.hijri; // {day, month:{ar,en}, year}
-      }catch(e){ return null; }
-    }
-
-    async function getTimings(city,country){
-      const url = `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=5`;
-      const res = await fetch(url);
-      const data = await res.json();
-      return data.data.timings; // Fajr,Dhuhr,Asr,Maghrib,Isha
-    }
-
-    // State
-    let timings = null; // last fetched timings
-    let tickHandle = null;
-
-    function loadDay(dateStr){
-      const raw = localStorage.getItem('ramadan_day_'+dateStr);
-      return raw? JSON.parse(raw) : {};
-    }
-    function saveDay(dateStr, obj){
-      localStorage.setItem('ramadan_day_'+dateStr, JSON.stringify(obj));
-    }
-
-    // Rendering
-    function renderFard(day){
-      const wrap = byId('fardList');
-      wrap.innerHTML = model.fard.map(f=>{
-        const cur = day[f.id]?.type;
-        const opts = Object.entries(f.pts).map(([k,v])=>(
-          `<button class="btn ${cur===k?'sel':''}" onclick="save('${f.id}',{type:'${k}',p:${v}})">${k==='m'?'مسجد':k==='g'?'جماعة':k==='f'?'فرد':'قضاء'}</button>`
-        )).join('');
-        return `
-          <div class="row">
-            <div><b>${f.n}</b><span class="pts">${f.d}</span></div>
-            <div class="opts">${opts}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderChecks(list, eid){
-      const wrap = byId(eid);
-      wrap.innerHTML = list.map(h=>{
-        const day = currentDay();
-        const done = !!day[h.id]?.done;
-        const label = h.l ? `<a href="${h.l}" target="_blank" class="link">${h.n}</a>` : h.n;
-        return `
-          <div class="row">
-            <span>${label} <small class="pts">(+${h.p} نقطة)</small></span>
-            <input type="checkbox" class="check" ${done?'checked':''} onchange="save('${h.id}',{done:this.checked,p:this.checked?${h.p}:0})">
-          </div>
-        `;
-      }).join('');
-    }
-
-    function updateTotals(){
-      const day = currentDay();
-      let total = 0;
-      // Points from fard types
-      model.fard.forEach(f=>{ if(day[f.id]?.p) total += day[f.id].p; });
-      // Taraweeh + Witr
-      if(day['taraweeh']?.p) total += day['taraweeh'].p;
-      if(day['s_witr']?.p) total += day['s_witr'].p;
-      // Sunan
-      model.sunan.forEach(s=>{ if(day[s.id]?.p) total += day[s.id].p; });
-      // Extra
-      model.extra.forEach(e=>{ if(day[e.id]?.p) total += day[e.id].p; });
-      // Fasting
-      if(day['fasting']?.p) total += day['fasting'].p;
-
-      byId('totalPts').innerText = total;
-
-      // Khatmah progress
-      const juz = +((day.khatmah && day.khatmah.juz) || 0);
-      const pct = Math.max(0, Math.min(100, Math.round((juz/30)*100)));
-      byId('juzBar').style.width = pct+'%';
-      byId('juzText').innerText = `تقدّم الختمة: ${pct}% ${juz?`(الجزء ${juz})`:''}`;
-      byId('juzSelect').value = juz || 0;
-    }
-
-    function currentDateStr(){ return byId('datePicker').value; }
-    function currentDay(){ return loadDay(currentDateStr()); }
-
-    function save(id, val){
-      const d = currentDateStr();
-      const day = loadDay(d);
-      day[id] = val;
-      saveDay(d, day);
-      updateTotals();
-    }
-
-    // Location & timings
-    async function applyLocation(){
-      const city = (localStorage.getItem('ramadan_city')||'').trim();
-      const country = (localStorage.getItem('ramadan_country')||'').trim();
-      byId('city').value = city;
-      byId('country').value = country;
-      const tbody = byId('times');
-      if(!city || !country){
-        tbody.innerHTML = `<tr class="city-row"><td colspan="5">أدخل المدينة والدولة ثم اضغط حفظ</td></tr>`;
-        return;
-      }
-      try{
-        timings = await getTimings(city,country);
-        tbody.innerHTML = `
-          <tr class="city-row">
-            <td>${fmt12(timings.Fajr)}</td>
-            <td>${fmt12(timings.Dhuhr)}</td>
-            <td>${fmt12(timings.Asr)}</td>
-            <td>${fmt12(timings.Maghrib)}</td>
-            <td>${fmt12(timings.Isha)}</td>
-          </tr>
-        `;
-      }catch(e){
-        tbody.innerHTML = `<tr class="city-row"><td colspan="5">تعذّر جلب المواقيت. تحقّق من المدينة/الدولة.</td></tr>`;
-      }
-    }
-
-    function saveLocation(){
-      localStorage.setItem('ramadan_city', byId('city').value||'');
-      localStorage.setItem('ramadan_country', byId('country').value||'');
-      applyLocation();
-    }
-
-    // Timers
-    function asTodayTime(now, hhmm){
-      const [h,m] = hhmm.split(':').map(x=>parseInt(x,10));
-      const t = new Date(now);
-      t.setHours(h,m,0,0);
-      return t;
-    }
-
-    function diffParts(ms){
-      const h = Math.floor(ms/3600000);
-      const m = Math.floor((ms%3600000)/60000);
-      const s = Math.floor((ms%60000)/1000);
-      return `${h}س ${m}د ${s}ث`;
-    }
-
-    function tick(){
-      const now = new Date();
-      // Hadith (stable per day)
-      const key = currentDateStr();
-      const hash = key.split('').reduce((a,b)=>(((a<<5)-a)+b.charCodeAt(0))|0,0);
-      byId('hadith').innerText = AHADITH[Math.abs(hash)%AHADITH.length];
-
-      // Hijri
-      // (Hijri text updated on date change below via syncHijri)
-
-      // Next prayer banners (if timings present)
-      const ban = byId('nextBanner');
-      const wAlert = byId('wuduAlert');
-      if(timings){
-        const map = [
-          {key:'Fajr',   n:'الفجر'},
-          {key:'Dhuhr',  n:'الظهر'},
-          {key:'Asr',    n:'العصر'},
-          {key:'Maghrib',n:'المغرب'},
-          {key:'Isha',   n:'العشاء'}
-        ];
-        let next = null, min = Infinity;
-        for(const p of map){
-          const t = asTodayTime(now, timings[p.key]);
-          const diff = t - now;
-          if(diff>0 && diff<min){ min = diff; next = {name:p.n, ms:diff}; }
-        }
-        if(!next){
-          // after Isha -> next Fajr of tomorrow
-          const t = asTodayTime(now, timings.Fajr); t.setDate(t.getDate()+1);
-          const diff = t - now;
-          next = {name:'الفجر', ms:diff};
-        }
-        ban.innerHTML = `⏱️ الصلاة القادمة: <b>${next.name}</b> خلال <span class="timer">${diffParts(next.ms)}</span>`;
-        const ten = 10*60*1000;
-        if(next.ms>0 && next.ms<=ten){
-          wAlert.style.display='block';
-          wAlert.innerHTML = `🌊 بقي أقل من 10 دقائق على أذان <b>${next.name}</b> — هيا للوضوء لتدرك الصف الأول.`;
-        }else{
-          wAlert.style.display='none';
-        }
-
-        // Suhoor (till Fajr today or tomorrow) & Iftar (till Maghrib today)
-        const fajrT = asTodayTime(now, timings.Fajr);
-        const magT  = asTodayTime(now, timings.Maghrib);
-        let suhoorMs = fajrT - now; if(suhoorMs<0){ const t = new Date(fajrT); t.setDate(t.getDate()+1); suhoorMs = t - now; }
-        let iftarMs  = magT - now;  if(iftarMs<0){ const t = new Date(magT); t.setDate(t.getDate()+1); iftarMs = t - now; }
-        byId('suhoorTimer').innerText = diffParts(suhoorMs);
-        byId('iftarTimer').innerText  = diffParts(iftarMs);
-      }
-    }
-
-    async function syncHijri(){
-      const d = new Date(currentDateStr());
-      const h = await getHijri(d);
-      if(h){
-        byId('hijri').innerText = `${h.day} ${h.month.ar} ${h.year}هـ`;
-        // خلال رمضان: اجعل الصيام معلمًا افتراضيًا (اختياري)
-        const inRamadan = (h.month.en === 'Ramadan');
-        if(inRamadan){
-          // لو لم يُعيَّن بعد، عيّنه من باب التيسير
-          const day = currentDay();
-          if(day.fasting===undefined){
-            save('fasting',{done:false,p:0}); // لا نفعّل تلقائيًا احترامًا لخصوصية التتبع
-          }
-        }
-      }else{
-        byId('hijri').innerText = 'تعذّر تحديد التاريخ الهجري';
-      }
-    }
-
-    function renderAll(){
-      // initialize sections
-      renderFard(currentDay());
-      renderChecks(model.sunan, 'sunanList');
-      renderChecks(model.extra, 'extraList');
-
-      // bind fasting/taraweeh/witr states
-      const day = currentDay();
-      byId('fasting').checked  = !!day.fasting?.done;
-      byId('taraweeh').checked = !!day.taraweeh?.done;
-      byId('s_witr').checked   = !!day.s_witr?.done;
-
-      updateTotals();
-    }
-
-    function onDateChange(){
-      renderAll();
-      syncHijri();
-    }
-
-    // Export / Import
-    function exportDay(){
-      const d = currentDateStr();
-      const data = loadDay(d);
-      const blob = new Blob([JSON.stringify({date:d,data},null,2)], {type:'application/json'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `ramadan_${d}.json`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function importDay(input){
-      const file = input.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          const obj = JSON.parse(reader.result);
-          const d = currentDateStr();
-          if(obj && obj.data){
-            saveDay(d, obj.data);
-            renderAll();
-          }else{
-            alert('ملف غير صالح.');
-          }
-        }catch(e){ alert('تعذّر قراءة الملف.'); }
-      };
-      reader.readAsText(file);
-      input.value='';
-    }
-
-    // Init
-    window.addEventListener('DOMContentLoaded', async ()=>{
-      if(localStorage.getItem('ramadan_dark')==='true') document.body.classList.add('dark');
-
-      // date -> default today
-      byId('datePicker').value = new Date().toISOString().split('T')[0];
-      byId('datePicker').addEventListener('change', onDateChange);
-
-      // load location inputs & timings
-      await applyLocation();
-
-      // initial render
-      await syncHijri();
-      renderAll();
-
-      // timers
-      tick();
-      tickHandle = setInterval(tick, 1000);
-    });
-  </script>
 </body>
 </html>
