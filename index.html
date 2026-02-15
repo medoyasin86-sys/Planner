@@ -3,17 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>ملصق هيدر للبلانر - Pastel Header Sticker (2732×360)</title>
+  <title>هيدر البلانر — كل تفاصيل العبادات (Sticker)</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      /* ثلاث لوحات باستيل يمكنك التبديل بينها من الزر */
-      --bg-1:#fffef9; --ink-1:#274e4a; --line-1:#cdbf98; --chip-1:#f7f0dd;
+      /* مقاس الملصق — عدّل الارتفاع لو أردت (مثلاً 360 أو 480) */
+      --W: 2732px; 
+      --H: 420px;
+
+      /* 3 لوحات Pastel */
+      --bg-1:#fffef9; --ink-1:#274e4a; --line-1:#ccb886; --chip-1:#f7f0dd;
       --bg-2:#fcfbff; --ink-2:#2e3a5e; --line-2:#c7c2e0; --chip-2:#efeaff;
-      --bg-3:#fbfffc; --ink-3:#2d4a33; --line-3:#c0e0cc; --chip-3:#e9f7ef;
+      --bg-3:#fbfffc; --ink-3:#2d4a33; --line-3:#bfe0cc; --chip-3:#e9f7ef;
 
       /* الافتراضي */
       --bg: var(--bg-1);
@@ -34,46 +38,76 @@
     }
     .btn.fill{ background:var(--gold); color:#1a1a1a; border-color:var(--gold); }
 
-    /* اللوحة/الملصق: عرض 2732 × ارتفاع 360 */
-    .sticker-wrap{
+    .wrap{
       display:flex; align-items:center; justify-content:center; min-height:100vh;
     }
     .sticker{
-      width:2732px; height:360px; box-sizing:border-box;
+      width:var(--W); height:var(--H);
       background:var(--bg); color:var(--ink);
-      border-radius:28px; border:8px double var(--gold);
+      border-radius:24px; border:8px double var(--gold);
       box-shadow:0 10px 30px rgba(0,0,0,.35);
       position:relative; overflow:hidden;
       transform-origin: top left;
+      box-sizing:border-box;
     }
 
-    /* محتوى الهيدر بسيط جدًا */
+    /* داخل الهيدر: صف علوي صغير + منطقة شرائط العبادات */
     .inner{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-      padding: 16px 28px;
+      display:flex; flex-direction:column; gap:8px;
+      padding: 12px 16px;
       height:100%;
       background:
         linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
         repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,0,0,0.015) 16px 32px);
+      box-sizing:border-box;
     }
 
-    .left, .right{ display:flex; align-items:center; gap:10px; }
+    /* صف علوي: عنوان صغير + حقول يوم/عنوان */
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      border-bottom:1.5px dashed var(--line); padding-bottom:6px;
+    }
     .title{
-      font-family:'Reem Kufi', sans-serif;
-      font-size:40px; margin:0; letter-spacing:.3px; color:var(--ink);
-      display:flex; align-items:center; gap:10px;
+      font-family:'Reem Kufi',sans-serif; margin:0; font-size:26px; letter-spacing:.2px; color:var(--ink);
+      display:flex; align-items:center; gap:8px;
     }
     .chip{
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex; align-items:center; gap:6px;
       background:var(--chip); border:1.5px solid var(--line); color:var(--ink);
-      padding:8px 12px; border-radius:14px; font-size:22px;
+      padding:6px 10px; border-radius:12px; font-size:18px;
     }
     .input{
       border:1.5px solid var(--line); background:#fff; color:#222;
-      border-radius:12px; padding:8px 12px; font-size:22px; min-width: 520px;
+      border-radius:10px; padding:6px 10px; font-size:18px; min-width: 360px;
       outline:none;
     }
-    /* خط فاصل رقيق أسفل الملصق (اختياري) */
+
+    /* شرائط العبادات: كل سطر عبارة عن Chips صغيرة */
+    .rows{ display:flex; flex-direction:column; gap:6px; }
+    .row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .label{
+      font-family:'Reem Kufi',sans-serif; font-weight:700; font-size:18px; color:var(--ink);
+      background:#fff7e6; border:1.5px solid var(--line); border-radius:999px; padding:4px 10px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 8px; border-radius:10px; font-size:17px; line-height:1;
+      background:#fff; border:1.5px solid var(--line); color:var(--ink);
+    }
+    .box{ width:14px; height:14px; border:2px solid var(--line); border-radius:3px; display:inline-block; vertical-align:middle; }
+    .sep{ opacity:.5; }
+
+    /* مسطرة الختمة (1..30) */
+    .juzbar{
+      display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+    }
+    .jlabel{ @apply .label; } /* (تعليق: للتوضيح فقط) */
+    .jcell{
+      width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+      border:1.5px solid var(--line); border-radius:4px; background:#fff; color:#555; font-size:12px; font-family:sans-serif;
+    }
+
+    /* خط سفلي رقيق */
     .bottom-line{
       position:absolute; left:0; right:0; bottom:0; height:8px;
       background:
@@ -81,13 +115,9 @@
       border-top:2px solid var(--line);
     }
 
-    /* معاينة متكيفة على الشاشة فقط */
-    @media (max-width: 1500px){
-      .sticker{ transform: scale(0.5); }
-    }
-    @media (max-width: 900px){
-      .sticker{ transform: scale(0.35); }
-    }
+    /* معاينة متكيّفة */
+    @media (max-width: 1500px){ .sticker{ transform: scale(0.6); } }
+    @media (max-width: 1000px){ .sticker{ transform: scale(0.42); } }
 
     @media print{
       .toolbar{ display:none; }
@@ -97,39 +127,97 @@
   </style>
 </head>
 <body>
-  <!-- أدوات خارجية -->
+  <!-- أدوات -->
   <div class="toolbar">
     <button class="btn" onclick="cycleTheme()">🎨 تبديل اللون</button>
     <button class="btn fill" onclick="savePNG()">💾 حفظ كصورة (PNG)</button>
   </div>
 
-  <!-- الملصق -->
-  <div class="sticker-wrap">
+  <div class="wrap">
     <div id="sticker" class="sticker">
       <div class="inner">
-        <!-- يسار: عنوان صغير -->
-        <div class="left">
-          <h1 class="title">🕌 ترويسة اليوم</h1>
-          <span class="chip">رمضان</span>
+
+        <!-- الصف العلوي: عنوان بسيط + اليوم/عنوان الصفحة -->
+        <div class="top">
+          <h1 class="title">🕌 هيدر العبادات اليومي (Ramadan)</h1>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span class="chip">اليوم:</span>
+            <input class="input" type="text" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18">
+            <span class="chip">عنوان الصفحة/ملاحظة:</span>
+            <input class="input" type="text" placeholder="اكتب عنوانك/ملاحظتك">
+          </div>
         </div>
 
-        <!-- يمين: خانات فارغة تكتبها يدويًا قبل التصدير أو داخل GoodNotes -->
-        <div class="right">
-          <span class="chip">اليوم:</span>
-          <input class="input" type="text" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18">
-          <span class="chip">عنوان/ملاحظة:</span>
-          <input class="input" type="text" placeholder="اكتب عنوان الصفحة / ملاحظة سريعة">
+        <!-- كل تفاصيل العبادات داخل الهيدر -->
+        <div class="rows">
+
+          <!-- الفرائض + الأنواع -->
+          <div class="row">
+            <span class="label">🕋 الفرائض</span>
+            <span class="pill"><span class="box"></span> 🌄 الفجر <span class="sep">|</span> م:100 ج:30 ف:15 ق:5</span>
+            <span class="pill"><span class="box"></span> ☀️ الظهر <span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
+            <span class="pill"><span class="box"></span> 🌤️ العصر <span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
+            <span class="pill"><span class="box"></span> 🌅 المغرب <span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
+            <span class="pill"><span class="box"></span> 🌃 العشاء <span class="sep">|</span> م:50 ج:30 ف:15 ق:5</span>
+          </div>
+
+          <!-- التراويح/الوتر/الصيام -->
+          <div class="row">
+            <span class="label">🌙 رمضان</span>
+            <span class="pill"><span class="box"></span> 🕯️ التراويح <span class="sep">|</span> +40</span>
+            <span class="pill"><span class="box"></span> 🌟 الوتر <span class="sep">|</span> +20</span>
+            <span class="pill"><span class="box"></span> 🌙 صيام اليوم <span class="sep">|</span> +100</span>
+            <span class="pill"><span class="box"></span> 🕌 سورة الكهف (للجمعة) <span class="sep">|</span> +40</span>
+          </div>
+
+          <!-- السنن والرواتب -->
+          <div class="row">
+            <span class="label">🌱 السنن</span>
+            <span class="pill"><span class="box"></span> ✨ سنة الفجر <span class="sep">|</span> +20</span>
+            <span class="pill"><span class="box"></span> ☀️ الضحى <span class="sep">|</span> +25</span>
+            <span class="pill"><span class="box"></span> ✨ الظهر قبل <span class="sep">|</span> +20</span>
+            <span class="pill"><span class="box"></span> ✨ الظهر بعد <span class="sep">|</span> +15</span>
+            <span class="pill"><span class="box"></span> ✨ سنة المغرب <span class="sep">|</span> +15</span>
+            <span class="pill"><span class="box"></span> ✨ سنة العشاء <span class="sep">|</span> +15</span>
+            <span class="pill"><span class="box"></span> 🕯️ الشفع <span class="sep">|</span> +15</span>
+          </div>
+
+          <!-- الأذكار والورد -->
+          <div class="row">
+            <span class="label">📿 الأذكار والورد</span>
+            <span class="pill"><span class="box"></span> ☀️ أذكار الصباح <span class="sep">|</span> +30</span>
+            <span class="pill"><span class="box"></span> 🌙 أذكار المساء <span class="sep">|</span> +30</span>
+            <span class="pill"><span class="box"></span> 😴 أذكار النوم <span class="sep">|</span> +30</span>
+            <span class="pill"><span class="box"></span> 📖 سورة الملك <span class="sep">|</span> +30</span>
+            <span class="pill"><span class="box"></span> 📖 خواتيم البقرة <span class="sep">|</span> +20</span>
+            <span class="pill"><span class="box"></span> 📖 الورد القرآني <span class="sep">|</span> +50</span>
+          </div>
+
+          <!-- مسطرة ختمة (1..30) -->
+          <div class="row">
+            <span class="label">📖 ختمة اليوم (جزء من 1–30)</span>
+            <div class="juzbar">
+              <!-- 30 خلية مرقّمة -->
+              <span class="jcell">1</span><span class="jcell">2</span><span class="jcell">3</span><span class="jcell">4</span><span class="jcell">5</span>
+              <span class="jcell">6</span><span class="jcell">7</span><span class="jcell">8</span><span class="jcell">9</span><span class="jcell">10</span>
+              <span class="jcell">11</span><span class="jcell">12</span><span class="jcell">13</span><span class="jcell">14</span><span class="jcell">15</span>
+              <span class="jcell">16</span><span class="jcell">17</span><span class="jcell">18</span><span class="jcell">19</span><span class="jcell">20</span>
+              <span class="jcell">21</span><span class="jcell">22</span><span class="jcell">23</span><span class="jcell">24</span><span class="jcell">25</span>
+              <span class="jcell">26</span><span class="jcell">27</span><span class="jcell">28</span><span class="jcell">29</span><span class="jcell">30</span>
+            </div>
+          </div>
+
         </div>
+
+        <div class="bottom-line"></div>
       </div>
-
-      <div class="bottom-line"></div>
     </div>
   </div>
 
-  <!-- html2canvas للتصدير كصورة -->
+  <!-- html2canvas للتصدير PNG -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    // تدوير لوحات الألوان الثلاث
+    // تدوير لوحات الباستيل
     let themeIndex = 0;
     function applyTheme(i){
       const r = document.documentElement;
@@ -142,16 +230,16 @@
     function cycleTheme(){ themeIndex=(themeIndex+1)%3; applyTheme(themeIndex); }
     applyTheme(themeIndex);
 
-    // حفظ كصورة PNG بالحجم الأصلي 2732×360
+    // حفظ كصورة PNG بالحجم الأصلي
     async function savePNG(){
       const node = document.getElementById('sticker');
       const prev = node.style.transform;
-      node.style.transform = 'none'; // إزالة أي تحجيم عرض
+      node.style.transform = 'none'; // إزالة أي تحجيم للعرض
       const canvas = await html2canvas(node, {backgroundColor: null, scale: 1, useCORS: true});
       node.style.transform = prev;
       const a = document.createElement('a');
       a.href = canvas.toDataURL('image/png');
-      a.download = 'planner_header_sticker_2732x360.png';
+      a.download = `planner_header_banner_full_${getComputedStyle(document.documentElement).getPropertyValue('--W').trim()}x${getComputedStyle(document.documentElement).getPropertyValue('--H').trim()}.png`;
       a.click();
     }
   </script>
