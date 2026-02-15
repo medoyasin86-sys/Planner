@@ -1,1 +1,268 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>توقيت شهر رمضان لمدارس الفترة الواحدة</title>
 
+<style>
+  :root{
+    --title-teal: #5aa5a7;
+    --header-red: #a54548;
+    --header-maroon: #8c2f36;
+    --header-amber: #c4823a;
+    --col-pale-pink: #f4e7e8;
+    --col-pale-amber: #fbf1e4;
+    --col-pale-blue: #e3f0f4;
+    --row-divider: #e5e5e5;
+    --text-dark: #333;
+    --white: #fff;
+  }
+
+  body {
+    font-family: "Tajawal", "Cairo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    color: var(--text-dark);
+    background: #fafafa;
+    line-height: 1.45;
+    direction: rtl;
+    text-align: right;
+  }
+
+  /* الحاوية العامة: مناسبة للعرض على الشاشة (عرض مرن) */
+  .wrap{
+    max-width: 860px;           /* أضيق قليلاً ليناسب A4 عمودي */
+    margin: 20px auto;
+    padding: 0 12px 24px;
+  }
+
+  /* العنوان */
+  .title-bar{
+    background: var(--title-teal);
+    color: var(--white);
+    text-align: center;
+    padding: 12px 10px;
+    border-radius: 10px 10px 0 0;
+    font-weight: 700;
+    font-size: clamp(18px, 2vw, 22px);
+  }
+
+  /* اسم المدرسة */
+  .school-bar{
+    background: #e8f3f3;
+    color: #2e5253;
+    text-align: center;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--row-divider);
+    font-weight: 700;
+    font-size: clamp(16px, 1.8vw, 20px);
+  }
+
+  /* الجدول */
+  .table{
+    width: 100%;
+    table-layout: fixed;           /* يمنع التمدد ويضمن الاحتواء */
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    direction: rtl;
+  }
+
+  .table thead th{
+    padding: 10px 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--white);
+    border-bottom: 2px solid var(--row-divider);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .th-lesson{ background: var(--header-maroon); width: 34%; }
+  .th-duration{ background: var(--header-amber); width: 18%; }
+  .th-t2{ background: var(--header-red); width: 48%; }
+
+  .table tbody td{
+    padding: 8px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--row-divider);
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+
+  .col-lesson{ background: var(--col-pale-pink); font-weight: 600; }
+  .col-duration{ background: var(--col-pale-amber); }
+  .col-t2{ background: var(--col-pale-blue); }
+
+  /* شبكة التوقيت "من/إلى" */
+  .time-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .time-cell{
+    background: rgba(255,255,255,.6);
+    border: 1px dashed #cbd5da;
+    border-radius: 8px;
+    padding: 8px 6px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    min-height: 34px;
+  }
+  .time-label{
+    font-size: 12px;
+    color: #6d7b80;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  /* شريط العرض (يظهر على الشاشة فقط) */
+  .actions{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .manager{
+    font-weight: 700;
+    color: #394447;
+    text-align: center; /* للعرض */
+    width: 100%;
+  }
+  .btn{
+    background: var(--title-teal);
+    color: var(--white);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* تذييل ثابت للطباعة في منتصف أسفل الصفحة */
+  .print-footer{
+    display: none; /* يظهر فقط أثناء الطباعة */
+  }
+
+  /* شاشة صغيرة */
+  @media (max-width: 640px){
+    .table thead th{ font-size: 14px; padding: 8px; }
+    .table tbody td{ font-size: 14px; padding: 8px; }
+    .time-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ----------------- إعدادات الطباعة: A4 Portrait صفحة واحدة ----------------- */
+  @media print{
+    @page{
+      size: A4 portrait;     /* عمودي */
+      margin: 10mm;          /* هوامش مريحة للطابعات */
+    }
+
+    html, body{
+      width: 210mm;
+      height: 297mm;
+      background: #fff !important;
+    }
+
+    /* توسيع الحاوية لعرض الصفحة العمودية بالكامل */
+    .wrap{
+      max-width: none;
+      width: calc(210mm - 20mm);  /* طرح الهوامش (10 + 10) */
+      margin: 0;
+      padding: 0;
+      transform: scale(0.98);     /* تصغير خفيف لضمان الاحتواء في صفحة واحدة */
+      transform-origin: top right;
+    }
+
+    .title-bar{ padding: 8px 6px; font-size: 18px; border-radius: 0; }
+    .school-bar{ padding: 6px; font-size: 16px; }
+
+    .table{ box-shadow: none; border-radius: 0; }
+    .table thead th{ padding: 6px 4px; font-size: 13px; }
+    .table tbody td{ padding: 6px 4px; font-size: 13px; }
+    .time-cell{ padding: 6px 4px; min-height: 28px; }
+    .time-label{ font-size: 10px; }
+
+    /* منع انقسام الصفوف/الرأس */
+    table, thead, tbody, tr, td, th { page-break-inside: avoid !important; }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+
+    /* إخفاء عناصر العرض */
+    .btn{ display: none !important; }
+    .actions{ display: none !important; }
+
+    /* تذييل مدير المدرسة في منتصف أسفل الصفحة */
+    .print-footer{
+      display: block !important;
+      position: fixed;
+      left: 50%;
+      bottom: 10mm;            /* داخل هامش الصفحة */
+      transform: translateX(-50%);
+      text-align: center;
+      font-weight: 700;
+      color: #394447;
+      width: auto;
+      max-width: calc(210mm - 20mm);
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="title-bar">
+    توقيت شهر رمضان لمدارس الفترة الواحدة
+  </div>
+
+  <div class="school-bar">
+    مدرسة المشاش للتعليم الأساسي ( ١–١٢ )
+  </div>
+
+  <table class="table" aria-label="توقيت شهر رمضان لمدارس الفترة الواحدة - التوقيت الثاني">
+    <thead>
+      <tr>
+        <th class="th-lesson">الحصة</th>
+        <th class="th-duration">الزمن بالدقيقة</th>
+        <th class="th-t2">
+          التوقيت الثاني
+          <br><span style="font-size:12px; opacity:.9;">من / إلى</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="col-lesson">الطابور</td><td class="col-duration">10</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>٧:٣٠</div><div class="time-cell"><span class="time-label">إلى</span>٧:٤٠</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الأولى</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>٧:٤٠</div><div class="time-cell"><span class="time-label">إلى</span>٨:١٥</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الثانية</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>٨:١٥</div><div class="time-cell"><span class="time-label">إلى</span>٨:٥٠</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الثالثة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>٨:٥٠</div><div class="time-cell"><span class="time-label">إلى</span>٩:٢٥</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الرابعة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>٩:٢٥</div><div class="time-cell"><span class="time-label">إلى</span>١٠:٠٠</div></div></td></tr>
+      <tr><td class="col-lesson">الفسحة</td><td class="col-duration">10</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>١٠:٠٠</div><div class="time-cell"><span class="time-label">إلى</span>١٠:١٠</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الخامسة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>١٠:١٠</div><div class="time-cell"><span class="time-label">إلى</span>١٠:٤٥</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة السادسة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>١٠:٤٥</div><div class="time-cell"><span class="time-label">إلى</span>١١:٢٠</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة السابعة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>١١:٢٠</div><div class="time-cell"><span class="time-label">إلى</span>١١:٥٥</div></div></td></tr>
+      <tr><td class="col-lesson">الحصة الثامنة</td><td class="col-duration">35</td><td class="col-t2"><div class="time-grid"><div class="time-cell"><span class="time-label">من</span>١١:٥٥</div><div class="time-cell"><span class="time-label">إلى</span>١٢:٣٠</div></div></td></tr>
+    </tbody>
+  </table>
+
+  <!-- شريط العرض (يختفي أثناء الطباعة) -->
+  <div class="actions">
+    <div class="manager">مدير المدرسة: أ/ سيد موسى شحاتة</div>
+    <button class="btn" onclick="window.print()">طباعة</button>
+  </div>
+
+</div>
+
+<!-- تذييل الطباعة: في منتصف أسفل الصفحة -->
+<div class="print-footer">مدير المدرسة: أ/ سيد موسى شحاتة</div>
+
+</body>
+</html>
