@@ -35,7 +35,7 @@
     padding: 0 12px 24px;
   }
 
-  /* العنوان الرئيسي */
+  /* العنوان */
   .title-bar{
     background: var(--title-teal);
     color: var(--white);
@@ -60,7 +60,7 @@
   /* الجدول */
   .table{
     width: 100%;
-    table-layout: fixed;           /* مهم لمنع التمدد */
+    table-layout: fixed;           /* لمنع التمدد */
     border-collapse: separate;
     border-spacing: 0;
     background: var(--white);
@@ -79,7 +79,6 @@
     text-align: center;
     white-space: nowrap;
   }
-
   .th-lesson{ background: var(--header-maroon); width: 24%; }
   .th-duration{ background: var(--header-amber); width: 18%; }
   .th-t2{ background: var(--header-red); width: 58%; }
@@ -120,6 +119,7 @@
     margin-bottom: 1px;
   }
 
+  /* الشريط السفلي للعرض على الشاشة */
   .actions{
     display: flex;
     justify-content: space-between;
@@ -128,7 +128,12 @@
     gap: 10px;
     flex-wrap: wrap;
   }
-  .manager{ font-weight: 700; color: #394447; }
+  .manager{
+    font-weight: 700;
+    color: #394447;
+    text-align: center; /* للعرض */
+    width: 100%;
+  }
   .btn{
     background: var(--title-teal);
     color: var(--white);
@@ -136,6 +141,11 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
+  }
+
+  /* تذييل ثابت للطباعة في وسط أسفل الصفحة */
+  .print-footer{
+    display: none; /* يظهر فقط أثناء الطباعة */
   }
 
   /* شاشة صغيرة */
@@ -149,10 +159,9 @@
   @media print{
     @page{
       size: A4 landscape;
-      margin: 8mm;                 /* قلل/زِد إذا لزم */
+      margin: 8mm;                 /* عدّلها إذا لزم */
     }
 
-    /* أبعاد الصفحة الفعلية */
     html, body{
       width: 297mm;
       height: 210mm;
@@ -165,7 +174,7 @@
       margin: 0;
       padding: 0;
       transform: scale(0.96);      /* تصغير خفيف لضمان الاحتواء */
-      transform-origin: top right; /* تثبيت التصغير من الأعلى لليمين */
+      transform-origin: top right;
     }
 
     .title-bar{ padding: 8px 6px; font-size: 18px; border-radius: 0; }
@@ -182,7 +191,24 @@
     thead { display: table-header-group; }
     tfoot { display: table-footer-group; }
 
-    .btn{ display: none; } /* إخفاء زر الطباعة */
+    /* إخفاء عناصر العرض */
+    .btn{ display: none !important; }
+    .actions{ display: none !important; }
+
+    /* تذييل مدير المدرسة في منتصف أسفل الصفحة */
+    .print-footer{
+      display: block !important;
+      position: fixed;
+      left: 50%;
+      bottom: 8mm;                 /* داخل هامش الصفحة */
+      transform: translateX(-50%);
+      text-align: center;
+      font-weight: 700;
+      color: #394447;
+      width: auto;
+      max-width: calc(297mm - 16mm);
+      font-size: 14px;
+    }
   }
 </style>
 </head>
@@ -224,11 +250,16 @@
     </tbody>
   </table>
 
+  <!-- شريط العرض (يختفي أثناء الطباعة) -->
   <div class="actions">
     <div class="manager">مدير المدرسة: أ/ سيد موسى شحاتة</div>
     <button class="btn" onclick="window.print()">طباعة</button>
   </div>
 
 </div>
+
+<!-- تذييل الطباعة: في منتصف أسفل الصفحة -->
+<div class="print-footer">مدير المدرسة: أ/ سيد موسى شحاتة</div>
+
 </body>
 </html>
