@@ -3,35 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>هيدر البلانر الفاخر — أنحف + أيقونات + خيارات الأداء</title>
+  <title>هيدر البلانر الفاخر — أنحف + هوامش آمنة + ألوان فخمة</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts (Arabic-friendly) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet"/>
 
   <style>
     :root{
-      /* مقاس الملصق (يمكن تعديل الارتفاع مثلاً 280px أو 320px) */
+      /* المقاس (يمكن تعديل الارتفاع بسهولة: 280 | 320) */
       --W: 2732px;
       --H: 300px;
 
-      /* لوحات فاخرة */
-      /* 1) Emerald / Gold */
-      --bg-1:#fcfbf7; --ink-1:#123d2a; --line-1:#c9b17a; --gold-1:#c5a059; --chip-1:#f5efe0;
-      /* 2) Onyx / Gold */
-      --bg-2:#fafafa; --ink-2:#1a1a1a; --line-2:#d0c2a1; --gold-2:#d2a95e; --chip-2:#f1ebdf;
-      /* 3) Burgundy / Gold */
-      --bg-3:#fffaf9; --ink-3:#4a0f1f; --line-3:#d4b68a; --gold-3:#c89b4f; --chip-3:#f6ede0;
-      /* 4) Navy / Gold */
-      --bg-4:#fbfcff; --ink-4:#10223f; --line-4:#c9be9a; --gold-4:#cba857; --chip-4:#efe9da;
+      /* مساحة آمنة لمنع أي قصّ */
+      --SAFE: 12px;
 
-      /* الافتراضي: Emerald/Gold */
-      --bg: var(--bg-1);
-      --ink: var(--ink-1);
-      --line: var(--line-1);
-      --gold: var(--gold-1);
-      --chip: var(--chip-1);
+      /* ========== لوحات فاخرة ========== */
+      /* 1) Emerald / Gold (الزمردي) */
+      --bg-emerald:#f7f6f2; --ink-emerald:#103a2b; --line-emerald:#cbb37e; --gold-emerald:#c5a059; --chip-emerald:#efe7d6;
+      /* 2) Navy / Gold (الكحلي) */
+      --bg-navy:#f8f9fc; --ink-navy:#0f2448; --line-navy:#ccbe98; --gold-navy:#caa354; --chip-navy:#efe7d8;
+      /* 3) Ruby / Gold (الياقوتي) */
+      --bg-ruby:#fff8f7; --ink-ruby:#4a0f1f; --line-ruby:#d7bf92; --gold-ruby:#c89b4f; --chip-ruby:#f6ecde;
+      /* 4) Marble / Gold (المرمري) — خلفية رخامية فاتحة طلّتها ناعمة */
+      --bg-marble:#fcfbf9; --ink-marble:#2f2f2f; --line-marble:#d4c7a6; --gold-marble:#c9a65a; --chip-marble:#f3ecde;
+
+      /* الافتراضي: Emerald */
+      --bg: var(--bg-emerald);
+      --ink: var(--ink-emerald);
+      --line: var(--line-emerald);
+      --gold: var(--gold-emerald);
+      --chip: var(--chip-emerald);
 
       --muted:#6b6b6b;
     }
@@ -50,29 +53,35 @@
     .wrap{ display:flex; align-items:center; justify-content:center; min-height:100vh; }
     .sticker{
       width:var(--W); height:var(--H);
-      background:var(--bg); color:var(--ink);
+      background:
+        radial-gradient(1200px 50% at 80% 0%, rgba(0,0,0,0.03), transparent 60%),
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
+        var(--bg);
+      color:var(--ink);
       border-radius:24px; border:8px double var(--gold);
       box-shadow:0 10px 30px rgba(0,0,0,.35);
       overflow:hidden; position:relative; transform-origin: top left; box-sizing:border-box;
+      padding: var(--SAFE); /* الهوامش الآمنة */
     }
 
     .inner{
       display:flex; flex-direction:column; gap:6px;
-      padding: 10px 14px; height:100%; box-sizing:border-box;
+      height:100%; box-sizing:border-box;
       background:
-        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
         repeating-linear-gradient(90deg, transparent 0 14px, rgba(0,0,0,0.015) 14px 28px);
+      padding: 6px 8px; border-radius: 12px;
     }
 
-    /* صف علوي أنيق وصغير */
+    /* الصف العلوي: صغير وأنيق */
     .top{
-      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
       border-bottom:1.5px dashed var(--line); padding-bottom:4px;
     }
     .title{
       font-family:'Reem Kufi',sans-serif; margin:0; font-size:22px; letter-spacing:.2px; color:var(--ink);
       display:flex; align-items:center; gap:8px;
     }
+    .title .icon{ font-size:20px; }
     .chip{
       display:inline-flex; align-items:center; gap:6px;
       background:var(--chip); border:1.5px solid var(--line); color:var(--ink);
@@ -80,7 +89,7 @@
     }
     .input{
       border:1.5px solid var(--line); background:#fff; color:#222;
-      border-radius:10px; padding:6px 10px; font-size:16px; min-width: 320px; outline:none;
+      border-radius:10px; padding:5px 9px; font-size:16px; min-width: 300px; outline:none;
     }
 
     /* صفوف مضغوطة */
@@ -99,6 +108,7 @@
     }
     .icon{ font-size:16px; }
     .pts{ color:var(--muted); font-size:14px; }
+    .sep{ opacity:.45; }
 
     /* مجموعة خيارات الأداء (م/ج/ف/ق) كـ checkbox */
     .opts{ display:inline-flex; align-items:center; gap:6px; }
@@ -107,40 +117,41 @@
       background:#faf7ee; border:1.2px solid var(--line); border-radius:8px; padding:2px 6px; font-size:13px;
     }
     .opt input{ width:14px; height:14px; vertical-align:middle; }
-    .sep{ opacity:.45; }
 
     /* الختمة: رقم الجزء اليومي (حقل صغير) */
     .juz{
       display:inline-flex; align-items:center; gap:6px;
       background:#fff; border:1.5px solid var(--line); padding:4px 8px; border-radius:10px;
+      font-size:15px;
     }
     .juz input{
-      width:48px; text-align:center; border:1.2px solid var(--line); border-radius:8px; padding:2px 4px; font-size:15px;
+      width:48px; text-align:center; border:1.2px solid var(--line); border-radius:8px; padding:2px 4px; font-size:14px;
     }
 
-    /* خط سفلي زخرفي */
+    /* زخرفة سفلية رقيقة */
     .bottom-line{
-      position:absolute; left:0; right:0; bottom:0; height:8px;
-      background:
-        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 48px);
+      position:absolute; left:var(--SAFE); right:var(--SAFE); bottom:var(--SAFE); height:8px;
+      background:repeating-linear-gradient(90deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 48px);
       border-top:2px solid var(--line);
+      border-radius: 6px;
     }
 
-    /* معاينة متكيّفة */
+    /* معاينة متكيّفة على الشاشة فقط */
     @media (max-width: 1500px){ .sticker{ transform: scale(0.6); } }
     @media (max-width: 1100px){ .sticker{ transform: scale(0.42); } }
 
     @media print{
       .toolbar{ display:none; }
       body{ background:#fff; }
-      .sticker{ width:100vw; height:100vh; border-width:6px; border-radius:0; box-shadow:none; }
+      .sticker{ width:100vw; height:100vh; border-width:6px; border-radius:0; box-shadow:none; padding:8px; }
+      .bottom-line{ left:8px; right:8px; bottom:8px; }
     }
   </style>
 </head>
 <body>
   <!-- أدوات -->
   <div class="toolbar">
-    <button class="btn" onclick="cycleTheme()">🎨 تبديل الألوان</button>
+    <button class="btn" onclick="cycleTheme()">🎨 تبديل الألوان (زمردي/كحلي/ياقوتي/مرمري)</button>
     <button class="btn fill" onclick="savePNG()">💾 حفظ كصورة (PNG)</button>
   </div>
 
@@ -150,7 +161,7 @@
 
         <!-- الصف العلوي -->
         <div class="top">
-          <h1 class="title">🕌 هيدر العبادات اليومي — فاخر</h1>
+          <h1 class="title"><span class="icon">🕌</span> هيدر العبادات اليومي — طابع إسلامي فاخر</h1>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
             <span class="chip">📅 اليوم:</span>
             <input class="input" type="text" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18">
@@ -160,7 +171,7 @@
         </div>
 
         <div class="rows">
-          <!-- الفرائض -->
+          <!-- الفرائض (مع Checkbox لكل: مسجد/جماعة/فرد/قضاء) -->
           <div class="row">
             <span class="label">🕋 الفرائض</span>
 
@@ -262,30 +273,34 @@
   <!-- html2canvas للتصدير PNG -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    // تدوير لوحات الألوان الفاخرة
+    // تدوير لوحات الألوان: زمردي -> كحلي -> ياقوتي -> مرمري
     let themeIndex = 0;
-    function applyTheme(i){
+    function applyTheme(name){
       const r = document.documentElement;
-      const k = (i%4)+1;
-      r.style.setProperty('--bg',   getComputedStyle(r).getPropertyValue(`--bg-${k}`));
-      r.style.setProperty('--ink',  getComputedStyle(r).getPropertyValue(`--ink-${k}`));
-      r.style.setProperty('--line', getComputedStyle(r).getPropertyValue(`--line-${k}`));
-      r.style.setProperty('--gold', getComputedStyle(r).getPropertyValue(`--gold-${k}`));
-      r.style.setProperty('--chip', getComputedStyle(r).getPropertyValue(`--chip-${k}`));
+      r.style.setProperty('--bg',   getComputedStyle(r).getPropertyValue(`--bg-${name}`));
+      r.style.setProperty('--ink',  getComputedStyle(r).getPropertyValue(`--ink-${name}`));
+      r.style.setProperty('--line', getComputedStyle(r).getPropertyValue(`--line-${name}`));
+      r.style.setProperty('--gold', getComputedStyle(r).getPropertyValue(`--gold-${name}`));
+      r.style.setProperty('--chip', getComputedStyle(r).getPropertyValue(`--chip-${name}`));
     }
-    function cycleTheme(){ themeIndex=(themeIndex+1)%4; applyTheme(themeIndex); }
-    applyTheme(themeIndex);
+    function cycleTheme(){
+      const names = ['emerald','navy','ruby','marble'];
+      themeIndex = (themeIndex + 1) % names.length;
+      applyTheme(names[themeIndex]);
+    }
+    // التهيئة
+    applyTheme('emerald');
 
-    // حفظ كصورة PNG بالحجم الأصلي
+    // حفظ كصورة PNG بالحجم الأصلي + بدون قص
     async function savePNG(){
       const node = document.getElementById('sticker');
-      const prev = node.style.transform;
-      node.style.transform = 'none'; // إزالة أي تحجيم عرض
+      const prevTransform = node.style.transform;
+      node.style.transform = 'none'; // إزالة أي تحجيم معاينة
       const canvas = await html2canvas(node, {backgroundColor: null, scale: 1, useCORS: true});
-      node.style.transform = prev;
+      node.style.transform = prevTransform;
       const a = document.createElement('a');
       a.href = canvas.toDataURL('image/png');
-      a.download = `planner_header_banner_luxe_${getComputedStyle(document.documentElement).getPropertyValue('--W').trim()}x${getComputedStyle(document.documentElement).getPropertyValue('--H').trim()}.png`;
+      a.download = `planner_header_banner_luxe_safe_${getComputedStyle(document.documentElement).getPropertyValue('--W').trim()}x${getComputedStyle(document.documentElement).getPropertyValue('--H').trim()}.png`;
       a.click();
     }
   </script>
