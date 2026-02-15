@@ -3,235 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>ملصق إنجازات رمضان - رأس بسيط + 3 جداول أفقية</title>
+  <title>ملصق هيدر للبلانر - Pastel Header Sticker (2732×360)</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --primary:#1a4d2e; --gold:#c5a059; --gold-light:#e6cc92;
-      --card:#ffffff; --text:#1a4d2e; --muted:#666;
+      /* ثلاث لوحات باستيل يمكنك التبديل بينها من الزر */
+      --bg-1:#fffef9; --ink-1:#274e4a; --line-1:#cdbf98; --chip-1:#f7f0dd;
+      --bg-2:#fcfbff; --ink-2:#2e3a5e; --line-2:#c7c2e0; --chip-2:#efeaff;
+      --bg-3:#fbfffc; --ink-3:#2d4a33; --line-3:#c0e0cc; --chip-3:#e9f7ef;
+
+      /* الافتراضي */
+      --bg: var(--bg-1);
+      --ink: var(--ink-1);
+      --line: var(--line-1);
+      --chip: var(--chip-1);
+
+      --gold:#c5a059;
     }
+
     body{ margin:0; background:#888; font-family:'Amiri',serif; }
+    .toolbar{
+      position:fixed; top:10px; left:10px; display:flex; gap:8px; z-index:9999;
+    }
+    .btn{
+      background:#fff; border:2px solid var(--gold); color:#1a1a1a; border-radius:999px;
+      padding:8px 14px; font-weight:700; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,.15);
+    }
+    .btn.fill{ background:var(--gold); color:#1a1a1a; border-color:var(--gold); }
 
-    /* لوحة الملصق بقياس iPad Pro 12.9" Landscape */
+    /* اللوحة/الملصق: عرض 2732 × ارتفاع 360 */
+    .sticker-wrap{
+      display:flex; align-items:center; justify-content:center; min-height:100vh;
+    }
     .sticker{
-      width:2732px; height:2048px;
-      background:var(--card); color:var(--text);
-      border-radius:28px; border:10px double var(--gold);
+      width:2732px; height:360px; box-sizing:border-box;
+      background:var(--bg); color:var(--ink);
+      border-radius:28px; border:8px double var(--gold);
       box-shadow:0 10px 30px rgba(0,0,0,.35);
-      margin:20px auto; position:relative; overflow:hidden;
+      position:relative; overflow:hidden;
+      transform-origin: top left;
     }
 
-    /* شريط أدوات خارجي */
-    .toolbar{ position:fixed; top:12px; left:12px; z-index:9999; display:flex; gap:8px; }
-    .btn{ background:var(--gold); border:none; border-radius:999px; padding:8px 14px; font-weight:700; cursor:pointer; }
-    .btn.outline{ background:#fff; border:2px solid var(--gold); color:#1a1a1a; }
-
-    /* ترويسة بسيطة وصغيرة */
-    .head{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px 22px; border-bottom:3px solid var(--gold);
-      background:#f8f4ea;
+    /* محتوى الهيدر بسيط جدًا */
+    .inner{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding: 16px 28px;
+      height:100%;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,0,0,0.015) 16px 32px);
     }
+
+    .left, .right{ display:flex; align-items:center; gap:10px; }
     .title{
-      font-family:'Reem Kufi',sans-serif; margin:0; font-size:34px; color:#1a4d2e;
+      font-family:'Reem Kufi', sans-serif;
+      font-size:40px; margin:0; letter-spacing:.3px; color:var(--ink);
       display:flex; align-items:center; gap:10px;
     }
-    .meta{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .pill{ border:1px solid var(--gold); border-radius:999px; padding:4px 10px; font-size:20px; background:#fff7e6; color:#333; }
-    .input{ border:1px solid var(--gold); border-radius:10px; padding:6px 10px; min-width:360px; font-size:20px; }
-
-    /* محتوى الجداول: ثلاثة جداول أفقية فوق بعض */
-    .content{ padding:18px 22px; display:flex; flex-direction:column; gap:22px; }
-
-    .section{
-      border:3px solid var(--gold); border-radius:18px; overflow:hidden; background:#fff;
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--chip); border:1.5px solid var(--line); color:var(--ink);
+      padding:8px 12px; border-radius:14px; font-size:22px;
     }
-    .section .s-head{
-      background:var(--primary); color:#fff; padding:10px 14px; font-size:26px; font-weight:700; margin:0;
-      display:flex; align-items:center; justify-content:space-between;
+    .input{
+      border:1.5px solid var(--line); background:#fff; color:#222;
+      border-radius:12px; padding:8px 12px; font-size:22px; min-width: 520px;
+      outline:none;
     }
-    .section .hint{ font-size:20px; color:#fff; opacity:.9; }
-
-    table{ width:100%; border-collapse:separate; border-spacing:0; }
-    thead th{
-      background:#f1efe8; color:#1a1a1a; text-align:center; padding:10px;
-      border-bottom:2px solid #e0d3ad; font-size:22px;
+    /* خط فاصل رقيق أسفل الملصق (اختياري) */
+    .bottom-line{
+      position:absolute; left:0; right:0; bottom:0; height:8px;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 48px);
+      border-top:2px solid var(--line);
     }
-    tbody td{
-      padding:12px 10px; border-bottom:1px dashed #e8dcb7; font-size:24px;
-      background:#fff;
+
+    /* معاينة متكيفة على الشاشة فقط */
+    @media (max-width: 1500px){
+      .sticker{ transform: scale(0.5); }
     }
-    tbody tr:nth-child(even) td{ background:#faf7ee; }
-    .c{text-align:center} .w{white-space:nowrap}
-    .check{ width:24px; height:24px; }
-
-    /* الحاشية */
-    .foot{ position:absolute; bottom:10px; left:0; right:0; text-align:center; color:#777; font-size:18px; }
-
-    /* تحجيم الملصق ليناسب الشاشة (عرض فقط) */
-    .fitWrap{ display:flex; align-items:center; justify-content:center; min-height:100vh; }
-    .sticker{ transform-origin: top left; }
+    @media (max-width: 900px){
+      .sticker{ transform: scale(0.35); }
+    }
 
     @media print{
       .toolbar{ display:none; }
       body{ background:#fff; }
-      .sticker{ width:100vw; height:100vh; border-width:8px; border-radius:0; box-shadow:none; }
+      .sticker{ width:100vw; height:100vh; border-width:6px; border-radius:0; box-shadow:none; }
     }
   </style>
 </head>
 <body>
-  <!-- أدوات -->
+  <!-- أدوات خارجية -->
   <div class="toolbar">
-    <button class="btn" onclick="toggleDark()">🌓 وضع ليلي</button>
-    <button class="btn outline" onclick="savePNG()">💾 حفظ كصورة (PNG)</button>
+    <button class="btn" onclick="cycleTheme()">🎨 تبديل اللون</button>
+    <button class="btn fill" onclick="savePNG()">💾 حفظ كصورة (PNG)</button>
   </div>
 
-  <div class="fitWrap">
+  <!-- الملصق -->
+  <div class="sticker-wrap">
     <div id="sticker" class="sticker">
-      <!-- رأس بسيط وصغير -->
-      <div class="head">
-        <h1 class="title">🕌 ملصق إنجازات رمضان</h1>
-        <div class="meta">
-          <span class="pill">اليوم:</span>
+      <div class="inner">
+        <!-- يسار: عنوان صغير -->
+        <div class="left">
+          <h1 class="title">🕌 ترويسة اليوم</h1>
+          <span class="chip">رمضان</span>
+        </div>
+
+        <!-- يمين: خانات فارغة تكتبها يدويًا قبل التصدير أو داخل GoodNotes -->
+        <div class="right">
+          <span class="chip">اليوم:</span>
           <input class="input" type="text" placeholder="مثال: 1 رمضان 1447هـ - 2026-02-18">
-          <span class="pill">الاسم:</span>
-          <input class="input" type="text" placeholder="اكتب اسمك">
+          <span class="chip">عنوان/ملاحظة:</span>
+          <input class="input" type="text" placeholder="اكتب عنوان الصفحة / ملاحظة سريعة">
         </div>
       </div>
 
-      <div class="content">
-        <!-- الجدول 1: الفرائض + التراويح/الوتر (أفقي بعرض الملصق) -->
-        <section class="section">
-          <div class="s-head">
-            <span>🕋 الفرائض + التراويح</span>
-            <span class="hint">خانات الإنجاز فارغة لتعليمها داخل GoodNotes</span>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th class="w">#</th>
-                <th>العبادة</th>
-                <th>التوضيح</th>
-                <th class="w">إنجاز</th>
-                <th>ملاحظات</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td class="c">1</td><td>🌄 الفجر</td><td class="c">م:100 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">2</td><td>☀️ الظهر</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">3</td><td>🌤️ العصر</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">4</td><td>🌅 المغرب</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">5</td><td>🌃 العشاء</td><td class="c">م:50 | ج:30 | ف:15 | ق:5</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">6</td><td>🕯️ التراويح</td><td class="c">+40 نقطة</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">7</td><td>🌟 الوتر</td><td class="c">+20 نقطة</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">8</td><td>🌙 صيام اليوم</td><td class="c">+100 نقطة</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-            </tbody>
-          </table>
-        </section>
-
-        <!-- الجدول 2: السنن والرواتب (أفقي) -->
-        <section class="section">
-          <div class="s-head">
-            <span>🌱 السنن والرواتب</span>
-            <span class="hint">اختر وعلّم ما تم إنجازه</span>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th class="w">#</th>
-                <th>العبادة</th>
-                <th>النقاط</th>
-                <th class="w">إنجاز</th>
-                <th>ملاحظات</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td class="c">1</td><td>✨ سنة الفجر</td><td class="c">+20</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">2</td><td>☀️ صلاة الضحى</td><td class="c">+25</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">3</td><td>✨ الظهر قبل</td><td class="c">+20</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">4</td><td>✨ الظهر بعد</td><td class="c">+15</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">5</td><td>✨ سنة المغرب</td><td class="c">+15</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">6</td><td>✨ سنة العشاء</td><td class="c">+15</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">7</td><td>🕯️ الشفع</td><td class="c">+15</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-            </tbody>
-          </table>
-        </section>
-
-        <!-- الجدول 3: الأذكار والورد + الكهف (أفقي) -->
-        <section class="section">
-          <div class="s-head">
-            <span>📿 الأذكار والورد</span>
-            <span class="hint">الذكريات اليومية وختمة القرآن</span>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th class="w">#</th>
-                <th>العبادة</th>
-                <th>النقاط</th>
-                <th class="w">إنجاز</th>
-                <th>ملاحظات</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td class="c">1</td><td>☀️ أذكار الصباح</td><td class="c">+30</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">2</td><td>🌙 أذكار المساء</td><td class="c">+30</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">3</td><td>😴 أذكار النوم</td><td class="c">+30</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">4</td><td>📖 سورة الملك</td><td class="c">+30</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">5</td><td>📖 خواتيم البقرة</td><td class="c">+20</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">6</td><td>📖 الورد القرآني</td><td class="c">+50</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <tr><td class="c">7</td><td>🕌 سورة الكهف (للجمعة)</td><td class="c">+40</td><td class="c"><input type="checkbox" class="check"></td><td></td></tr>
-              <!-- خانة رقم الجزء لليوم (اختياري) -->
-              <tr>
-                <td class="c">8</td>
-                <td>📖 تقدم الختمة اليوم</td>
-                <td class="c">آخر جزء مُنجز</td>
-                <td class="c"><input type="text" placeholder="جزء" style="width:100px; text-align:center; font-size:20px; padding:6px 8px; border:1px solid var(--gold); border-radius:10px;"></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-
-      <div class="foot">ملصق أفقي — رأس بسيط — ثلاثة جداول بعرض الملصق ومكدسة — خطوط Amiri + Reem Kufi</div>
+      <div class="bottom-line"></div>
     </div>
   </div>
 
-  <!-- html2canvas لأخذ لقطة PNG -->
+  <!-- html2canvas للتصدير كصورة -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    // تحجيم العرض على الشاشة دون التأثير على التصدير
-    function fitToScreen(){
-      const el = document.getElementById('sticker');
-      const pad = 60;
-      const sw = window.innerWidth - pad;
-      const sh = window.innerHeight - pad;
-      const scaleW = sw / 2732, scaleH = sh / 2048;
-      const scale = Math.min(scaleW, scaleH);
-      el.style.transform = `scale(${Math.max(0.25, Math.min(1, scale))})`;
+    // تدوير لوحات الألوان الثلاث
+    let themeIndex = 0;
+    function applyTheme(i){
+      const r = document.documentElement;
+      const k = i===0 ? '1' : i===1 ? '2' : '3';
+      r.style.setProperty('--bg',   getComputedStyle(r).getPropertyValue(`--bg-${k}`));
+      r.style.setProperty('--ink',  getComputedStyle(r).getPropertyValue(`--ink-${k}`));
+      r.style.setProperty('--line', getComputedStyle(r).getPropertyValue(`--line-${k}`));
+      r.style.setProperty('--chip', getComputedStyle(r).getPropertyValue(`--chip-${k}`));
     }
-    window.addEventListener('resize', fitToScreen);
-    window.addEventListener('DOMContentLoaded', fitToScreen);
+    function cycleTheme(){ themeIndex=(themeIndex+1)%3; applyTheme(themeIndex); }
+    applyTheme(themeIndex);
 
-    function toggleDark(){
-      // وضع ليلي بسيط (مجرّد قلب ألوان الخلفية/الحدود حول اللوحة)
-      document.body.style.background = document.body.style.background === 'rgb(17, 17, 17)' ? '#888' : '#111';
-    }
-
+    // حفظ كصورة PNG بالحجم الأصلي 2732×360
     async function savePNG(){
       const node = document.getElementById('sticker');
       const prev = node.style.transform;
-      node.style.transform = 'none'; // إزالة التحجيم مؤقتًا
+      node.style.transform = 'none'; // إزالة أي تحجيم عرض
       const canvas = await html2canvas(node, {backgroundColor: null, scale: 1, useCORS: true});
       node.style.transform = prev;
-      const dataURL = canvas.toDataURL('image/png');
       const a = document.createElement('a');
-      a.href = dataURL;
-      a.download = 'ramadan_sticker_simple_landscape_2732x2048.png';
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'planner_header_sticker_2732x360.png';
       a.click();
     }
   </script>
